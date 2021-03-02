@@ -48,6 +48,19 @@ h3 {
     height: 100vh;
 }
 
+.logoContainer {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    z-index: 1000;
+    height: 53px;
+    width: 40px;
+    background-image: url("./img/dark_mode/Logo.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
 .menuContainer {
     position: absolute;
     top: 0;
@@ -175,7 +188,7 @@ h3 {
 #carouselsContainer {
     scroll-snap-type: y mandatory;
     scroll-behavior: smooth;
-    height: 100vh;
+    height: 100%;
     overflow-x: hidden;
     overflow-y: scroll;
     background-color: black;
@@ -190,6 +203,7 @@ h3 {
     overflow-x: scroll;
     overflow-y: hidden;
     display: flex;
+    transition: opacity 0.2s;
 }
 .panelContainer {
     scroll-snap-align: start;
@@ -277,7 +291,7 @@ h3 {
 }
 
 
-@media (max-aspect-ratio: 3/2) {
+@media (max-aspect-ratio: 3/2) and (min-aspect-ratio: 1/1) {
     .menuContainer {
         width: 30%;
     }
@@ -307,6 +321,12 @@ h3 {
         font-size: 40px;
     }
 
+    .logoContainer {
+        top: 20px;
+        height: 120px;
+        width: 90px;
+    }
+
     #carouselsContainer {
         padding-top: 25vh;
         padding-bottom: 25vh;
@@ -314,6 +334,27 @@ h3 {
 
     .menuContainer {
         display: none;
+        width: 100%;
+    }
+
+    .menuIconsContainer {
+        width: 120px;
+    }
+    .menuIcon {
+        height: 70px;
+        width: 70px;
+    }
+
+    .menuContent {
+        width: 80%;
+    }
+
+    .tendencyContainer h2 {
+        font-size: 60px;
+    }
+
+    .projectContainer h2 {
+        font-size: 60px;
     }
 
     .carouselContainer {

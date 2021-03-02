@@ -3,6 +3,7 @@ import "./App.css";
 import getRandomColor from "./helpers/getRandomColor";
 import Carousel from "./components/Carousel";
 import Menu from "./components/Menu";
+import Logo from "./components/Logo";
 
 const App = () => {
 
@@ -65,6 +66,7 @@ const App = () => {
 
     return(
         <div className="App">
+            <Logo />
             <div id="carouselsContainer">
                 {projects.map((project, i) => (
                     <Carousel key={i} index={i} project={project} />

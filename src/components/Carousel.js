@@ -15,11 +15,15 @@ const Carousel = (props) => {
             }
             document.getElementById('carouselsContainer').addEventListener('scroll', function() {
                 const scrollPosition = document.getElementById("carousel_" + props.index).getBoundingClientRect().top;
-                
+                if(scrollPosition >= 0 && scrollPosition <= (window.innerHeight / 3)) {
+                    setOpacity(1);
+                } else {
+                    setOpacity(0.25);
+                }
             });
             
         }
-    }, [props.index, opacity]);
+    }, [props.index]);
 
     return(
         <div id={"carousel_" + props.index} className="carouselContainer" style={{opacity: `${opacity}`}}>
