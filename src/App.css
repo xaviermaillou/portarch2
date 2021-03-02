@@ -1,0 +1,323 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    font-family: "Montserrat";
+    color: white;
+    font-size: 16px;
+    font-weight: 300;
+}
+*::-webkit-scrollbar {
+    display: none;
+}
+
+input, button, label, textarea {
+    width: 100%;
+    background: none;
+    border: none;
+    border-bottom: 2px solid silver;
+    outline: none;
+}
+
+::placeholder {
+    color: silver;
+}
+
+h1 {
+    font-size: 25px;
+    font-weight: 500;
+    text-transform: uppercase;
+    padding-bottom: 20px;
+}
+h2 {
+    opacity: 0.5;
+    text-transform: uppercase;
+    width: 100%;
+    font-weight: 700;
+    -webkit-mask: linear-gradient(to left, rgba(255,255,255,0), rgba(255,255,255,1), rgba(255,255,255,1));
+    mask: linear-gradient(to left, rgba(255,255,255,0), rgba(255,255,255,1), rgba(255,255,255,1));
+}
+h3 {
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.App {
+    height: 100vh;
+}
+
+.menuContainer {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100vh;
+    width: 40%;
+    display: flex;
+    flex-direction: row-reverse;
+    background: linear-gradient(
+        to left,
+        hsl(0, 0%, 0%) 0%,
+        hsla(0, 0%, 0%, 0.738) 19%,
+        hsla(0, 0%, 0%, 0.541) 34%,
+        hsla(0, 0%, 0%, 0.382) 47%,
+        hsla(0, 0%, 0%, 0.278) 56.5%,
+        hsla(0, 0%, 0%, 0.194) 65%,
+        hsla(0, 0%, 0%, 0.126) 73%,
+        hsla(0, 0%, 0%, 0.075) 80.2%,
+        hsla(0, 0%, 0%, 0.042) 86.1%,
+        hsla(0, 0%, 0%, 0.021) 91%,
+        hsla(0, 0%, 0%, 0.008) 95.2%,
+        hsla(0, 0%, 0%, 0.002) 98.2%,
+        hsla(0, 0%, 0%, 0) 100%
+    );
+    /* background-image: url("./img/dark_mode/gradient_bg.png"); */
+    background-size: contain;
+    background-repeat: repeat-y;
+}
+
+.menuIconsContainer {
+    height: 100%;
+    width: 60px;
+    display: flex;
+    flex-direction: column;
+    justify-content:center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 1);
+}
+.menuIcon {
+    height: 35px;
+    width: 35px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    opacity: 0.5;
+    transition: opacity 0.2s;
+    -webkit-transform-style: preserve-3d;
+    transform-style: preserve-3d;
+}
+.menuIcon:hover {
+    cursor: pointer;
+}
+#icon_0 {
+    background-image: url("./img/dark_mode/globe.png");
+    background-size: contain;
+}
+#icon_0.selected {
+    background-image: url("./img/globe_champagne.png");
+}
+#icon_1 {
+    background-image: url("./img/dark_mode/user.png");
+    background-size: contain;
+}
+#icon_1.selected {
+    background-image: url("./img/user_champagne.png");
+}
+#icon_2 {
+    background-image: url("./img/dark_mode/config.png");
+    background-size: contain;
+}
+#icon_2.selected {
+    background-image: url("./img/config_champagne.png");
+}
+
+.menuContent {
+    height: 100%;
+    width: 60%;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
+
+.discoverContainer {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+.searchContainer {
+    width: 100%;
+    padding-bottom: 10px;
+    font-size: 20px;
+}
+.tendencyContainer {
+    aspect-ratio: 2/1;
+    width: 100%;
+    margin-bottom: 10px;
+    overflow: hidden;
+}
+.tendencyCover {
+    aspect-ratio: 2/1;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column-reverse;
+    padding: 5px;
+    transition: background-color 0.2s;
+}
+.tendencyCover:hover {
+    cursor: pointer;
+    background-color: rgba(0, 0, 0, 0);
+}
+.tendencyContainer h2 {
+    white-space: nowrap;
+    font-size: 30px;
+}
+
+.profileContainer.own {
+    aspect-ratio: 2/1;
+    width: 100%;
+}
+.userInfo.own {
+    padding: 5px;
+}
+
+#carouselsContainer {
+    scroll-snap-type: y mandatory;
+    scroll-behavior: smooth;
+    height: 100vh;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    background-color: black;
+}
+
+.carouselContainer {
+    scroll-snap-align: center;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    height: 100vh;
+    max-width: 100%;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    display: flex;
+}
+.panelContainer {
+    scroll-snap-align: start;
+    height: 100%;
+    flex-shrink: 0;
+}
+.panelAContainer {
+    aspect-ratio: 1/1;
+}
+.panelACover {
+    height: 100%;
+    width: 100%;
+    background-color: rgba(180, 180, 180, 0.2);
+    transition: opacity 0.2s;
+    -webkit-transform-style: preserve-3d;
+    transform-style: preserve-3d;
+}
+.panelACover:hover {
+    cursor: pointer;
+}
+.badge {
+    padding: 20px;
+}
+.badge h2 {
+    font-size: 100px;
+}
+
+.panelBContainer {
+    aspect-ratio: 1/1;
+    background-color: black;
+}
+.detailPicsContainer {
+    width: 100%;
+    padding: 1.5%;
+    display: flex;
+    flex-wrap: wrap;
+}
+.detailPic {
+    aspect-ratio: 1/1;
+    width: 30.2%;
+    margin: 1.5%;
+    flex-shrink: 0;
+}
+
+.portfolioContainer {
+    aspect-ratio: 1/1;
+    width: 100%;
+}
+.profileContainer {
+    height: 50%;
+    width: 100vh;
+    display: flex;
+}
+.profilePic {
+    aspect-ratio: 1/1;
+    height: 100%;
+    background-color: yellow;
+}
+.userInfo {
+    height: 100%;
+    width: 50%;
+    position: relative;
+    padding: 10px;
+    text-transform: capitalize;
+}
+.userLocation {
+    position: absolute;
+    bottom: 10px;
+}
+
+.projectContainer {
+    aspect-ratio: 1/1;
+    width: 100%;
+    margin-top: 10px;
+    padding: 5px;
+}
+.projectContainer h2 {
+    font-size: 30px;
+}
+
+.configProfilePic {
+    aspect-ratio: 1/1;
+    width: 100%;
+    background-color: yellow;
+}
+
+
+@media (max-aspect-ratio: 3/2) {
+    .menuContainer {
+        width: 30%;
+    }
+
+    .profileContainer.own {
+        aspect-ratio: 1/1;
+        width: 100%;
+        flex-direction: column;
+    }
+    .profilePic.own {
+        width: 100%;
+    }
+    .userInfo.own {
+        height: 100%;
+        width: 100%;
+    }
+}
+
+@media (max-aspect-ratio: 1/1) {
+    * {
+        font-size: 32px;
+    }
+    h1 {
+        font-size: 50px;
+    }
+    h3 {
+        font-size: 40px;
+    }
+
+    #carouselsContainer {
+        padding-top: 25vh;
+        padding-bottom: 25vh;
+    }
+
+    .menuContainer {
+        display: none;
+    }
+
+    .carouselContainer {
+        height: 100vw;
+        opacity: 0.25;
+    }
+}
