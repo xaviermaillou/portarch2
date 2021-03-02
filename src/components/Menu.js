@@ -4,7 +4,7 @@ import Discover from "./Discover";
 import User from "./User";
 import Config from "./Config";
 
-const Menu = () => {
+const Menu = (props) => {
 
     const [content, setContent] = useState(0);
 
@@ -13,8 +13,8 @@ const Menu = () => {
             <MenuIcons selected={content} setSelected={setContent} />
             <div className="menuContent">
                 {content === 0 && <Discover />}
-                {content === 1 && <User />}
-                {content === 2 && <Config />}
+                {content === 1 && <User user={props.user} />}
+                {content === 2 && <Config user={props.user} saveChanges={props.setUser} />}
             </div>
         </div>
     );

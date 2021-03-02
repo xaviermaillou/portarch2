@@ -3,7 +3,7 @@ import getRandomColor from "../helpers/getRandomColor";
 import Profile from "./Profile";
 import Project from "./Project";
 
-const User = () => {
+const User = (props) => {
 
     const [myProjects] = useState([
         {
@@ -23,7 +23,7 @@ const User = () => {
     return(
         <div className="userContainer">
             <h1>Profile</h1>
-            <Profile own={true} />
+            <Profile author={props.user} own={true} />
             {myProjects.map((project, i) => (
                 <Project key={i} title={project.title} color={project.color} />
             ))}

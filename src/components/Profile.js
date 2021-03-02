@@ -2,12 +2,7 @@ import React, {useState} from "react";
 
 const Profile = (props) => {
 
-    const [userInfo] = useState(props.author || {
-        name: "ducito",
-        job: "architect",
-        location: "Bariloche",
-        country: "AR",
-    });
+    const [userInfo] = useState(props.author);
 
     return(
         <div className={props.own ? "profileContainer own" : "profileContainer"}>

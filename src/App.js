@@ -7,6 +7,13 @@ import Logo from "./components/Logo";
 
 const App = () => {
 
+    const [user, setUser] = useState({
+        name: "ducito",
+        job: "architect",
+        location: "Bariloche",
+        country: "AR",
+    });
+
     const [projects] = useState([
         {
             title: "Casa copada",
@@ -72,7 +79,7 @@ const App = () => {
                     <Carousel key={i} index={i} project={project} />
                 ))}
             </div>
-            <Menu />
+            <Menu user={user} setUser={setUser} />
         </div>
     );
 }
