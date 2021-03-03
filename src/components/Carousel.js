@@ -8,7 +8,7 @@ const Carousel = (props) => {
     const [opacity, setOpacity] = useState(1);
 
     useEffect(() => {
-        if((window.innerHeight / window.innerWidth) >= 1) {
+        if((window.innerHeight / window.innerWidth) >= 1 && !props.noAuthor) {
             setOpacity(0.25);
             if(props.index === 0) {
                 setOpacity(1);
@@ -23,13 +23,13 @@ const Carousel = (props) => {
             });
             
         }
-    }, [props.index]);
+    }, [props.index, props.noAuthor]);
 
     return(
-        <div id={"carousel_" + props.index} className="carouselContainer" style={{opacity: `${opacity}`}}>
+        <div id={!props.noAuthor && "carousel_" + props.index} className="carouselContainer" style={{opacity: `${opacity}`}}>
             <PanelA color={props.project.color} title ={props.project.title} />
             <PanelB color={props.project.color} pictures={props.project.detailPics} />
-            <Portfolio color={props.project.color} author={props.project.author} />
+            {!props.noAuthor && <Portfolio color={props.project.color} author={props.project.author} />}
         </div>
     );
 }

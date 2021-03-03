@@ -21,10 +21,14 @@ input, button, label, textarea, select {
     outline: none;
 }
 button {
+    width: fit-content;
     color: #f7e7ce;
-    font-size: 150%;
-    font-weight: 700;
+    font-size: 120%;
+    font-weight: 500;
     border: none;
+}
+button:hover {
+    cursor: pointer;
 }
 
 ::placeholder {
@@ -272,11 +276,15 @@ h3 {
 .portfolioContainer {
     aspect-ratio: 1/1;
     width: 100%;
+    overflow-y: scroll;
+    scroll-snap-type: y mandatory;
+    scroll-behavior: smooth;
 }
 .profileContainer {
     height: 50%;
     width: 100vh;
     display: flex;
+    scroll-snap-align: center;
 }
 .profilePic {
     aspect-ratio: 1/1;
@@ -389,5 +397,9 @@ h3 {
     .carouselContainer {
         height: 100vw;
         opacity: 0.25;
+    }
+
+    .profileContainer {
+        width: 100%;
     }
 }
