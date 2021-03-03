@@ -2,16 +2,16 @@ import React, {useState} from "react";
 
 const Profile = (props) => {
 
-    const [userInfo] = useState(props.author);
+    const [user] = useState(props.author);
 
     return(
         <div className={props.own ? "profileContainer own" : "profileContainer"}>
             <div className={props.own ? "profilePic own" : "profilePic"}>
             </div>
             <div className={props.own ? "userInfo own" : "userInfo"}>
-                <h3>{userInfo.name}</h3>
-                <p>{userInfo.job}</p>
-                <p className="userLocation">{userInfo.location}, {userInfo.country}</p>
+                <h3>{user.name}</h3>
+                <p>{user.job}</p>
+                <p className="userLocation">{user.location}, {user.country}</p>
             </div>
             
         </div>

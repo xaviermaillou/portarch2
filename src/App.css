@@ -26,11 +26,24 @@ button {
     font-size: 120%;
     font-weight: 500;
     border: none;
+    margin-right: 10px;
 }
 button:hover {
     cursor: pointer;
 }
-
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+    -webkit-text-fill-color: white;
+    -webkit-box-shadow: 0 0 0px 1000px rgb(20,20,20) inset;
+    box-shadow: 0 0 0px 1000px rgb(20,20,20) inset;
+}
 ::placeholder {
     color: silver;
 }
@@ -39,7 +52,6 @@ h1 {
     font-size: 25px;
     font-weight: 500;
     text-transform: uppercase;
-    margin-bottom: 40px;
 }
 h2 {
     opacity: 0.5;
@@ -147,7 +159,7 @@ h3 {
 .menuContent {
     height: 100%;
     width: 60%;
-    padding-top: 20px;
+    padding-top: 40px;
     padding-bottom: 20px;
     overflow-x: hidden;
     overflow-y: scroll;
@@ -161,6 +173,8 @@ h3 {
 .searchContainer {
     width: 100%;
     padding-bottom: 10px;
+}
+.searchContainer input {
     font-size: 20px;
 }
 .tendencyContainer {
@@ -319,7 +333,20 @@ h3 {
     background-color: yellow;
     margin-bottom: 20px;
 }
-.configContainer input, .configContainer select, .configContainer button {
+.discoverContainer input, .configContainer input, .configContainer select, .configContainer button, .userContainer input, .userContainer button {
+    margin-top: 30px;
+}
+
+.helpLink {
+    color: #f7e7ce;
+    margin-top: 20px;
+}
+.helpLink:hover {
+    cursor: pointer;
+}
+.helpAlert {
+    color: yellow;
+    font-weight: 500;
     margin-top: 20px;
 }
 
@@ -349,6 +376,7 @@ h3 {
     }
     h1 {
         font-size: 50px;
+        margin-bottom: 40px;
     }
     h3 {
         font-size: 40px;
@@ -384,6 +412,10 @@ h3 {
 
     .menuContent {
         width: 80%;
+    }
+
+    .searchContainer input {
+        font-size: 50px;
     }
 
     .tendencyContainer h2 {

@@ -13,7 +13,7 @@ const Menu = (props) => {
             <MenuIcons selected={content} setSelected={setContent} />
             <div className="menuContent">
                 {content === 0 && <Discover />}
-                {content === 1 && <User user={props.user} />}
+                {content === 1 && <User user={props.user} setContent={setContent} />}
                 {content === 2 && <Config user={props.user} saveChanges={props.setUser} />}
             </div>
         </div>
