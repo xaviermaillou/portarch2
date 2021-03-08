@@ -3,7 +3,7 @@ import getRandomColor from "../helpers/getRandomColor";
 import Profile from "./Profile";
 import Project from "./Project";
 import Log from "./Log";
-import {useUser} from "../contexts/UserContext";
+import {useUser, signOut} from "../contexts/UserContext";
 
 const User = (props) => {
 
@@ -34,7 +34,10 @@ const User = (props) => {
     }
 
     const handleClickLogOut = () => {
-        user.update(undefined);
+        //user.update(undefined);
+        //firebase.auth().signOut()
+        signOut();
+        window.location.reload(false);
     }
 
     return(

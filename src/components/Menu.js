@@ -4,7 +4,7 @@ import Discover from "./Discover";
 import User from "./User";
 import Config from "./Config";
 
-const Menu = (props) => {
+const Menu = () => {
 
     const [content, setContent] = useState(0);
 

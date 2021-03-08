@@ -1,12 +1,12 @@
 import React, {useState} from "react";
-import {useUser} from "../contexts/UserContext";
+//import {useUser} from "../contexts/UserContext";
 
 import firebase from "firebase/app";
 import "firebase/auth";
 
 const Log = (props) => {
 
-    const user = useUser();
+    //const user = useUser();
     const [newUser, setNewUser] = useState({});
 
     const handleChange = (e) => {

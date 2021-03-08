@@ -11,7 +11,7 @@ const Profile = (props) => {
             <div className={props.own ? "profilePic own" : "profilePic"}>
             </div>
             <div className={props.own ? "userInfo own" : "userInfo"}>
-                <h3>{author.name}</h3>
+                <h3>{author.displayName}</h3>
                 <p>{author.job}</p>
                 <p className="userLocation">{author.location}, {author.country}</p>
             </div>   
