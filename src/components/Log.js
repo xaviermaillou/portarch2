@@ -1,7 +1,12 @@
 import React, {useState} from "react";
+import {useUser} from "../contexts/UserContext";
+
+import firebase from "firebase/app";
+import "firebase/auth";
 
 const Log = (props) => {
 
+    const user = useUser();
     const [newUser, setNewUser] = useState({});
 
     const handleChange = (e) => {
@@ -13,9 +18,10 @@ const Log = (props) => {
 
     const handleClick = () => {
         if(props.alreadyMember) {
-            props.setUser(newUser);
+            firebase.auth().signInWithEmailAndPassword(newUser.email, newUser.password);
         } else {
-            props.setUser(newUser);
+            firebase.auth().createUserWithEmailAndPassword(newUser.email, newUser.password);
+            props.setContent(2);
         }
     }
 

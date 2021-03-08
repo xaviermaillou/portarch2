@@ -3,9 +3,11 @@ import getRandomColor from "../helpers/getRandomColor";
 import Profile from "./Profile";
 import Project from "./Project";
 import Log from "./Log";
+import {useUser} from "../contexts/UserContext";
 
 const User = (props) => {
 
+    const user = useUser();
     const [alreadyMember, setAlreadyMember] = useState(true);
     const [linkBelow, setLinkBelow] = useState("Not a member yet?");
     const [errorMessage, setErrorMessage] = useState("");
@@ -32,20 +34,20 @@ const User = (props) => {
     }
 
     const handleClickLogOut = () => {
-        props.setUser(undefined);
+        user.update(undefined);
     }
 
     return(
         <div className="userContainer">
             <h1>Profile</h1>
-            {props.user && <Profile author={props.user} own={true} />}
-            {!props.user && <Log alreadyMember={alreadyMember} setErrorMessage={setErrorMessage} setContent={props.setContent} setUser={props.setUser} />}
-            {!props.user && <p className="helpLink" onClick={() => handleClick()}>{linkBelow}</p>}
-            {!props.user && <p className="helpAlert">{errorMessage}</p>}
-            {props.user && myProjects.map((project, i) => (
+            {user.state === undefined && <Log alreadyMember={alreadyMember} setErrorMessage={setErrorMessage} setContent={props.setContent} />}
+            {user.state === undefined && <p className="helpLink" onClick={() => handleClick()}>{linkBelow}</p>}
+            {user.state === undefined && <p className="helpAlert">{errorMessage}</p>}
+            {user.state !== undefined && <Profile own={true} />}
+            {user.state !== undefined && myProjects.map((project, i) => (
                 <Project key={i} title={project.title} color={project.color} />
             ))}
-            {props.user && <p className="helpLink" onClick={() => handleClickLogOut()}>Sign out</p>}
+            {user.state !== undefined && <p className="helpLink" onClick={() => handleClickLogOut()}>Sign out</p>}
         </div>
     );
 }

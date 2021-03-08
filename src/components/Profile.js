@@ -1,19 +1,20 @@
 import React, {useState} from "react";
+import {useUser} from "../contexts/UserContext";
 
 const Profile = (props) => {
 
-    const [user] = useState(props.author);
+    const user = useUser();
+    const [author] = useState(props.author || user.state);
 
     return(
         <div className={props.own ? "profileContainer own" : "profileContainer"}>
             <div className={props.own ? "profilePic own" : "profilePic"}>
             </div>
             <div className={props.own ? "userInfo own" : "userInfo"}>
-                <h3>{user.name}</h3>
-                <p>{user.job}</p>
-                <p className="userLocation">{user.location}, {user.country}</p>
-            </div>
-            
+                <h3>{author.name}</h3>
+                <p>{author.job}</p>
+                <p className="userLocation">{author.location}, {author.country}</p>
+            </div>   
         </div>
     );
 }

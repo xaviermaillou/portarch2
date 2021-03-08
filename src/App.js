@@ -5,9 +5,22 @@ import Carousel from "./components/Carousel";
 import Menu from "./components/Menu";
 import Logo from "./components/Logo";
 
-const App = () => {
+import firebase from "firebase/app";
+import "firebase/auth";
 
-    const [user, setUser] = useState(undefined);
+// Your web app's Firebase configuration
+var firebaseConfig = {
+    apiKey: "AIzaSyDaT1cYZvk2-YGNjgQxJMI5jAwu2-kyE6c",
+    authDomain: "portarch-9bfa9.firebaseapp.com",
+    projectId: "portarch-9bfa9",
+    storageBucket: "portarch-9bfa9.appspot.com",
+    messagingSenderId: "653239294431",
+    appId: "1:653239294431:web:aacaceb68c3aba85c00c6a"
+};
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+
+const App = () => {
 
     const [projects] = useState([
         {
@@ -78,7 +91,7 @@ const App = () => {
                     <Carousel key={i} index={i} project={project} />
                 ))}
             </div>
-            <Menu user={user} setUser={setUser} />
+            <Menu />
         </div>
     );
 }
