@@ -3,7 +3,6 @@ import getRandomColor from "../helpers/getRandomColor";
 import Profile from "./Profile";
 import Project from "./Project";
 import Log from "./Log";
-import firebase from "firebase/app";
 
 const User = (props) => {
 
@@ -33,14 +32,14 @@ const User = (props) => {
     }
 
     const handleClickLogOut = () => {
-        firebase.auth().signOut()
+        props.setUser(undefined);
     }
 
     return(
         <div className="userContainer">
             <h1>Profile</h1>
             {props.user && <Profile author={props.user} own={true} />}
-            {!props.user && <Log alreadyMember={alreadyMember} setErrorMessage={setErrorMessage} setContent={props.setContent} />}
+            {!props.user && <Log alreadyMember={alreadyMember} setErrorMessage={setErrorMessage} setContent={props.setContent} setUser={props.setUser} />}
             {!props.user && <p className="helpLink" onClick={() => handleClick()}>{linkBelow}</p>}
             {!props.user && <p className="helpAlert">{errorMessage}</p>}
             {props.user && myProjects.map((project, i) => (

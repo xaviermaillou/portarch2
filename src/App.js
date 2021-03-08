@@ -5,18 +5,6 @@ import Carousel from "./components/Carousel";
 import Menu from "./components/Menu";
 import Logo from "./components/Logo";
 
-import firebase from "firebase/app";
-
-const firebaseConfig = {
-    apiKey: "AIzaSyBtctlFklyaETF31TFot-UevHhsr5RGFQY",
-    authDomain: "portarch-a9e42.firebaseapp.com",
-    projectId: "portarch-a9e42",
-    storageBucket: "portarch-a9e42.appspot.com",
-    messagingSenderId: "297460194995",
-    appId: "1:297460194995:web:08a01445bf37ac2afe1ac6"
-};
-firebase.initializeApp(firebaseConfig);
-
 const App = () => {
 
     const [user, setUser] = useState(undefined);
@@ -79,18 +67,8 @@ const App = () => {
     ]);
 
     useEffect(() => {
-        firebase.auth().onAuthStateChanged((user) => {
-            if (user) {
-              setUser({
-                  id: user.uid,
-                  name: user.displayName,
-                  pic: user.photoURL,
-              })
-            } else {
-              setUser(undefined);
-            }
-        });
-    });
+        
+    },[]);
 
     return(
         <div className="App">
