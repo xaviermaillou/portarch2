@@ -7,6 +7,7 @@ import Logo from "./components/Logo";
 
 import firebase from "firebase/app";
 import "firebase/auth";
+import "firebase/firestore";
 
 // Your web app's Firebase configuration
 var firebaseConfig = {
@@ -22,12 +23,13 @@ firebase.initializeApp(firebaseConfig);
 
 const App = () => {
 
+
     const [projects] = useState([
         {
             title: "Casa copada",
             color: getRandomColor(),
             author: {
-                name: "Pablo Gutierrez",
+                displayName: "Pablo Gutierrez",
                 job: "architect",
                 location: "Valencia",
                 country: "ES",
@@ -45,7 +47,7 @@ const App = () => {
             title: "Puente peligroso",
             color: getRandomColor(),
             author: {
-                name: "laura Mendez",
+                displayName: "laura Mendez",
                 job: "engineer",
                 location: "Córdoba",
                 country: "AR",
@@ -63,7 +65,7 @@ const App = () => {
             title: "Torre pretensiosa",
             color: getRandomColor(),
             author: {
-                name: "Esteban fernández",
+                displayName: "Esteban fernández",
                 job: "engineer",
                 location: "Caracas",
                 country: "VE",

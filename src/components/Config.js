@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from "react";
 import {useUser, updateUser} from "../contexts/UserContext";
+import PictureConfig from "./PictureConfig";
 
 const Config = (props) => {
 
@@ -41,14 +42,15 @@ const Config = (props) => {
     }
 
     const handleClick = () => {
-        //user.update(configUser);
-        //firebase.auth().currentUser.updateProfile(configUser);
         updateUser(configUser);
     }
 
     return(
         <div className="configContainer">
             <h1>Settings</h1>
+            {configUser &&
+                <PictureConfig />
+            }
             {configUser && 
                 <input 
                     onChange={(e) => handleChange(e)} 
@@ -57,7 +59,7 @@ const Config = (props) => {
                     autoComplete="off">
                 </input>
             }
-            {1 === 0 && 
+            {configUser && 
                 <input 
                     onChange={(e) => handleChange(e)} 
                     value={configUser.job || ""} name="job" 
@@ -65,7 +67,7 @@ const Config = (props) => {
                     autoComplete="off">
                 </input>
             }
-            {1 === 0 && 
+            {configUser && 
                 <input 
                     onChange={(e) => handleChange(e)} 
                     value={configUser.location || ""} name="location" 
@@ -73,7 +75,7 @@ const Config = (props) => {
                     autoComplete="off">
                 </input>
             }
-            {1 === 0 && 
+            {configUser && 
                 <select onChange={(e) => handleChange(e)} id="countrySelect" name="country" defaultValue="null">
                     <option value="null" disabled>Country</option>
                     {countries.map((country, i) => (

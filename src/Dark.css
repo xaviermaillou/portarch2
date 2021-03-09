@@ -1,0 +1,80 @@
+* {
+    color: white;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+    -webkit-text-fill-color: white;
+    -webkit-box-shadow: 0 0 0px 1000px rgb(20,20,20) inset;
+    box-shadow: 0 0 0px 1000px rgb(20,20,20) inset;
+}
+
+::placeholder {
+    color: silver;
+}
+
+.logoContainer {
+    background-image: url("./img/dark_mode/Logo.png");
+}
+
+.menuContainer {
+    background: linear-gradient(
+        to left,
+        hsl(0, 0%, 0%) 0%,
+        hsla(0, 0%, 0%, 0.738) 59.5%,
+        hsla(0, 0%, 0%, 0.541) 67%,
+        hsla(0, 0%, 0%, 0.382) 73.5%,
+        hsla(0, 0%, 0%, 0.278) 78.25%,
+        hsla(0, 0%, 0%, 0.194) 82.5%,
+        hsla(0, 0%, 0%, 0.126) 86.5%,
+        hsla(0, 0%, 0%, 0.075) 90.1%,
+        hsla(0, 0%, 0%, 0.042) 93.05%,
+        hsla(0, 0%, 0%, 0.021) 95.5%,
+        hsla(0, 0%, 0%, 0.008) 97.6%,
+        hsla(0, 0%, 0%, 0.002) 99.1%,
+        hsla(0, 0%, 0%, 0) 100%
+    );
+}
+
+.menuIconsContainer {
+    background-color: rgba(0, 0, 0, 1);
+}
+
+#icon_0 {
+    background-image: url("./img/dark_mode/globe.png");
+}
+#icon_1 {
+    background-image: url("./img/dark_mode/user.png");
+}
+#icon_2 {
+    background-image: url("./img/dark_mode/config.png");
+}
+
+.tendencyCover {
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.tendencyCover:hover {
+    background-color: rgba(0, 0, 0, 0);
+}
+
+#carouselsContainer {
+    background-color: black;
+}
+
+.panelBContainer {
+    background-color: black;
+}
+
+@media (max-aspect-ratio: 1/1) {
+    .menuContainer {
+        background-color: rgba(0, 0, 0, 0.5);
+    }
+}

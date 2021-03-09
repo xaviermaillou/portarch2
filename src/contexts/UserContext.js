@@ -1,6 +1,7 @@
 import React, {useState, useEffect, useContext} from "react";
 import firebase from "firebase/app";
 import "firebase/auth";
+import "firebase/firestore";
 
 export const UserContext = React.createContext();
 
@@ -10,13 +11,19 @@ export const UserProvider = (props) => {
     useEffect(() => {
       firebase.auth().onAuthStateChanged((user) => {
         if (user) {
-            setUser(user);
+            firebase.firestore().collection('users_data').where('id', '==', user.uid).onSnapshot((snapshot) => {
+              const newUserData = snapshot.docs.map((doc) => ({
+                ...doc.data(),
+              }));
+              
+              setUser(newUserData[0]);
+            });
         } else {
           // User is signed out
           // ...
         }
       });
-    });
+    }, []);
 
     return <UserContext.Provider value={{state: user}}>
                 {props.children}
@@ -28,7 +35,7 @@ export const useUser = () => {
 }
 
 export const updateUser = (user) => {
-  firebase.auth().currentUser.updateProfile(user);
+  firebase.firestore().collection('users_data').doc(user.id).set(user);
 }
 
 export const signOut = () => {

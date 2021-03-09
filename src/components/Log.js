@@ -3,6 +3,7 @@ import React, {useState} from "react";
 
 import firebase from "firebase/app";
 import "firebase/auth";
+import "firebase/firestore";
 
 const Log = (props) => {
 
@@ -20,7 +21,14 @@ const Log = (props) => {
         if(props.alreadyMember) {
             firebase.auth().signInWithEmailAndPassword(newUser.email, newUser.password);
         } else {
-            firebase.auth().createUserWithEmailAndPassword(newUser.email, newUser.password);
+            firebase.auth().createUserWithEmailAndPassword(newUser.email, newUser.password)
+            .then((userCredential) => {
+                let id = userCredential.user.uid;
+                firebase.firestore().collection('users_data').doc(id).set({
+                    id: id,
+                });
+            });
+            
             props.setContent(2);
         }
     }
