@@ -1,15 +1,14 @@
 import React, {useState} from "react";
 import DarkTheme from "./DarkTheme";
-import LightTheme from "./LightTheme";
+//import LightTheme from "./LightTheme";
 
 const Wrapper = () => {
 
-    const [theme, setTheme] = useState(1);
+    const [theme] = useState(0);
 
     return(
         <>
             {theme === 0 && <DarkTheme />}
-            {theme === 1 && <LightTheme />}
         </>
     );
 }

@@ -17,7 +17,19 @@ select:-webkit-autofill:focus {
 }
 
 ::placeholder {
-    color: silver;
+    color: gray;
+}
+
+input, label, textarea, select {
+    border-bottom: 2px solid lightgray;
+}
+
+button {
+    color: #b6a896;
+}
+
+input:focus, textarea:focus, select:focus {
+    border-bottom: 2px solid #b6a896;
 }
 
 .logoContainer {
@@ -50,11 +62,20 @@ select:-webkit-autofill:focus {
 #icon_0 {
     background-image: url("./img/light_mode/globe.png");
 }
+#icon_0.selected {
+    background-image: url("./img/light_mode/globe_selected.png");
+}
 #icon_1 {
     background-image: url("./img/light_mode/user.png");
 }
+#icon_1.selected {
+    background-image: url("./img/light_mode/user_selected.png");
+}
 #icon_2 {
     background-image: url("./img/light_mode/config.png");
+}
+#icon_2.selected {
+    background-image: url("./img/light_mode/config_selected.png");
 }
 
 .tendencyCover {

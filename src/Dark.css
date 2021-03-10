@@ -17,7 +17,19 @@ select:-webkit-autofill:focus {
 }
 
 ::placeholder {
-    color: silver;
+    color: lightgray;
+}
+
+input, label, textarea, select {
+    border-bottom: 2px solid silver;
+}
+
+button {
+    color: #f7e7ce;
+}
+
+input:focus, textarea:focus, select:focus {
+    border-bottom: 2px solid #f7e7ce;
 }
 
 .logoContainer {
@@ -50,11 +62,20 @@ select:-webkit-autofill:focus {
 #icon_0 {
     background-image: url("./img/dark_mode/globe.png");
 }
+#icon_0.selected {
+    background-image: url("./img/dark_mode/globe_selected.png");
+}
 #icon_1 {
     background-image: url("./img/dark_mode/user.png");
 }
+#icon_1.selected {
+    background-image: url("./img/dark_mode/user_selected.png");
+}
 #icon_2 {
     background-image: url("./img/dark_mode/config.png");
+}
+#icon_2.selected {
+    background-image: url("./img/dark_mode/config_selected.png");
 }
 
 .tendencyCover {
@@ -63,6 +84,11 @@ select:-webkit-autofill:focus {
 
 .tendencyCover:hover {
     background-color: rgba(0, 0, 0, 0);
+}
+
+.addProjectContainer {
+    background: url("./img/dark_mode/plus.png");
+    background-color: rgba(255,255,255,0.1);
 }
 
 #carouselsContainer {
@@ -75,6 +101,6 @@ select:-webkit-autofill:focus {
 
 @media (max-aspect-ratio: 1/1) {
     .menuContainer {
-        background-color: rgba(0, 0, 0, 0.5);
+        background: rgba(0, 0, 0, 0.75);
     }
 }

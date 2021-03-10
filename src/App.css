@@ -7,6 +7,7 @@
     font-family: "Montserrat";
     font-size: 16px;
     font-weight: 300;
+    background-repeat: no-repeat !important;
 }
 *::-webkit-scrollbar {
     display: none;
@@ -16,16 +17,12 @@ input, button, label, textarea, select {
     width: 100%;
     background: none;
     border: none;
-    border-bottom: 2px solid gray;
     outline: none;
     transition: border-bottom 0.2s;
 }
-input:focus, textarea:focus, select:focus {
-    border-bottom: 2px solid #f7e7ce;
-}
+
 button {
     width: fit-content;
-    color: #f7e7ce;
     font-size: 120%;
     font-weight: 500;
     border: none;
@@ -108,8 +105,7 @@ h3 {
     width: 35px;
     margin-top: 30px;
     margin-bottom: 30px;
-    opacity: 0.5;
-    transition: opacity 0.2s;
+    opacity: 0.25;
     -webkit-transform-style: preserve-3d;
     transform-style: preserve-3d;
 }
@@ -119,20 +115,11 @@ h3 {
 #icon_0 {
     background-size: contain;
 }
-#icon_0.selected {
-    background-image: url("./img/globe_champagne.png");
-}
 #icon_1 {
     background-size: contain;
 }
-#icon_1.selected {
-    background-image: url("./img/user_champagne.png");
-}
 #icon_2 {
     background-size: contain;
-}
-#icon_2.selected {
-    background-image: url("./img/config_champagne.png");
 }
 
 .menuContent {
@@ -278,7 +265,8 @@ h3 {
 .profilePic {
     aspect-ratio: 1/1;
     height: 100%;
-    background-color: yellow;
+    background-color: rgba(255,255,255,0.25);
+    background-size: contain;
 }
 .userInfo {
     height: 100%;
@@ -302,10 +290,15 @@ h3 {
     font-size: 30px;
 }
 
+.addProjectContainer {
+    background-position: center !important;
+}
+
 .configProfilePic {
     aspect-ratio: 1/1;
     width: 100%;
-    background-color: yellow;
+    background-color: rgba(255,255,255,0.25);
+    background-size: contain;
     margin-bottom: 20px;
 }
 .discoverContainer input, .configContainer input, .configContainer select, .configContainer button, .userContainer input, .userContainer button {
@@ -411,5 +404,9 @@ h3 {
 
     .profileContainer {
         width: 100%;
+    }
+
+    .discoverContainer input, .configContainer input, .configContainer select, .configContainer button, .userContainer input, .userContainer button {
+        margin-top: 60px;
     }
 }

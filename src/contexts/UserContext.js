@@ -2,6 +2,7 @@ import React, {useState, useEffect, useContext} from "react";
 import firebase from "firebase/app";
 import "firebase/auth";
 import "firebase/firestore";
+import "firebase/storage";
 
 export const UserContext = React.createContext();
 
@@ -40,4 +41,15 @@ export const updateUser = (user) => {
 
 export const signOut = () => {
   firebase.auth().signOut();
+}
+
+export const uploadPicture = (file, user) => {
+  let ref = firebase.storage().ref().child('profile_pictures/' + user.id);
+  ref.put(file).then((result) => {
+    ref.getDownloadURL().then((url) => {
+      firebase.firestore().collection('users_data').doc(user.id).update({
+        profilePicture: url,
+      });
+    });
+  });
 }

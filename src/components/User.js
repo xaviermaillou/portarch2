@@ -3,6 +3,7 @@ import getRandomColor from "../helpers/getRandomColor";
 import Profile from "./Profile";
 import Project from "./Project";
 import Log from "./Log";
+import AddProject from "./AddProject";
 import {useUser, signOut} from "../contexts/UserContext";
 
 const User = (props) => {
@@ -12,20 +13,7 @@ const User = (props) => {
     const [linkBelow, setLinkBelow] = useState("Not a member yet?");
     const [errorMessage, setErrorMessage] = useState("");
 
-    const [myProjects] = useState([
-        {
-            title: "Pabellón vanguardista",
-            color: getRandomColor(),
-        },
-        {
-            title: "Complejo complicado",
-            color: getRandomColor(),
-        },
-        {
-            title: "Hospital elitista",
-            color: getRandomColor(),
-        },
-    ]);
+    const [myProjects, setMyProjects] = useState([]);
 
     const handleClick = () => {
         setErrorMessage("");
@@ -50,6 +38,7 @@ const User = (props) => {
             {user.state !== undefined && myProjects.map((project, i) => (
                 <Project key={i} title={project.title} color={project.color} />
             ))}
+            {user.state !== undefined && <AddProject />}
             {user.state !== undefined && <p className="helpLink" onClick={() => handleClickLogOut()}>Sign out</p>}
         </div>
     );
