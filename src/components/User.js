@@ -1,5 +1,4 @@
 import React, {useState} from "react";
-import getRandomColor from "../helpers/getRandomColor";
 import Profile from "./Profile";
 import Project from "./Project";
 import Log from "./Log";

@@ -21,6 +21,12 @@ input, button, label, textarea, select {
     transition: border-bottom 0.2s;
 }
 
+textarea {
+    height: 100%;
+    padding: 5px;
+    resize: none;
+}
+
 button {
     width: fit-content;
     font-size: 120%;
@@ -291,7 +297,68 @@ h3 {
 }
 
 .addProjectContainer {
+    display: flex;
     background-position: center !important;
+    background-size: contain !important;
+    padding: 0;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+}
+.addProjectContent {
+    flex-shrink: 0;
+    height: 100%;
+    width: 100%;
+    scroll-snap-align: center;
+}
+.addProject1 {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-position: center !important;
+    background-size: 50% !important;
+    padding: 5px;
+}
+.addProject1:hover {
+    cursor: pointer;
+}
+.addProject2 {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 5px;
+}
+.addProject3 {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.addProjectTitle {
+    font-size: 32px;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+.addProjectContent p {
+    text-align: center;
+}
+.addNewProjectPicturesDisplayContainer {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-content: flex-start;
+}
+.addNewProjectPicturesDisplay {
+    aspect-ratio: 1/1;
+    height: 25%;
+    flex-shrink: 0;
+    background-position: center;
+    background-size: contain;
+}
+.addNewProjectPicture {
+    background-position: center !important;
+    background-size: 50% !important;
 }
 
 .configProfilePic {
@@ -301,7 +368,10 @@ h3 {
     background-size: contain;
     margin-bottom: 20px;
 }
-.discoverContainer input, .configContainer input, .configContainer select, .configContainer button, .userContainer input, .userContainer button {
+.configProfilePic:hover {
+    cursor: pointer;
+}
+.discoverContainer input, .configContainer input, .configContainer select, .configContainer button, .userContainer input, .userContainer button, .userContainer textarea {
     margin-top: 30px;
 }
 
@@ -393,6 +463,11 @@ h3 {
         font-size: 60px;
     }
 
+    .addProjectTitle {
+        font-size: 64px;
+        font-weight: 700;
+    }
+
     .projectContainer h2 {
         font-size: 60px;
     }
@@ -406,7 +481,11 @@ h3 {
         width: 100%;
     }
 
-    .discoverContainer input, .configContainer input, .configContainer select, .configContainer button, .userContainer input, .userContainer button {
+    .discoverContainer input, .configContainer input, .configContainer select, .configContainer button, .userContainer input, .userContainer button, .userContainer textarea {
         margin-top: 60px;
+    }
+
+    .helpLink {
+        margin-top: 40px;
     }
 }

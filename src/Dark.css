@@ -17,19 +17,25 @@ select:-webkit-autofill:focus {
 }
 
 ::placeholder {
-    color: lightgray;
+    color: silver;
 }
 
-input, label, textarea, select {
-    border-bottom: 2px solid silver;
+input, label, select {
+    border-bottom: 4px solid gray;
+}
+textarea {
+    border-left: 4px solid gray;
 }
 
 button {
     color: #f7e7ce;
 }
 
-input:focus, textarea:focus, select:focus {
-    border-bottom: 2px solid #f7e7ce;
+input:focus, select:focus {
+    border-bottom: 4px solid #f7e7ce;
+}
+textarea:focus {
+    border-left: 4px solid #f7e7ce;
 }
 
 .logoContainer {
@@ -86,9 +92,22 @@ input:focus, textarea:focus, select:focus {
     background-color: rgba(0, 0, 0, 0);
 }
 
-.addProjectContainer {
+.addProjectContent {
+    background-color: rgba(0, 0, 0, 0.75);
+}
+.addProject1 {
     background: url("./img/dark_mode/plus.png");
-    background-color: rgba(255,255,255,0.1);
+    background-color: rgba(0, 0, 0, 0.75);
+}
+.addProjectContent p {
+    color: gray;
+}
+.addNewProjectPicturesDisplay {
+    background-color: black;
+}
+.addNewProjectPicture {
+    background: url("./img/dark_mode/plus.png");
+    background-color: rgba(0, 0, 0, 0.75);
 }
 
 #carouselsContainer {

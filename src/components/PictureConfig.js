@@ -11,6 +11,10 @@ const PictureConfig = (props) => {
     const handleChange = (e) => {
         var file = e.target.files[0];
 
+        if(file === undefined) {
+            return;
+        }
+
         if(file.type !== 'image/jpeg' && file.type !== 'image/png') {
             return;
         }
