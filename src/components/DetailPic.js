@@ -7,7 +7,7 @@ const DetailPic = (props) => {
     }
 
     return(
-        <div onClick={() => handleClick()} className="detailPic" style={{backgroundColor: `${props.color}`}}>
+        <div onClick={() => handleClick()} className="detailPic" style={{background: `url(${props.picture})`}}>
             
         </div>
     );

@@ -54,6 +54,37 @@ export const uploadPicture = (file, user) => {
   });
 }
 
+export const useProjects = () => {
+  const [projects, setProjects] = useState([]);
+
+  useEffect(() => {
+    firebase.firestore().collection('projects').onSnapshot((snapshot) => {
+      const project = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      setProjects(project);
+    });
+  }, []);
+
+  return projects;
+}
+
+export const useProjectPictures = (id) => {
+  const [pictures, setPictures] = useState([]);
+
+  useEffect(() => {
+    firebase.firestore().collection('project_pictures').where('project_id', '==', id).onSnapshot((snapshot) => {
+      const picture = snapshot.docs.map((doc) => ({
+        ...doc.data(),
+      }));
+      setPictures(picture);
+    });
+  }, [id]);
+
+  return pictures;
+}
+
 export const uploadProject = (mainPicture, data, pictures, userID) => {
 
   let randomID = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
@@ -86,4 +117,38 @@ export const uploadProject = (mainPicture, data, pictures, userID) => {
     });
     i++;
   });
+}
+
+export const useAuthorData = (id) => {
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    firebase.firestore().collection('users_data').where('id', '==', id).onSnapshot((snapshot) => {
+      const data = snapshot.docs.map((doc) => ({
+        ...doc.data(),
+      }));
+      setData(data);
+    });
+  }, [id]);
+
+  return data;
+}
+
+export const useAuthorProjects = (id) => {
+  const [projects, setProjects] = useState([]);
+
+  useEffect(() => {
+    if(id === 0) {
+      return;
+    }
+    firebase.firestore().collection('projects').where('author', '==', id).onSnapshot((snapshot) => {
+      const project = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      setProjects(project);
+    });
+  }, [id]);
+
+  return projects;
 }

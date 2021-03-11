@@ -3,16 +3,17 @@ import Profile from "./Profile";
 import Project from "./Project";
 import Log from "./Log";
 import AddProject from "./AddProject";
-import {useUser, signOut} from "../contexts/UserContext";
+import {useUser, signOut, useAuthorProjects} from "../contexts/UserContext";
 
 const User = (props) => {
 
     const user = useUser();
+    console.log(user);
     const [alreadyMember, setAlreadyMember] = useState(true);
     const [linkBelow, setLinkBelow] = useState("Not a member yet?");
     const [errorMessage, setErrorMessage] = useState("");
 
-    const [myProjects, setMyProjects] = useState([]);
+    const myProjects = useAuthorProjects(user.state !== undefined ? user.state.id : 0);
 
     const handleClick = () => {
         setErrorMessage("");
@@ -21,8 +22,6 @@ const User = (props) => {
     }
 
     const handleClickLogOut = () => {
-        //user.update(undefined);
-        //firebase.auth().signOut()
         signOut();
         window.location.reload(false);
     }
@@ -33,9 +32,9 @@ const User = (props) => {
             {user.state === undefined && <Log alreadyMember={alreadyMember} setErrorMessage={setErrorMessage} setContent={props.setContent} />}
             {user.state === undefined && <p className="helpLink" onClick={() => handleClick()}>{linkBelow}</p>}
             {user.state === undefined && <p className="helpAlert">{errorMessage}</p>}
-            {user.state !== undefined && <Profile own={true} />}
+            {user.state !== undefined && <Profile own={true} author={user.state} />}
             {user.state !== undefined && myProjects.map((project, i) => (
-                <Project key={i} title={project.title} color={project.color} />
+                <Project key={i} title={project.title} picture={project.mainPicture} />
             ))}
             {user.state !== undefined && <AddProject />}
             {user.state !== undefined && <p className="helpLink" onClick={() => handleClickLogOut()}>Sign out</p>}

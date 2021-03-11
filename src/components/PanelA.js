@@ -10,7 +10,7 @@ const PanelA = (props) => {
     }
 
     return(
-        <div className="panelContainer panelAContainer" style={{backgroundColor: `${props.color}`}}>
+        <div className="panelContainer panelAContainer" style={{background: `url(${props.picture})`}}>
             <div onClick={() => clickHandler()} className="panelACover" style={{opacity: `${coverOpacity}`}}>
                 <Badge title={props.title} />
             </div>

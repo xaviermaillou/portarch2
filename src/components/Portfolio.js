@@ -1,70 +1,17 @@
-import React, {useState} from "react";
+import React from "react";
 import Carousel from "./Carousel";
 import Profile from "./Profile";
-import getRandomColor from "../helpers/getRandomColor";
+import {useAuthorData, useAuthorProjects} from "../contexts/UserContext";
 
 const Portfolio = (props) => {
 
-    const [projects] = useState([
-        {
-            title: "Casa copada",
-            color: getRandomColor(),
-            author: {
-                name: "Pablo Gutierrez",
-                job: "architect",
-                location: "Valencia",
-                country: "ES",
-            },
-            detailPics: [
-                getRandomColor(),
-                getRandomColor(),
-                getRandomColor(),
-                getRandomColor(),
-                getRandomColor(),
-                getRandomColor(),
-            ],
-        },
-        {
-            title: "Puente peligroso",
-            color: getRandomColor(),
-            author: {
-                name: "laura Mendez",
-                job: "engineer",
-                location: "Córdoba",
-                country: "AR",
-            },
-            detailPics: [
-                getRandomColor(),
-                getRandomColor(),
-                getRandomColor(),
-                getRandomColor(),
-                getRandomColor(),
-                getRandomColor(),
-            ],
-        },
-        {
-            title: "Torre pretensiosa",
-            color: getRandomColor(),
-            author: {
-                name: "Esteban fernández",
-                job: "engineer",
-                location: "Caracas",
-                country: "VE",
-            },
-            detailPics: [
-                getRandomColor(),
-                getRandomColor(),
-                getRandomColor(),
-                getRandomColor(),
-                getRandomColor(),
-                getRandomColor(),
-            ],
-        },
-    ]);
+    const authorData = useAuthorData(props.author);
+
+    const projects = useAuthorProjects(props.author);
 
     return(
         <div className="panelContainer portfolioContainer">
-            <Profile author={props.author} />
+            <Profile author={authorData[0]} />
             {projects.map((project, i) => (
                 <Carousel key={i} project={project} noAuthor={true} />
             ))}

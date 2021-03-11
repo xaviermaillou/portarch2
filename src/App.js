@@ -1,13 +1,13 @@
-import React, {useState, useEffect} from "react";
+import React from "react";
 import "./App.css";
-import getRandomColor from "./helpers/getRandomColor";
 import Carousel from "./components/Carousel";
 import Menu from "./components/Menu";
 import Logo from "./components/Logo";
 
 import firebase from "firebase/app";
 import "firebase/auth";
-import "firebase/firestore";
+
+import {useProjects} from "./contexts/UserContext";
 
 // Your web app's Firebase configuration
 var firebaseConfig = {
@@ -23,73 +23,13 @@ firebase.initializeApp(firebaseConfig);
 
 const App = () => {
 
-
-    const [projects] = useState([
-        {
-            title: "Casa copada",
-            color: getRandomColor(),
-            author: {
-                displayName: "Pablo Gutierrez",
-                job: "architect",
-                location: "Valencia",
-                country: "ES",
-            },
-            detailPics: [
-                getRandomColor(),
-                getRandomColor(),
-                getRandomColor(),
-                getRandomColor(),
-                getRandomColor(),
-                getRandomColor(),
-            ],
-        },
-        {
-            title: "Puente peligroso",
-            color: getRandomColor(),
-            author: {
-                displayName: "laura Mendez",
-                job: "engineer",
-                location: "Córdoba",
-                country: "AR",
-            },
-            detailPics: [
-                getRandomColor(),
-                getRandomColor(),
-                getRandomColor(),
-                getRandomColor(),
-                getRandomColor(),
-                getRandomColor(),
-            ],
-        },
-        {
-            title: "Torre pretensiosa",
-            color: getRandomColor(),
-            author: {
-                displayName: "Esteban fernández",
-                job: "engineer",
-                location: "Caracas",
-                country: "VE",
-            },
-            detailPics: [
-                getRandomColor(),
-                getRandomColor(),
-                getRandomColor(),
-                getRandomColor(),
-                getRandomColor(),
-                getRandomColor(),
-            ],
-        },
-    ]);
-
-    useEffect(() => {
-        
-    },[]);
+    const projects = useProjects();
 
     return(
         <div className="App">
             <Logo />
             <div id="carouselsContainer">
-                {projects.map((project, i) => (
+                {projects && projects.map((project, i) => (
                     <Carousel key={i} index={i} project={project} />
                 ))}
             </div>
