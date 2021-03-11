@@ -4,7 +4,7 @@ import PictureConfig from "./PictureConfig";
 
 const Config = (props) => {
 
-    const user = useUser()
+    const user = useUser();
     const [configUser, setConfigUser] = useState(user.state);
     const [countries, setCountries] = useState([]);
 

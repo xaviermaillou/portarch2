@@ -1,8 +1,9 @@
 import React, {useState} from "react";
+import {useUser, uploadProject} from "../contexts/UserContext";
 
 const AddProject = () => {
 
-    const [instance, setInstance] = useState(0);
+    const userID = useUser().state.id;
 
     const [mainPicture, setMainPicture] = useState();
     const [projectData, setProjectData] = useState({});
@@ -71,6 +72,10 @@ const AddProject = () => {
         setPictures([...pictures]);
     }
 
+    const handleSubmit = () => {
+        uploadProject(mainPicture, projectData, pictures, userID);
+    }
+
     return(
         <div className="addProjectContainer projectContainer">
 
@@ -126,6 +131,8 @@ const AddProject = () => {
                     )}
                     <div onClick={() => handleClick(false)} className="addNewProjectPicturesDisplay addNewProjectPicture" style={{display: `${pictures.length < 12 ? 'block' : 'none'}`}}></div>
                 </div>
+
+                <button onClick={() => handleSubmit()}>Add</button>
 
             </div>
 

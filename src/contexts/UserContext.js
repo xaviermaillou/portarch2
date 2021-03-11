@@ -53,3 +53,37 @@ export const uploadPicture = (file, user) => {
     });
   });
 }
+
+export const uploadProject = (mainPicture, data, pictures, userID) => {
+
+  let randomID = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+
+  firebase.firestore().collection('projects').doc(randomID).set({
+    title: data.title,
+    memoir: data.memoir,
+    author: userID,
+  }, {merge: true});
+
+  let ref = firebase.storage().ref().child('project_pictures/' + randomID);
+  ref.put(mainPicture).then((result) => {
+    ref.getDownloadURL().then((url) => {
+      firebase.firestore().collection('projects').doc(randomID).set({
+        mainPicture: url,
+      }, {merge: true});
+    });
+  });
+
+  let i = 0;
+  pictures.forEach((picture) => {
+    let ref = firebase.storage().ref().child('project_pictures/' + randomID + i);
+    ref.put(picture).then((result) => {
+      ref.getDownloadURL().then((url) => {
+        firebase.firestore().collection('project_pictures').doc().set({
+          project_id: randomID,
+          url: url,
+        });
+      });
+    });
+    i++;
+  });
+}
