@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import Profile from "./Profile";
 import Project from "./Project";
 import Log from "./Log";
@@ -8,12 +8,20 @@ import {useUser, signOut, useAuthorProjects} from "../contexts/UserContext";
 const User = (props) => {
 
     const user = useUser();
-    console.log(user);
     const [alreadyMember, setAlreadyMember] = useState(true);
     const [linkBelow, setLinkBelow] = useState("Not a member yet?");
     const [errorMessage, setErrorMessage] = useState("");
+    const [enabledForm, setEnabledForm] = useState(true);
+    const [allowRefresh, setAllowRefresh] = useState(true);
+    const [myProjects, setMyProjects] = useState([]);
 
-    const myProjects = useAuthorProjects(user.state !== undefined ? user.state.id : 0);
+    const loadedProjects = useAuthorProjects((user.state !== undefined ? user.state.id : 0));
+
+    useEffect(() => {
+        if(allowRefresh) {
+            setMyProjects(loadedProjects);
+        }
+    }, [allowRefresh, loadedProjects]);
 
     const handleClick = () => {
         setErrorMessage("");
@@ -26,6 +34,12 @@ const User = (props) => {
         window.location.reload(false);
     }
 
+    const reloadForm = () => {
+        console.log("reloaded");
+        setEnabledForm(false);
+        setEnabledForm(true);
+    }
+
     return(
         <div className="userContainer">
             <h1>Profile</h1>
@@ -34,9 +48,9 @@ const User = (props) => {
             {user.state === undefined && <p className="helpAlert">{errorMessage}</p>}
             {user.state !== undefined && <Profile own={true} author={user.state} />}
             {user.state !== undefined && myProjects.map((project, i) => (
-                <Project key={i} title={project.title} picture={project.mainPicture} />
+                <Project key={i} project={project} />
             ))}
-            {user.state !== undefined && <AddProject />}
+            {(user.state !== undefined && enabledForm) && <AddProject reload={() => reloadForm()} allowRefresh={allowRefresh} setAllowRefresh={setAllowRefresh} />}
             {user.state !== undefined && <p className="helpLink" onClick={() => handleClickLogOut()}>Sign out</p>}
         </div>
     );

@@ -38,7 +38,7 @@ const PanelB = (props) => {
             <div className="projectMemoir">
                 <p>
                     <b>
-                        "
+                        " 
                     </b>
                     {props.memoir}
                 </p>

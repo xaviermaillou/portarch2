@@ -7,7 +7,7 @@ import Logo from "./components/Logo";
 import firebase from "firebase/app";
 import "firebase/auth";
 
-import {useProjects} from "./contexts/UserContext";
+import {useUser, useProjects, useFavorites} from "./contexts/UserContext";
 
 // Your web app's Firebase configuration
 var firebaseConfig = {
@@ -23,14 +23,16 @@ firebase.initializeApp(firebaseConfig);
 
 const App = () => {
 
+    const user = useUser();
     const projects = useProjects();
+    const favorites = useFavorites(user.state ? user.state.id : 0);
 
     return(
         <div className="App">
             <Logo />
             <div id="carouselsContainer">
                 {projects && projects.map((project, i) => (
-                    <Carousel key={i} index={i} project={project} />
+                    <Carousel key={i} index={i} project={project} favorite={favorites.includes(project.id)} />
                 ))}
             </div>
             <Menu />

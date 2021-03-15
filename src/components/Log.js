@@ -26,10 +26,11 @@ const Log = (props) => {
                 let id = userCredential.user.uid;
                 firebase.firestore().collection('users_data').doc(id).set({
                     id: id,
+                    profilePicture: "https://firebasestorage.googleapis.com/v0/b/portarch-9bfa9.appspot.com/o/project_pictures%2Fanonymous.png?alt=media&token=2ee8159f-bc93-4c00-bd0d-774b92e6f960",
                 });
             });
             
-            props.setContent(2);
+            //props.setContent(2);
         }
     }
 

@@ -31,7 +31,7 @@ const Carousel = (props) => {
 
     return(
         <div id={!props.noAuthor ? "carousel_" + props.index : undefined} className="carouselContainer" style={{opacity: `${opacity}`}}>
-            <PanelA picture={props.project.mainPicture} title ={props.project.title} />
+            <PanelA picture={props.project.mainPicture} title ={props.project.title} id={props.project.id} favorite={props.favorite} />
             <PanelB id={props.project.id} memoir={props.project.memoir} ownProject={props.noAuthor} />
             {!props.noAuthor && <Portfolio author={props.project.author} />}
             {ghostDiv && <div className="ghostDiv" style={{width: `${window.innerWidth - window.innerHeight}px`}}></div>}

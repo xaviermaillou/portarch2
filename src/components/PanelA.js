@@ -5,14 +5,17 @@ const PanelA = (props) => {
 
     const [coverOpacity, setCoverOpacity] = useState(0);
 
-    const clickHandler = () => {
+    const clickHandler = (e) => {
+        if(e.target.classList.contains("addFavorite")) {
+            return;
+        }
         coverOpacity === 0 ? setCoverOpacity(1) : setCoverOpacity(0);
     }
 
     return(
         <div className="panelContainer panelAContainer" style={{background: `url(${props.picture})`}}>
-            <div onClick={() => clickHandler()} className="panelACover" style={{opacity: `${coverOpacity}`}}>
-                <Badge title={props.title} />
+            <div onClick={(e) => clickHandler(e)} className="panelACover" style={{opacity: `${coverOpacity}`}}>
+                <Badge title={props.title} id={props.id} favorite={props.favorite} />
             </div>
         </div>
     );

@@ -1,7 +1,7 @@
-import React, {useState} from "react";
-import {useUser, uploadProject} from "../contexts/UserContext";
+import React, {useState, useEffect} from "react";
+import {useUser, uploadProject, deleteProject, deleteProjectPicture} from "../contexts/UserContext";
 
-const AddProject = () => {
+const AddProject = (props) => {
 
     const userID = useUser().state.id;
 
@@ -11,8 +11,33 @@ const AddProject = () => {
 
     const [initOpacity, setInitOpacity] = useState(1);
 
+    const [submitted, setSubmitted] = useState(false);
+    const [remainingItems, setRemainingItems] = useState(0);
+    const [existingPictures, setExistingPictures] = useState([]);
+
+    const form_id = props.existingProject ? props.existingProject.id : 0;
+
+    useEffect(() => {
+        if(props.allowRefresh && props.existingPictures) {
+            setExistingPictures(props.existingPictures);
+        }
+    }, [props.allowRefresh, props.existingPictures]);
+
+    useEffect(() => {
+        if(props.existingProject) {
+            setProjectData({
+                title: props.existingProject.title,
+                memoir: props.existingProject.memoir,
+                author: props.existingProject.author,
+            });
+
+            setInitOpacity(0);
+            document.getElementById("addProjectContainer" + form_id).style.backgroundImage = "url(" + props.existingProject.mainPicture + ")";
+        }
+    }, [props.existingProject, form_id]);
+
     const handleClick = (n) => {
-        n ? document.getElementById("addNewProjectMainPicture").click() : document.getElementById("addNewProjectPictures").click()
+        n ? document.getElementById("addNewProjectMainPicture" + form_id).click() : document.getElementById("addNewProjectPictures" + form_id).click()
     }
 
     const handleChangeMainPicture = (e) => {
@@ -31,10 +56,10 @@ const AddProject = () => {
         setMainPicture(file);
 
         let filePath = URL.createObjectURL(e.target.files[0]);
-        document.getElementsByClassName("addProjectContainer")[0].style.backgroundImage = "url(" + filePath + ")";
+        document.getElementById("addProjectContainer" + form_id).style.backgroundImage = "url(" + filePath + ")";
 
         setTimeout(() => {
-            document.getElementsByClassName("addProject2")[0].scrollIntoView({behavior: "smooth"});
+            document.getElementById("addProject2" + form_id).scrollIntoView({behavior: "smooth"});
         }, 1000);
     }
 
@@ -63,8 +88,16 @@ const AddProject = () => {
 
         let filePath = URL.createObjectURL(e.target.files[0]);
         setTimeout(() => {
-            document.getElementsByClassName("addNewProjectPicturesDisplay")[document.getElementsByClassName("addNewProjectPicturesDisplay").length - 2].style.backgroundImage = "url(" + filePath + ")";
+            document.getElementsByClassName("addNewProjectPicturesDisplay"+form_id)[document.getElementsByClassName("addNewProjectPicturesDisplay"+form_id).length - 1].style.backgroundImage = "url(" + filePath + ")";
         }, 500);
+    }
+
+    const handleDeleteExistingPicture = (id) => {
+        deleteProjectPicture(id);
+    }
+
+    const handleDelete = () => {
+        deleteProject(props.existingProject.id, props.existingPictures.length);
     }
 
     const handleDeletePicture = (i) => {
@@ -73,20 +106,21 @@ const AddProject = () => {
     }
 
     const handleSubmit = () => {
-        uploadProject(mainPicture, projectData, pictures, userID);
+        uploadProject(setRemainingItems, props.setAllowRefresh, mainPicture, projectData, pictures, userID, (props.reload && props.reload), (props.existingPictures && props.existingPictures.length), (props.existingProject && props.existingProject.id), (props.existingProject && props.setEdit));
+        setSubmitted(true);
     }
 
     return(
-        <div className="addProjectContainer projectContainer">
+        <div id={"addProjectContainer" + form_id} className="addProjectContainer projectContainer">
 
             <input 
-                id="addNewProjectMainPicture" 
+                id={"addNewProjectMainPicture" + form_id} 
                 type="file" 
                 style={{display: 'none'}}
                 onChange={(e) => handleChangeMainPicture(e)} />
 
             <input 
-                id="addNewProjectPictures" 
+                id={"addNewProjectPictures" + form_id}
                 type="file" 
                 style={{display: 'none'}}
                 onChange={(e) => handleChangePictures(e)} />
@@ -103,7 +137,7 @@ const AddProject = () => {
                 </p>
             </div>
 
-            <div className="addProject2 addProjectContent">
+            <div id={"addProject2" + form_id} className="addProject2 addProjectContent">
 
                 <input
                 className="addProjectTitle"
@@ -125,17 +159,25 @@ const AddProject = () => {
             <div className="addProject3 addProjectContent">
 
                 <div className="addNewProjectPicturesDisplayContainer">
+                    {existingPictures && existingPictures.map((picture, i) => 
+                        <div key={i} onClick={() => handleDeleteExistingPicture(picture.id)} className={"addNewProjectPicturesDisplay addNewProjectPicturesDisplay"+form_id} style={{background: `url(${picture.url})`}}>
+                        </div>
+                    )} 
                     {pictures.map((picture, i) => 
-                        <div key={i} onClick={() => handleDeletePicture(i)} className="addNewProjectPicturesDisplay">
+                        <div key={i} onClick={() => handleDeletePicture(i)} className={"addNewProjectPicturesDisplay addNewProjectPicturesDisplay"+form_id}>
                         </div>
                     )}
-                    <div onClick={() => handleClick(false)} className="addNewProjectPicturesDisplay addNewProjectPicture" style={{display: `${pictures.length < 12 ? 'block' : 'none'}`}}></div>
+                    <div onClick={() => handleClick(false)} className="addNewProjectPicturesDisplay addNewProjectPicture" style={{display: `${((props.existingPictures ? props.existingPictures.length : 0) + pictures.length) < 12 ? 'block' : 'none'}`}}></div>
                 </div>
 
-                <button onClick={() => handleSubmit()}>Add</button>
+                {!submitted && <button onClick={() => handleSubmit()}>{props.existingProject ? "UPDATE PROJECT" : "ADD PROJECT"}</button>}
+                {submitted && <div className="submitFooter"><span>{remainingItems} item(s) remaining...</span><i className="loadingIcon" alt="loading..." /></div>}
 
             </div>
-
+            {props.existingProject && <div className="formFooter">
+                <button onClick={() => handleDelete()}>DELETE PROJECT</button>
+                <button onClick={() => props.setEdit(false)}>CANCEL EDITING</button>
+            </div>}
         </div>
     );
 }
