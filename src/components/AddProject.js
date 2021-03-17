@@ -15,6 +15,9 @@ const AddProject = (props) => {
     const [remainingItems, setRemainingItems] = useState(0);
     const [existingPictures, setExistingPictures] = useState([]);
 
+    const [errorMessage1, setErrorMessage1] = useState();
+    const [errorMessage2, setErrorMessage2] = useState();
+
     const form_id = props.existingProject ? props.existingProject.id : 0;
 
     useEffect(() => {
@@ -31,7 +34,8 @@ const AddProject = (props) => {
                 author: props.existingProject.author,
             });
 
-            setInitOpacity(0);
+            document.getElementById("addProject1" + form_id).classList.add("reload");
+
             document.getElementById("addProjectContainer" + form_id).style.backgroundImage = "url(" + props.existingProject.mainPicture + ")";
         }
     }, [props.existingProject, form_id]);
@@ -48,6 +52,7 @@ const AddProject = (props) => {
         }
 
         if(file.type !== 'image/jpeg' && file.type !== 'image/png') {
+            setErrorMessage1("Sorry, must be jpeg or png format...");
             return;
         }
 
@@ -58,12 +63,16 @@ const AddProject = (props) => {
         let filePath = URL.createObjectURL(e.target.files[0]);
         document.getElementById("addProjectContainer" + form_id).style.backgroundImage = "url(" + filePath + ")";
 
-        setTimeout(() => {
+        setTimeout(() => {            
             document.getElementById("addProject2" + form_id).scrollIntoView({behavior: "smooth"});
-        }, 1000);
+        }, 2000);
     }
 
     const handleChangeInput = (e) => {
+        setErrorMessage2();
+        document.getElementById("addProject2" + form_id).firstElementChild.classList.remove("help");
+        document.getElementById("addProject2" + form_id).lastElementChild.classList.remove("help");
+
         setProjectData({
             ...projectData,
             [e.target.name]: e.target.value,
@@ -97,6 +106,7 @@ const AddProject = (props) => {
     }
 
     const handleDelete = () => {
+        props.setEdit(false);
         deleteProject(props.existingProject.id, props.existingPictures.length);
     }
 
@@ -106,7 +116,19 @@ const AddProject = (props) => {
     }
 
     const handleSubmit = () => {
-        uploadProject(setRemainingItems, props.setAllowRefresh, mainPicture, projectData, pictures, userID, (props.reload && props.reload), (props.existingPictures && props.existingPictures.length), (props.existingProject && props.existingProject.id), (props.existingProject && props.setEdit));
+        if(!props.existingProject && mainPicture === undefined) {
+            setErrorMessage1("How'd you share a project with no picture?");
+            document.getElementById("addProject1" + form_id).scrollIntoView({behavior: "smooth"});
+            return;
+        } else if(projectData.title === undefined || projectData.memoir === undefined) {
+            setErrorMessage2("Mandatory");
+            document.getElementById("addProject2" + form_id).firstChild.classList.add("help");
+            document.getElementById("addProject2" + form_id).lastChild.classList.add("help");
+            document.getElementById("addProject2" + form_id).scrollIntoView({behavior: "smooth"});
+            return;
+        }
+
+        uploadProject(setRemainingItems, props.setAllowRefresh, mainPicture, projectData, pictures, userID, (props.reload && props.reload), ((props.existingPictures && props.existingPictures.length > 0) && props.existingPictures[props.existingPictures.length -1].order + 1), (props.existingProject && props.existingProject.id), (props.existingProject && props.setEdit));
         setSubmitted(true);
     }
 
@@ -126,15 +148,18 @@ const AddProject = (props) => {
                 onChange={(e) => handleChangePictures(e)} />
 
             <div 
+                id={"addProject1" + form_id}
                 onClick={() => handleClick(true)} 
                 className="addProject1 addProjectContent"
                 style={{opacity: `${initOpacity}`}}>
                 <h2>
                     Add a new project
                 </h2>
-                <p>
+                {errorMessage1 ? 
+                <span className="helpAlert">{errorMessage1}</span>
+                : <p>
                     Start with a main picture
-                </p>
+                </p>}
             </div>
 
             <div id={"addProject2" + form_id} className="addProject2 addProjectContent">
@@ -144,14 +169,14 @@ const AddProject = (props) => {
                 onChange={(e) => handleChangeInput(e)}
                 name="title"
                 value={projectData.title || ""}
-                placeholder="Title"
+                placeholder={errorMessage2 ? "No title?" : "Title"}
                 autoComplete="off" />
 
                 <textarea
                 onChange={(e) => handleChangeInput(e)}
                 name="memoir"
                 value={projectData.memoir || ""}
-                placeholder="Memoir"
+                placeholder={errorMessage2 ? "Every project needs a memoir. Write at least some words..." : "Memoir"}
                 autoComplete="off" />
 
             </div>
@@ -170,9 +195,9 @@ const AddProject = (props) => {
                     <div onClick={() => handleClick(false)} className="addNewProjectPicturesDisplay addNewProjectPicture" style={{display: `${((props.existingPictures ? props.existingPictures.length : 0) + pictures.length) < 12 ? 'block' : 'none'}`}}></div>
                 </div>
 
+                <div className="submitCover"></div>
                 {!submitted && <button onClick={() => handleSubmit()}>{props.existingProject ? "UPDATE PROJECT" : "ADD PROJECT"}</button>}
                 {submitted && <div className="submitFooter"><span>{remainingItems} item(s) remaining...</span><i className="loadingIcon" alt="loading..." /></div>}
-
             </div>
             {props.existingProject && <div className="formFooter">
                 <button onClick={() => handleDelete()}>DELETE PROJECT</button>

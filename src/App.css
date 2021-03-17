@@ -68,16 +68,21 @@ h3 {
     font-size: 20px;
     font-weight: 700;
 }
+h4 {
+    font-size: 20px;
+    font-weight: 500;
+}
 
 .App {
     height: 100vh;
+    width: 100%;
 }
 
 .logoContainer {
     position: absolute;
     right: 10px;
     top: 10px;
-    z-index: 1000;
+    z-index: 2000;
     height: 53px;
     width: 40px;
     background-size: contain;
@@ -93,6 +98,7 @@ h3 {
     width: 40%;
     display: flex;
     flex-direction: row-reverse;
+    transition: opacity 0.2s;
 }
 
 .menuIconsContainer {
@@ -145,16 +151,21 @@ h3 {
 }
 .searchContainer input {
     font-size: 20px;
+    margin-bottom: 10px;
 }
 .tendencyContainer {
     aspect-ratio: 2/1;
     width: 100%;
+    position: relative;
+    display: flex;
     margin-bottom: 10px;
     overflow: hidden;
 }
 .tendencyCover {
-    aspect-ratio: 2/1;
+    height: 100%;
     width: 100%;
+    z-index: 12;
+    position: absolute;
     display: flex;
     flex-direction: column-reverse;
     padding: 5px;
@@ -163,9 +174,48 @@ h3 {
 .tendencyCover:hover {
     cursor: pointer;
 }
+.tendencyCover.selected {
+    background: none;
+}
 .tendencyContainer h2 {
     white-space: nowrap;
     font-size: 30px;
+}
+.resultsContainer{
+    display: flex;
+    flex-direction: column-reverse;
+}
+.results {
+    aspect-ratio: 2/1;
+    height: 100%;
+    width: 100%;
+    position: relative;
+}
+.result {
+    aspect-ratio: 1/1;
+    height: 100%;
+    background-position: center !important;
+    background-size: cover !important;
+}
+.result:nth-child(1) {
+    z-index: 10;
+    position: absolute;
+    left: 0%;
+}
+.result:nth-child(2) {
+    z-index: 8;
+    position: absolute;
+    left: 25%;
+}
+.result:nth-child(3) {
+    z-index: 6;
+    position: absolute;
+    left: 43.75%;
+}
+.result:nth-child(4) {
+    z-index: 4;
+    position: absolute;
+    left: 50%;
 }
 
 .profileContainer.own {
@@ -174,6 +224,14 @@ h3 {
 }
 .userInfo.own {
     padding: 5px;
+}
+
+.searchResultsHeader {
+    height: 10vh;
+    width: 100%;
+    position: absolute;
+    padding: 10px;
+    z-index: 2000;
 }
 
 #carouselsContainer {
@@ -362,6 +420,7 @@ h3 {
     scroll-snap-type: x mandatory;
 }
 .addProjectContent {
+    position: relative;
     flex-shrink: 0;
     height: 100%;
     width: 100%;
@@ -377,6 +436,12 @@ h3 {
 }
 .addProject1:hover {
     cursor: pointer;
+}
+.addProject1.reload {
+    background-image: url("./img/dark_mode/refresh.png");
+}
+.addProject1.reload h2, .addProject1.reload p {
+    display: none;
 }
 .addProject2 {
     display: flex;
@@ -396,7 +461,7 @@ h3 {
     font-weight: 700;
     text-transform: uppercase;
 }
-.addProjectContent p {
+.addProjectContent p, .addProjectContent span {
     text-align: center;
 }
 .addNewProjectPicturesDisplayContainer {
@@ -449,9 +514,14 @@ h3 {
     align-items: flex-end;
     gap: 10px;
     margin-bottom: 5px;
+    z-index: 1000;
 }
-.submitFooter span {
-    color: gray;
+.submitCover {
+    height: 30px;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    right: 0;
 }
 
 .configProfilePic {
@@ -464,19 +534,22 @@ h3 {
 .configProfilePic:hover {
     cursor: pointer;
 }
+.configProfilePic.loading {
+    background-image: url("./img/dark_mode/loading.gif");
+    background-position: center !important;
+    background-size: 50% !important;
+}
 .discoverContainer input, .configContainer input, .configContainer select, .configContainer button, .userContainer input, .userContainer button, .userContainer textarea {
     margin-top: 30px;
 }
 
 .helpLink {
-    color: #f7e7ce;
     margin-top: 20px;
 }
 .helpLink:hover {
     cursor: pointer;
 }
 .helpAlert {
-    color: yellow;
     font-weight: 500;
     margin-top: 20px;
 }
@@ -512,6 +585,9 @@ h3 {
     h3 {
         font-size: 40px;
     }
+    h4 {
+        font-size: 40px;
+    }
 
     .logoContainer {
         top: 20px;
@@ -525,13 +601,15 @@ h3 {
     }
 
     .menuContainer {
-        display: none;
+        z-index: -1000;
+        opacity: 0;
         width: 100%;
         background: none;
         overflow-x: hidden;
     }
     .menuContainer.opened {
-        display: flex;
+        z-index: 1000;
+        opacity: 1;
     }
 
     .menuIconsContainer {

@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import "./App.css";
 import Carousel from "./components/Carousel";
 import Menu from "./components/Menu";
@@ -27,15 +27,31 @@ const App = () => {
     const projects = useProjects();
     const favorites = useFavorites(user.state ? user.state.id : 0);
 
+    const [search, setSearch] = useState();
+
+    //Removes the search results from main stream
+    const handleClickClose = () => {
+        let containers = document.getElementsByClassName("tendencyCover");
+        for (let i = 0; i < containers.length; i++) {
+            containers[i].classList.remove("selected");
+        }
+
+        setSearch();
+    }
+
     return(
         <div className="App">
+            {search !== undefined && <div className="searchResultsHeader"><h1><button onClick={() => handleClickClose()}>X </button>{search.title}</h1></div>}
             <Logo />
             <div id="carouselsContainer">
-                {projects && projects.map((project, i) => (
+                {(projects && search === undefined) && projects.map((project, i) => (
+                    <Carousel key={i} index={i} project={project} favorite={favorites.includes(project.id)} />
+                ))}
+                {search !== undefined && search.projects.map((project, i) => (
                     <Carousel key={i} index={i} project={project} favorite={favorites.includes(project.id)} />
                 ))}
             </div>
-            <Menu />
+            <Menu setSearch={setSearch} />
         </div>
     );
 }

@@ -5,10 +5,14 @@ import PictureConfig from "./PictureConfig";
 const Config = (props) => {
 
     const user = useUser();
-    const [configUser, setConfigUser] = useState(user.state);
+    const [configUser, setConfigUser] = useState();
     const [countries, setCountries] = useState([]);
 
     const countriesURL = "https://restcountries.eu/rest/v2/all";
+
+    useEffect(() => {
+        setConfigUser(user.state);
+    }, [user]);
 
     useEffect(() => {
         if(configUser !== undefined) {

@@ -15,7 +15,6 @@ const PanelB = (props) => {
         zoomedPic.style.display = "none";
         zoomedPic.style.opacity = 0;
         setSelectedPic(undefined);
-        
     }
 
     useEffect(() => {

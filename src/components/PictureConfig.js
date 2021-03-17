@@ -1,8 +1,9 @@
-import React from "react";
+import React, {useState} from "react";
 import {useUser, uploadPicture} from "../contexts/UserContext";
 
 const PictureConfig = (props) => {
     const user = useUser().state;
+    const [loading, setLoading] = useState(false);
 
     const handleClick = () => {
         document.getElementById("changePictureInput").click();
@@ -19,13 +20,13 @@ const PictureConfig = (props) => {
             return;
         }
 
-        uploadPicture(file, user);
+        uploadPicture(file, user, setLoading);
     }
 
     return(
         <div 
-            className="configProfilePic" 
-            style={{backgroundImage: `url(${user.profilePicture})`}}
+            className={"configProfilePic " + (loading && "loading")} 
+            style={loading ? {} : {backgroundImage: `url(${user.profilePicture})`}}
             onClick={() => handleClick()}>
             <input 
                 id="changePictureInput" 

@@ -19,6 +19,9 @@ select:-webkit-autofill:focus {
 ::placeholder {
     color: silver;
 }
+input.help::placeholder, textarea.help::placeholder {
+    color: yellow;
+}
 
 input, label, select {
     border-bottom: 4px solid gray;
@@ -84,6 +87,9 @@ textarea:focus {
     background-image: url("./img/dark_mode/config_selected.png");
 }
 
+.tendencyContainer {
+    background-color: darkgray;
+}
 .tendencyCover {
     background-color: rgba(0, 0, 0, 0.5);
 }
@@ -109,6 +115,15 @@ textarea:focus {
     background: url("./img/dark_mode/plus.png");
     background-color: rgba(0, 0, 0, 0.75);
 }
+.submitFooter span {
+    color: #f7e7ce;;
+}
+.submitCover {
+    background: linear-gradient(to top, rgba(0,0,0,0.5), rgba(0,0,0,0));
+}
+.searchResultsHeader {
+    background: linear-gradient(to bottom, rgba(0,0,0,0.5), rgba(0,0,0,0));
+}
 
 #carouselsContainer {
     background-color: black;
@@ -120,6 +135,13 @@ textarea:focus {
 
 .userInfo {
     background-color: rgba(0, 0, 0, 0.5);
+}
+
+.helpLink {
+    color: #f7e7ce;
+}
+.helpAlert {
+    color: yellow;
 }
 
 @media (max-aspect-ratio: 1/1) {

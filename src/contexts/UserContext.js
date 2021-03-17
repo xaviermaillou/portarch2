@@ -1,9 +1,11 @@
 import React, {useState, useEffect, useContext} from "react";
+import splitToKeywords from "../helpers/splitToKeywords";
 import firebase from "firebase/app";
 import "firebase/auth";
 import "firebase/firestore";
 import "firebase/storage";
 
+//NPM Package to compress images
 import imageCompression from 'browser-image-compression';
 
 export const UserContext = React.createContext();
@@ -24,7 +26,6 @@ export const UserProvider = (props) => {
             });
         } else {
           // User is signed out
-          // ...
         }
       });
     }, []);
@@ -38,15 +39,20 @@ export const useUser = () => {
     return useContext(UserContext);
 }
 
+//Updates user's data (displayName, job, city, country)
 export const updateUser = (user) => {
   firebase.firestore().collection('users_data').doc(user.id).update(user, {merge: true});
 }
 
+//Sign out
 export const signOut = () => {
   firebase.auth().signOut();
 }
 
-export const uploadPicture = (file, user) => {
+//Uploads/updates user's profile picture
+export const uploadPicture = (file, user, setLoading) => {
+  setLoading(true);
+
   const options = {
     maxSizeMB: 0.5,
     maxWidthOrHeight: 540,
@@ -60,6 +66,7 @@ export const uploadPicture = (file, user) => {
         firebase.firestore().collection('users_data').doc(user.id).update({
           profilePicture: url,
         });
+        setLoading(false);
       });
     });
   })
@@ -68,6 +75,7 @@ export const uploadPicture = (file, user) => {
   });;
 }
 
+//Gets all the projects for the main stream
 export const useProjects = () => {
   const [projects, setProjects] = useState([]);
 
@@ -85,12 +93,13 @@ export const useProjects = () => {
   return projects;
 }
 
+//Gets the secondary pictures for each project (taking its id)
 export const useProjectPictures = (id) => {
   const [pictures, setPictures] = useState([]);
 
   useEffect(() => {
     console.log("Loading projects' pictures");
-    firebase.firestore().collection('project_pictures').where('project_id', '==', id).onSnapshot((snapshot) => {
+    firebase.firestore().collection('project_pictures').where('project_id', '==', id).orderBy('order').onSnapshot((snapshot) => {
       const picture = snapshot.docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),
@@ -102,25 +111,41 @@ export const useProjectPictures = (id) => {
   return pictures;
 }
 
+//Uploads/updates a project
 export const uploadProject = (setRemainingItems, setAllowRefresh, mainPicture, data, pictures, userID, reload, i = 0, projectID, setEdit) => {
 
+  //First, creates an ID (which will be used all along the process): whether the actual project's id (if updating an existing one), or creating a random one
   let id = projectID ? projectID : Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+
+  //Sums the quantity of uploads needed: 
+  //one for all the string data (always), 
+  //one for the main picture (mainPicture !== undefined ?), 
+  //and one for each secondary picture (pictures.length)
   let remainingUploads = pictures.length + (mainPicture !== undefined ? 2 : 1);
-  if(remainingUploads === 0 && projectID !== undefined) {setEdit(false)}
+
+  //if(remainingUploads === 0 && projectID !== undefined) {setEdit(false)}
+
+  //Unables user's projects refresh when uploading 
+  //to prevent the project to appear gradually on his profile while uploading 
+  //and, on the other hand, unables the newly uploaded secondary pictures to appear in the form while uploading the project
   setAllowRefresh(false);
 
+  //Compress plugin options
   const options = {
     maxSizeMB: 1,
     maxWidthOrHeight: 1920,
     useWebWorker: true
   }
 
+  //Used for the indicator of remaining items during the upload
   setRemainingItems(remainingUploads);
 
+  //Uploads/updates the project's data document with the previously set id
   firebase.firestore().collection('projects').doc(id).set({
     title: data.title,
     memoir: data.memoir,
     author: userID,
+    keywords: splitToKeywords(data.title),
   }, {merge: true}).then(() => {
     remainingUploads--;
     setRemainingItems(remainingUploads);
@@ -128,36 +153,47 @@ export const uploadProject = (setRemainingItems, setAllowRefresh, mainPicture, d
     else if(remainingUploads === 0 && projectID === undefined) {reload(); setAllowRefresh(true)}
   });
 
+  //If there is a new main picture uploaded, uploads this picture to the storage
   if(mainPicture !== undefined) {
     let ref = firebase.storage().ref().child('project_pictures/' + id);
     imageCompression(mainPicture, options).then((compressedFile) => {
       ref.put(compressedFile).then((result) => {
         ref.getDownloadURL().then((url) => {
+          //... then takes the url to put it in the project's main picture document (creating a new one if it is a new project)
           firebase.firestore().collection('projects').doc(id).set({
             mainPicture: url,
           }, {merge: true});
           remainingUploads--;
           setRemainingItems(remainingUploads);
+          //Now if it was the last upload, 
+          //whether it just unsets the edition mode of the project's container (in case of updating an existing one)...
           if(remainingUploads === 0 && projectID !== undefined) {setEdit(false); setAllowRefresh(true)}
+          //...or reloads the <AddProject /> component to empty it (in case of new project)
           else if(remainingUploads === 0 && projectID === undefined) {reload(); setAllowRefresh(true)}
         });
       });
     });
   }
   
+  //If there are uploaded secondary pictures, uploads them to the storage
   if(pictures !== undefined) {
     pictures.forEach((picture, index) => {
       let ref = firebase.storage().ref().child('project_pictures/' + id + (index + i));
       imageCompression(picture, options).then((compressedFile) => {
         ref.put(compressedFile).then((result) => {
           ref.getDownloadURL().then((url) => {
+            //... then takes the url to put it in the 'project_pictures' collection, one document created per picture uploaded
             firebase.firestore().collection('project_pictures').doc(id + (index + i)).set({
               project_id: id,
               url: url,
+              order: index + i,
             });
             remainingUploads--;
             setRemainingItems(remainingUploads);
+            //Now if it was the last upload, 
+            //whether it just unsets the edition mode of the project's container (in case of updating an existing one)...
             if(remainingUploads === 0 && projectID !== undefined) {setEdit(false); setAllowRefresh(true)}
+            //...or reloads the <AddProject /> component to empty it (in case of new project)
             else if(remainingUploads === 0 && projectID === undefined) {reload(); setAllowRefresh(true)}
           });
         });
@@ -166,6 +202,7 @@ export const uploadProject = (setRemainingItems, setAllowRefresh, mainPicture, d
   }
 }
 
+//Deletes the project, needs the quantity of secondary pictures to delete all of them from storage (because cannot iterate through storage files)
 export const deleteProject = (id, picturesQuantity) => {
   firebase.firestore().collection('projects').doc(id).delete();
   firebase.firestore().collection('project_pictures').where('project_id', '==', id).get().then((snapshot) => {
@@ -178,17 +215,21 @@ export const deleteProject = (id, picturesQuantity) => {
       doc.ref.delete();
     });
   });
+
+  //Manual iteration to delete all the files from storage
   firebase.storage().ref().child('project_pictures/' + id).delete();
   for (let i = 0; i < picturesQuantity; i++) {
     firebase.storage().ref().child('project_pictures/' + id + i).delete();
   }
 }
 
+//Deletes one specific secondary picture of a project with its name
 export const deleteProjectPicture = (fileName) => {
   firebase.firestore().collection('project_pictures').doc(fileName).delete();
   firebase.storage().ref().child('project_pictures/' + fileName).delete();
 }
 
+//Gets the project's author user's data (taking his id)
 export const useAuthorData = (id) => {
   const [data, setData] = useState([]);
 
@@ -208,6 +249,7 @@ export const useAuthorData = (id) => {
   return data;
 }
 
+//Get the projects from a specific user (with his id)
 export const useAuthorProjects = (id) => {
   const [projects, setProjects] = useState([]);
 
@@ -228,6 +270,7 @@ export const useAuthorProjects = (id) => {
   return projects;
 }
 
+//Adds/removes favorite (taking project's id, user's id and if favorited (boolean))
 export const addFavorite = (id, userID, favorite) => {
   if(!favorite) {
     firebase.firestore().collection('favorites').doc(id+userID).set({
@@ -239,6 +282,7 @@ export const addFavorite = (id, userID, favorite) => {
   }
 }
 
+//Gets all the user's favorites (just to know which projects are favorited (their ids), it doesn't uploads the projects with all their data)
 export const useFavorites = (userID) => {
   const [favorites, setFavorites] = useState([]);
 
@@ -257,4 +301,24 @@ export const useFavorites = (userID) => {
   }, [userID]);
 
   return favorites;
+}
+
+//Searchs through projects' keywords
+export const search = (str, setSearches, searches) => {
+  if(str.length === 0) {
+    return;
+  }
+  //Creates a random id for each search resuls pack (for DOM purposes)
+  const id = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+  console.log("Search: " + str);
+  firebase.firestore().collection('projects').where('keywords', 'array-contains-any', splitToKeywords(str)).onSnapshot((snapshot) => {
+    const result = snapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+    if(result.length === 0) {
+      return;
+    }
+    setSearches(searches => [...searches, {id: id, search: str, result: result}]);
+  });
 }
