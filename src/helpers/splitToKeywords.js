@@ -1,5 +1,5 @@
 const splitToKeywords = (str) => {
-    return str.toLowerCase().replace(",", " ").replace(".", " ").replace(":", " ").replace(";", " ").replace("(", " ").replace(")", " ").replace("/", " ").replace("&", " ").split(" ").join(" ").replace(/\s+/g," ").replace(/^\s+|\s+$/,'').split(" ");
+    return str.toLowerCase().split(",").join(" ").split(".").join(" ").split(":").join(" ").split(";").join(" ").split("(").join(" ").split(")").join(" ").split("/").join(" ").split("&").join(" ").split(" ").join(" ").replace(/\s+/g," ").replace(/^\s+|\s+$/,'').split(" ");
 }
 
 export default splitToKeywords;

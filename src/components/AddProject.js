@@ -14,6 +14,7 @@ const AddProject = (props) => {
     const [submitted, setSubmitted] = useState(false);
     const [remainingItems, setRemainingItems] = useState(0);
     const [existingPictures, setExistingPictures] = useState([]);
+    const [keywords, setKeywords] = useState([]);
 
     const [errorMessage1, setErrorMessage1] = useState();
     const [errorMessage2, setErrorMessage2] = useState();
@@ -33,6 +34,8 @@ const AddProject = (props) => {
                 memoir: props.existingProject.memoir,
                 author: props.existingProject.author,
             });
+
+            setKeywords(props.existingProject.keywords.join(", "));
 
             document.getElementById("addProject1" + form_id).classList.add("reload");
 
@@ -72,6 +75,11 @@ const AddProject = (props) => {
         setErrorMessage2();
         document.getElementById("addProject2" + form_id).firstElementChild.classList.remove("help");
         document.getElementById("addProject2" + form_id).lastElementChild.classList.remove("help");
+
+        if(e.target.name === "keywords") {
+            setKeywords(e.target.value);
+            return;
+        }
 
         setProjectData({
             ...projectData,
@@ -128,7 +136,14 @@ const AddProject = (props) => {
             return;
         }
 
-        uploadProject(setRemainingItems, props.setAllowRefresh, mainPicture, projectData, pictures, userID, (props.reload && props.reload), ((props.existingPictures && props.existingPictures.length > 0) && props.existingPictures[props.existingPictures.length -1].order + 1), (props.existingProject && props.existingProject.id), (props.existingProject && props.setEdit));
+        /*const keywordsArray = keywords.split(",").join(" ");
+        keywordsArray.forEach((keyword, i) => {
+            keywordsArray[i] = keyword.replace(/\s+/g," ").replace(/^\s+|\s+$/,'').toLowerCase();
+            console.log(keywordsArray[i]);
+        });
+        setKeywords(keywordsArray);*/
+
+        uploadProject(setRemainingItems, props.setAllowRefresh, mainPicture, projectData, keywords, pictures, userID, (props.reload && props.reload), ((props.existingPictures && props.existingPictures.length > 0) && props.existingPictures[props.existingPictures.length -1].order + 1), (props.existingProject && props.existingProject.id), (props.existingProject && props.setEdit));
         setSubmitted(true);
     }
 
@@ -151,7 +166,8 @@ const AddProject = (props) => {
                 id={"addProject1" + form_id}
                 onClick={() => handleClick(true)} 
                 className="addProject1 addProjectContent"
-                style={{opacity: `${initOpacity}`}}>
+                style={{opacity: `${initOpacity}`}}
+            >
                 <h2>
                     Add a new project
                 </h2>
@@ -162,8 +178,10 @@ const AddProject = (props) => {
                 </p>}
             </div>
 
-            <div id={"addProject2" + form_id} className="addProject2 addProjectContent">
-
+            <div 
+                id={"addProject2" + form_id} 
+                className="addProject2 addProjectContent"
+            >
                 <input
                 className="addProjectTitle"
                 onChange={(e) => handleChangeInput(e)}
@@ -172,31 +190,46 @@ const AddProject = (props) => {
                 placeholder={errorMessage2 ? "No title?" : "Title"}
                 autoComplete="off" />
 
+                <input 
+                className="addKeywords"
+                onChange={(e) => handleChangeInput(e)}
+                name="keywords"
+                value={keywords || ""}
+                placeholder="Keywords (city, style, materials, etc...)" />
+
                 <textarea
                 onChange={(e) => handleChangeInput(e)}
                 name="memoir"
                 value={projectData.memoir || ""}
                 placeholder={errorMessage2 ? "Every project needs a memoir. Write at least some words..." : "Memoir"}
                 autoComplete="off" />
-
             </div>
 
             <div className="addProject3 addProjectContent">
-
+                {(existingPictures.length + pictures.length) === 0 && <p>Add some more pictures</p>}
                 <div className="addNewProjectPicturesDisplayContainer">
                     {existingPictures && existingPictures.map((picture, i) => 
-                        <div key={i} onClick={() => handleDeleteExistingPicture(picture.id)} className={"addNewProjectPicturesDisplay addNewProjectPicturesDisplay"+form_id} style={{background: `url(${picture.url})`}}>
+                        <div 
+                            key={i} 
+                            onClick={() => handleDeleteExistingPicture(picture.id)} 
+                            className={"addNewProjectPicturesDisplay addNewProjectPicturesDisplay"+form_id} 
+                            style={{background: `url(${picture.url})`}}
+                        >
                         </div>
                     )} 
                     {pictures.map((picture, i) => 
-                        <div key={i} onClick={() => handleDeletePicture(i)} className={"addNewProjectPicturesDisplay addNewProjectPicturesDisplay"+form_id}>
+                        <div 
+                            key={i} 
+                            onClick={() => handleDeletePicture(i)} 
+                            className={"addNewProjectPicturesDisplay addNewProjectPicturesDisplay"+form_id}
+                        >
                         </div>
                     )}
                     <div onClick={() => handleClick(false)} className="addNewProjectPicturesDisplay addNewProjectPicture" style={{display: `${((props.existingPictures ? props.existingPictures.length : 0) + pictures.length) < 12 ? 'block' : 'none'}`}}></div>
                 </div>
 
                 <div className="submitCover"></div>
-                {!submitted && <button onClick={() => handleSubmit()}>{props.existingProject ? "UPDATE PROJECT" : "ADD PROJECT"}</button>}
+                {!submitted && <button onClick={() => handleSubmit()}>{props.existingProject ? "UPDATE" : "ADD"}</button>}
                 {submitted && <div className="submitFooter"><span>{remainingItems} item(s) remaining...</span><i className="loadingIcon" alt="loading..." /></div>}
             </div>
             {props.existingProject && <div className="formFooter">

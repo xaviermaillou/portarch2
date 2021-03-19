@@ -98,7 +98,6 @@ export const useProjectPictures = (id) => {
   const [pictures, setPictures] = useState([]);
 
   useEffect(() => {
-    console.log("Loading projects' pictures");
     firebase.firestore().collection('project_pictures').where('project_id', '==', id).orderBy('order').onSnapshot((snapshot) => {
       const picture = snapshot.docs.map((doc) => ({
         id: doc.id,
@@ -112,7 +111,7 @@ export const useProjectPictures = (id) => {
 }
 
 //Uploads/updates a project
-export const uploadProject = (setRemainingItems, setAllowRefresh, mainPicture, data, pictures, userID, reload, i = 0, projectID, setEdit) => {
+export const uploadProject = (setRemainingItems, setAllowRefresh, mainPicture, data, keywords, pictures, userID, reload, i = 0, projectID, setEdit) => {
 
   //First, creates an ID (which will be used all along the process): whether the actual project's id (if updating an existing one), or creating a random one
   let id = projectID ? projectID : Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
@@ -124,7 +123,6 @@ export const uploadProject = (setRemainingItems, setAllowRefresh, mainPicture, d
   let remainingUploads = pictures.length + (mainPicture !== undefined ? 2 : 1);
 
   //if(remainingUploads === 0 && projectID !== undefined) {setEdit(false)}
-
   //Unables user's projects refresh when uploading 
   //to prevent the project to appear gradually on his profile while uploading 
   //and, on the other hand, unables the newly uploaded secondary pictures to appear in the form while uploading the project
@@ -140,17 +138,32 @@ export const uploadProject = (setRemainingItems, setAllowRefresh, mainPicture, d
   //Used for the indicator of remaining items during the upload
   setRemainingItems(remainingUploads);
 
+  const keywordsArray = keywords.split(",");
+  keywordsArray.forEach((keyword, i) => {
+      keywordsArray[i] = keyword.replace(/\s+/g," ").replace(/^\s+|\s+$/,'').toLowerCase();
+  });
+
   //Uploads/updates the project's data document with the previously set id
   firebase.firestore().collection('projects').doc(id).set({
+    id: id,
     title: data.title,
     memoir: data.memoir,
     author: userID,
-    keywords: splitToKeywords(data.title),
+    search_words: splitToKeywords(data.title).concat(splitToKeywords(keywords)),
+    keywords: keywordsArray,
   }, {merge: true}).then(() => {
     remainingUploads--;
     setRemainingItems(remainingUploads);
     if(remainingUploads === 0 && projectID !== undefined) {setEdit(false); setAllowRefresh(true)}
     else if(remainingUploads === 0 && projectID === undefined) {reload(); setAllowRefresh(true)}
+  });
+
+  keywordsArray.forEach((keyword) => {
+    firebase.firestore().collection('keywords').doc(keyword).set({
+      keyword: keyword,
+      projects: firebase.firestore.FieldValue.arrayUnion(id),
+      score: firebase.firestore.FieldValue.increment(1),
+    }, {merge: true});
   });
 
   //If there is a new main picture uploaded, uploads this picture to the storage
@@ -234,7 +247,6 @@ export const useAuthorData = (id) => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    console.log("Loading author's data");
     if(id === 0) {
       return;
     }
@@ -254,7 +266,6 @@ export const useAuthorProjects = (id) => {
   const [projects, setProjects] = useState([]);
 
   useEffect(() => {
-    console.log("Loading author's projects");
     if(id === 0) {
       return;
     }
@@ -291,7 +302,6 @@ export const useFavorites = (userID) => {
       return;
     }
     firebase.firestore().collection('favorites').where('author_id', '==', userID).onSnapshot((snapshot) => {
-      console.log("Loading favorites " + userID);
       const favorite = [];
       snapshot.docs.map((doc) => (
         favorite.push(doc.data().project_id)
@@ -311,7 +321,7 @@ export const search = (str, setSearches, searches) => {
   //Creates a random id for each search resuls pack (for DOM purposes)
   const id = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
   console.log("Search: " + str);
-  firebase.firestore().collection('projects').where('keywords', 'array-contains-any', splitToKeywords(str)).onSnapshot((snapshot) => {
+  firebase.firestore().collection('projects').where('search_words', 'array-contains-any', splitToKeywords(str)).onSnapshot((snapshot) => {
     const result = snapshot.docs.map((doc) => ({
       id: doc.id,
       ...doc.data(),
@@ -319,6 +329,52 @@ export const search = (str, setSearches, searches) => {
     if(result.length === 0) {
       return;
     }
-    setSearches(searches => [...searches, {id: id, search: str, result: result}]);
+    if(setSearches !== undefined && searches !== undefined) {
+      console.log("Results: " + result.length);
+      setSearches(searches => [...searches, {id: id, search: str, result: result}]);
+    } else {
+      console.log(result);
+      return result;
+    }
   });
+}
+
+export const useTendencies = () => {
+  const [tendencies, setTendencies] = useState([]);
+
+  useEffect(() => {
+    firebase.firestore().collection('keywords').orderBy('score', 'desc').limit(5).onSnapshot((snapshot) => {
+      const tendency = snapshot.docs.map((doc) => ({
+        ...doc.data(),
+      }));
+      setTendencies(tendency);
+    });
+  }, []);
+  return tendencies;
+}
+
+export const useProjectById = (id) => {
+  const [project, setProject] = useState([]);
+
+  useEffect(() => {
+    firebase.firestore().collection('projects').doc(id).onSnapshot((snapshot) => {
+      setProject(snapshot.doc.data());
+    });
+  });
+
+  return project;
+}
+
+export const useProjectsByIdsArray = (IdsArray) => {
+  const [projects, setProjects] = useState([]);
+
+  useEffect(() => {
+    firebase.firestore().collection('projects').where('id', 'array-contains-any', IdsArray).onSnapshot((snapshot) => {
+      const project = snapshot.docs.map((doc) => ({
+        ...doc.data(),
+      }));
+      setProjects(project);
+    });
+  });
+  return projects;
 }

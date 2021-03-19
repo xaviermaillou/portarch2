@@ -13,7 +13,7 @@ const Search = (props) => {
 
     const handleKeyPress = (e) => {
         if(e.key === "Enter") {
-            search(searchString, setSearches, searches);
+            search(searchString.toLowerCase(), setSearches, searches);
             setSearchString("");
         }
     }
