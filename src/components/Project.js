@@ -19,6 +19,9 @@ const Project = (props) => {
         <>
             {!edit && 
                 <div className="projectContainer" style={{background: `url(${props.project.mainPicture})`}}>
+                    <div className="submitCover"></div>
+                    <h2>{props.project.title}</h2>
+                    
                     {props.project.order !== 0 && 
                         <div 
                             onClick={() => handleClickOrder(-1)} 
@@ -35,8 +38,7 @@ const Project = (props) => {
                             <div className="arrow-down"></div>
                         </div>
                     }
-                    <h2>{props.project.title}</h2>
-                    <div className="submitCover"></div>
+
                     <button className="editButton" onClick={() => handleClickEdit()}>EDIT</button>
                 </div>
             }
