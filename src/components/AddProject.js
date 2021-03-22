@@ -143,7 +143,7 @@ const AddProject = (props) => {
         });
         setKeywords(keywordsArray);*/
 
-        uploadProject(setRemainingItems, props.setAllowRefresh, mainPicture, projectData, keywords, pictures, userID, (props.reload && props.reload), ((props.existingPictures && props.existingPictures.length > 0) && props.existingPictures[props.existingPictures.length -1].order + 1), (props.existingProject && props.existingProject.id), (props.existingProject && props.setEdit));
+        uploadProject(setRemainingItems, props.setAllowRefresh, props.order, mainPicture, projectData, keywords, pictures, userID, (props.reload && props.reload), ((props.existingPictures && props.existingPictures.length > 0) && props.existingPictures[props.existingPictures.length -1].order + 1), (props.existingProject && props.existingProject.id), (props.existingProject && props.setEdit));
         setSubmitted(true);
     }
 

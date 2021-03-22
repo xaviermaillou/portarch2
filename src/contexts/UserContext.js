@@ -111,7 +111,7 @@ export const useProjectPictures = (id) => {
 }
 
 //Uploads/updates a project
-export const uploadProject = (setRemainingItems, setAllowRefresh, mainPicture, data, keywords, pictures, userID, reload, i = 0, projectID, setEdit) => {
+export const uploadProject = (setRemainingItems, setAllowRefresh, order, mainPicture, data, keywords, pictures, userID, reload, i = 0, projectID, setEdit) => {
 
   //First, creates an ID (which will be used all along the process): whether the actual project's id (if updating an existing one), or creating a random one
   let id = projectID ? projectID : Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
@@ -149,6 +149,7 @@ export const uploadProject = (setRemainingItems, setAllowRefresh, mainPicture, d
     title: data.title,
     memoir: data.memoir,
     author: userID,
+    order: order,
     search_words: splitToKeywords(data.title).concat(splitToKeywords(keywords)),
     keywords: keywordsArray,
   }, {merge: true}).then(() => {
@@ -269,7 +270,7 @@ export const useAuthorProjects = (id) => {
     if(id === 0) {
       return;
     }
-    firebase.firestore().collection('projects').where('author', '==', id).onSnapshot((snapshot) => {
+    firebase.firestore().collection('projects').where('author', '==', id).orderBy('order').onSnapshot((snapshot) => {
       const project = snapshot.docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),
@@ -279,6 +280,25 @@ export const useAuthorProjects = (id) => {
   }, [id]);
 
   return projects;
+}
+
+//Ups the project's order
+export const changeProjectOrder = (user, order, n) => {
+  firebase.firestore().collection('projects').where('author', '==', user).where('order', '==', order).limit(1).get().then((snapshot) => {
+    snapshot.docs.forEach((doc) => {
+      console.log(doc.id);
+      firebase.firestore().collection('projects').doc(doc.id).set({
+        order: firebase.firestore.FieldValue.increment(n),
+      }, {merge: true});
+    });
+  });
+  firebase.firestore().collection('projects').where('author', '==', user).where('order', '==', order+n).limit(1).get().then((snapshot) => {
+    snapshot.docs.forEach((doc) => {
+      firebase.firestore().collection('projects').doc(doc.id).set({
+        order: firebase.firestore.FieldValue.increment(-n),
+      }, {merge: true});
+    });
+  });
 }
 
 //Adds/removes favorite (taking project's id, user's id and if favorited (boolean))

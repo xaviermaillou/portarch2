@@ -7,6 +7,16 @@ const Carousel = (props) => {
 
     //noAuthor prop is true when it is a portfolio's carousel, which means there is no author at the end
 
+    let id = undefined;
+
+    if(!props.noAuthor && props.isSearchResult) {
+        id = "carousel_" + props.index + "_result";
+    } else if(!props.noAuthor) {
+        id = "carousel_" + props.index;
+    } else {
+        id = undefined;
+    }
+
     //Entire carousel's opacity
     const [opacity, setOpacity] = useState(1);
 
@@ -23,8 +33,11 @@ const Carousel = (props) => {
                 setOpacity(1);
             }
             //Also, a scroll event listener is added, which gets the distance between the carousel and the top of the screen
-            document.getElementById('carouselsContainer').addEventListener('scroll', function() {
-                const scrollPosition = document.getElementById("carousel_" + props.index).getBoundingClientRect().top;
+            document.getElementById(props.isSearchResult ? 'searchResultsContainer' : 'carouselsContainer').addEventListener('scroll', function() {
+                if(document.getElementById(id) === null) {
+                    return;
+                }
+                const scrollPosition = document.getElementById(id).getBoundingClientRect().top;
                 //If the carousel's top edge's distance with top of the screen is between 0 and a third of the display height,
                 //opacity is set to 1, otherwise 0.25
                 if(scrollPosition >= 0 && scrollPosition <= (window.innerHeight / 3)) {
@@ -33,18 +46,23 @@ const Carousel = (props) => {
                     setOpacity(0.25);
                 }
             });
-            
         }
         //The ghost div is only needed if landscape display, and if the carousel is inside a portfolio (otherwise the author section at the end plays the same role as the ghost div)
         if((window.innerHeight / window.innerWidth) <= 1 && props.noAuthor) {
             setGhostDiv(true);
         }
-    }, [props.index, props.noAuthor]);
+    }, [props.index, props.noAuthor, id, props.isSearchResult, props.isSearchSet]);
+
+    useEffect(() => {
+        return () => {
+            console.log("cleaned up");
+        };
+    }, [props.isSearchSet]);
 
     return(
-        <div id={!props.noAuthor ? "carousel_" + props.index : undefined} className="carouselContainer" style={{opacity: `${opacity}`}}>
+        <div id={id} className="carouselContainer" style={{opacity: `${opacity}`}}>
             <PanelA picture={props.project.mainPicture} title ={props.project.title} id={props.project.id} favorite={props.favorite} />
-            <PanelB id={props.project.id} memoir={props.project.memoir} ownProject={props.noAuthor} />
+            <PanelB id={props.project.id} memoir={props.project.memoir} ownProject={props.noAuthor} resultProject={props.isSearchResult} />
             {!props.noAuthor && <Portfolio author={props.project.author} />}
             {ghostDiv && <div className="ghostDiv" style={{width: `${window.innerWidth - window.innerHeight}px`}}></div>}
         </div>

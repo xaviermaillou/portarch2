@@ -18,14 +18,13 @@ var firebaseConfig = {
     messagingSenderId: "653239294431",
     appId: "1:653239294431:web:aacaceb68c3aba85c00c6a"
 };
-// Initialize Firebase
+// Initializes Firebase
 firebase.initializeApp(firebaseConfig);
 
 const App = () => {
 
     const user = useUser();
     const projects = useProjects();
-    console.log(projects);
     const favorites = useFavorites(user.state ? user.state.id : 0);
 
     const [search, setSearch] = useState();
@@ -36,20 +35,36 @@ const App = () => {
         for (let i = 0; i < containers.length; i++) {
             containers[i].classList.remove("selected");
         }
-
         setSearch();
     }
 
     return(
         <div className="App">
-            {search !== undefined && <div className="searchResultsHeader"><h1><button onClick={() => handleClickClose()}>X </button>{search.title}</h1></div>}
+            {search !== undefined && <div className="searchResultsHeader"><h1><button onClick={() => handleClickClose()}>x </button>{search.title}</h1></div>}
             <Logo />
+            {/*Default stream*/}
             <div id="carouselsContainer">
-                {(projects && search === undefined) && projects.map((project, i) => (
-                    <Carousel key={i} index={i} project={project} favorite={favorites.includes(project.id)} />
+                {(projects) && projects.map((project, i) => (
+                    <Carousel 
+                        key={i} 
+                        index={i} 
+                        project={project} 
+                        favorite={favorites.includes(project.id)} 
+                        isSearchResult={false} 
+                    />
                 ))}
+            </div>
+            {/*Results stream*/}
+            <div id="searchResultsContainer" className={search !== undefined ? "open" : ""}>
                 {search !== undefined && search.projects.map((project, i) => (
-                    <Carousel key={i} index={i} project={project} favorite={favorites.includes(project.id)} />
+                    <Carousel 
+                        key={i} 
+                        index={i} 
+                        project={project} 
+                        favorite={favorites.includes(project.id)} 
+                        isSearchResult={true} 
+                        isSearchSet={search} 
+                    />
                 ))}
             </div>
             <Menu setSearch={setSearch} />

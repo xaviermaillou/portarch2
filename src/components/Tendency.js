@@ -11,6 +11,7 @@ const Tendency = (props) => {
             containers[i].classList.remove("selected");
         }
         document.getElementById("tendencyCover" + props.index).classList.add("selected");
+        document.getElementsByClassName("logoContainer")[0].click();
     }
 
     return(
@@ -22,6 +23,7 @@ const Tendency = (props) => {
             </div>
             <div id={"tendencyCover" + props.index} className="tendencyCover">
                 <h2>{props.title}</h2>
+                <p>{props.result.length} result(s)</p>
             </div>
         </div>
     );

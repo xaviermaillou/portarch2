@@ -65,9 +65,21 @@ const User = (props) => {
             {/* If user is connected */}
             {user.state !== undefined && <Profile own={true} author={user.state} />}
             {user.state !== undefined && myProjects.map((project, i) => (
-                <Project key={i} project={project} />
+                <Project 
+                    key={i} 
+                    project={project} 
+                    maxOrder={myProjects.length} 
+                    user={user.state.id}
+                />
             ))}
-            {(user.state !== undefined && enabledForm) && <AddProject reload={() => reloadForm()} allowRefresh={allowRefresh} setAllowRefresh={setAllowRefresh} />}
+            {(user.state !== undefined && enabledForm) && 
+                <AddProject 
+                    reload={() => reloadForm()} 
+                    allowRefresh={allowRefresh} 
+                    setAllowRefresh={setAllowRefresh}
+                    order={myProjects !== undefined ? myProjects.length : 0}
+                />
+            }
             {user.state !== undefined && <p className="helpLink" onClick={() => handleClickLogOut()}>Sign out</p>}
         </div>
     );

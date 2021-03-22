@@ -90,6 +90,9 @@ textarea:focus {
 .tendencyContainer {
     background-color: darkgray;
 }
+.tendencyContainer p {
+    color: silver;
+}
 .tendencyCover {
     background-color: rgba(0, 0, 0, 0.5);
 }
@@ -128,8 +131,17 @@ textarea:focus {
 #carouselsContainer {
     background-color: black;
 }
+#searchResultsContainer {
+    background: none;
+}
+#searchResultsContainer.open {
+    background-color: black;
+}
 
 .panelBContainer {
+    background-color: black;
+}
+.zoomedPic {
     background-color: black;
 }
 

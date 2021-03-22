@@ -1,12 +1,12 @@
 import React, {useState, useEffect} from "react";
 import Search from "./Search";
-import Tendency from "./Tendency";
+//import Tendency from "./Tendency";
 
 import {useTendencies} from "../contexts/UserContext";
 
 const Discover = (props) => {
 
-    const tendencies = useTendencies();
+    //const tendencies = useTendencies();
 
     return(
         <div className="discoverContainer">
