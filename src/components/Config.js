@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react";
-import {useUser, updateUser} from "../contexts/UserContext";
+import {useUser, updateUser, signOut} from "../contexts/UserContext";
 import PictureConfig from "./PictureConfig";
 
 const Config = (props) => {
@@ -49,6 +49,11 @@ const Config = (props) => {
         updateUser(configUser);
     }
 
+    const handleClickLogOut = () => {
+        signOut();
+        window.location.reload(false);
+    }
+
     return(
         <div className="configContainer">
             <h1>Settings</h1>
@@ -88,6 +93,11 @@ const Config = (props) => {
                 </select>
             }
             <button onClick={() => handleClick()}>Save</button>
+            {configUser && 
+                <p className="helpLink" onClick={() => handleClickLogOut()}>
+                    Sign out
+                </p>
+            }
         </div>
     );
 }

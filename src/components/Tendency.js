@@ -11,7 +11,9 @@ const Tendency = (props) => {
             containers[i].classList.remove("selected");
         }
         document.getElementById("tendencyCover" + props.index).classList.add("selected");
-        document.getElementsByClassName("logoContainer")[0].click();
+        if((window.innerHeight / window.innerWidth) >= 1) {
+            document.getElementsByClassName("logoContainer")[0].click();
+        }
     }
 
     return(

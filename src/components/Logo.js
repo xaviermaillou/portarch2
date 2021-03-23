@@ -10,6 +10,9 @@ const Logo = () => {
             document.getElementsByClassName("menuContainer ")[0].classList.remove('opened')
             : document.getElementsByClassName("menuContainer ")[0].classList.add('opened');
             setMenuOpened(!menuOpened);
+        } else {
+            window.location.reload();
+            return false;
         }
     }
 

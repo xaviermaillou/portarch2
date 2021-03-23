@@ -3,7 +3,7 @@ import Profile from "./Profile";
 import Project from "./Project";
 import Log from "./Log";
 import AddProject from "./AddProject";
-import {useUser, signOut, useAuthorProjects} from "../contexts/UserContext";
+import {useUser, useAuthorProjects} from "../contexts/UserContext";
 
 const User = (props) => {
 
@@ -42,11 +42,6 @@ const User = (props) => {
         !alreadyMember ? setLinkBelow("Not a member yet?") : setLinkBelow("Already member?")
     }
 
-    const handleClickLogOut = () => {
-        signOut();
-        window.location.reload(false);
-    }
-
     //Reloads the <AddProject /> component when new project is fully uploaded (in order to empty the component and reload it new)
     const reloadForm = () => {
         console.log("reloaded");
@@ -80,7 +75,6 @@ const User = (props) => {
                     order={myProjects !== undefined ? myProjects.length : 0}
                 />
             }
-            {user.state !== undefined && <p className="helpLink" onClick={() => handleClickLogOut()}>Sign out</p>}
         </div>
     );
 }

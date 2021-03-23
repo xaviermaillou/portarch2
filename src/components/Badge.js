@@ -8,10 +8,10 @@ const Badge = (props) => {
     return(
         <div className="badge">
             <h2>{props.title}</h2>
-            <div 
+            {user !== undefined && <div 
                 onClick={() => addFavorite(props.id, user.id, props.favorite)} 
                 className={props.favorite ? "addFavorite selected" : "addFavorite"}
-            ></div>
+            ></div>}
         </div>
     );
 }

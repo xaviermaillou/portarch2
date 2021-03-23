@@ -45,7 +45,7 @@ const App = () => {
             {search !== undefined && <div className="searchResultsHeader"><h1><button onClick={() => handleClickClose()}>x </button>{search.title}</h1></div>}
             <Logo />
             {/*Default stream*/}
-            <div id="carouselsContainer" className={dark ? "darkened" : ""}>
+            <div id="carouselsContainer" className={(search !== undefined ? "closed" : "") + " " + (dark ? "darkened" : "")}>
                 {(projects) && projects.map((project, i) => (
                     <Carousel 
                         key={i} 
@@ -57,7 +57,7 @@ const App = () => {
                 ))}
             </div>
             {/*Results stream*/}
-            <div id="searchResultsContainer" className={search !== undefined ? "open" : ""}>
+            <div id="searchResultsContainer" className={(search !== undefined ? "open" : "") + " " + (dark ? "darkened" : "")}>
                 {search !== undefined && search.projects.map((project, i) => (
                     <Carousel 
                         key={i} 
