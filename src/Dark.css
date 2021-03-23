@@ -41,6 +41,10 @@ textarea:focus {
     border-left: 4px solid #f7e7ce;
 }
 
+.App {
+    background-color: black;
+}
+
 .logoContainer {
     background-image: url("./img/dark_mode/Logo.png");
 }

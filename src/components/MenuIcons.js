@@ -17,7 +17,7 @@ const MenuIcons = (props) => {
     }
 
     return(
-        <div className="menuIconsContainer">
+        <div className="menuIconsContainer" onMouseEnter={() => props.onMouseEnter()} onMouseLeave={() => props.onMouseLeave()}>
             <div onClick={() => handleClick(0)} id="icon_0" className="menuIcon"></div>
             <div onClick={() => handleClick(1)} id="icon_1" className="menuIcon"></div>
             <div onClick={() => handleClick(2)} id="icon_2" className="menuIcon"></div>

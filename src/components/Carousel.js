@@ -25,9 +25,9 @@ const Carousel = (props) => {
 
     useEffect(() => {
         //If portrait display and is not a portfolio's carousel (has an author at the end)
-        //opacity is set to 0.25
+        //opacity is set to 0.1
         if((window.innerHeight / window.innerWidth) >= 1 && !props.noAuthor) {
-            setOpacity(0.25);
+            setOpacity(0.1);
             //Except if it is the first carousel
             if(props.index === 0) {
                 setOpacity(1);
@@ -39,11 +39,11 @@ const Carousel = (props) => {
                 }
                 const scrollPosition = document.getElementById(id).getBoundingClientRect().top;
                 //If the carousel's top edge's distance with top of the screen is between 0 and a third of the display height,
-                //opacity is set to 1, otherwise 0.25
+                //opacity is set to 1, otherwise 0.1
                 if(scrollPosition >= 0 && scrollPosition <= (window.innerHeight / 3)) {
                     setOpacity(1);
                 } else {
-                    setOpacity(0.25);
+                    setOpacity(0.1);
                 }
             });
         }
@@ -61,6 +61,7 @@ const Carousel = (props) => {
 
     return(
         <div id={id} className="carouselContainer" style={{opacity: `${opacity}`}}>
+            {!props.noAuthor && <div className="securityDiv"></div>}
             <PanelA picture={props.project.mainPicture} title ={props.project.title} id={props.project.id} favorite={props.favorite} />
             <PanelB id={props.project.id} memoir={props.project.memoir} ownProject={props.noAuthor} resultProject={props.isSearchResult} />
             {!props.noAuthor && <Portfolio author={props.project.author} />}

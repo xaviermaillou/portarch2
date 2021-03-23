@@ -29,6 +29,8 @@ const App = () => {
 
     const [search, setSearch] = useState();
 
+    const [dark, setDark] = useState(false);
+
     //Removes the search results from main stream
     const handleClickClose = () => {
         let containers = document.getElementsByClassName("tendencyCover");
@@ -43,7 +45,7 @@ const App = () => {
             {search !== undefined && <div className="searchResultsHeader"><h1><button onClick={() => handleClickClose()}>x </button>{search.title}</h1></div>}
             <Logo />
             {/*Default stream*/}
-            <div id="carouselsContainer">
+            <div id="carouselsContainer" className={dark ? "darkened" : ""}>
                 {(projects) && projects.map((project, i) => (
                     <Carousel 
                         key={i} 
@@ -67,7 +69,7 @@ const App = () => {
                     />
                 ))}
             </div>
-            <Menu setSearch={setSearch} />
+            <Menu setSearch={setSearch} setDark={setDark} />
         </div>
     );
 }
