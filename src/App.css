@@ -165,7 +165,7 @@ h4 {
     top: 0;
     right: 0;
     height: 100vh;
-    width: 40%;
+    width: 30%;
     z-index: 4000;
     display: flex;
     flex-direction: row-reverse;
@@ -203,16 +203,18 @@ h4 {
 }
 
 .menuContent {
-    opacity: 0.1;
+    filter: brightness(100%);
+    opacity: 0;
     height: 100%;
-    width: 60%;
+    width: 100%;
     padding-top: 40px;
     padding-bottom: 20px;
     overflow-x: hidden;
     overflow-y: scroll;
-    transition: opacity 0.2s;
+    transition: opacity 0.2s, filter 0.2s;
 }
 .menuContent.focused {
+    filter: brightness(100%);
     opacity: 1;
 }
 
@@ -338,6 +340,8 @@ h4 {
     overflow-x: hidden;
     overflow-y: scroll;
     transition: opacity 0.2s;
+    -webkit-mask: linear-gradient(to left, rgba(255,255,255,0), rgba(255,255,255,0.5), rgba(255,255,255,1), rgba(255,255,255,1), rgba(255,255,255,1), rgba(255,255,255,1));
+    mask: linear-gradient(to left, rgba(255,255,255,0), rgba(255,255,255,0.5), rgba(255,255,255,1), rgba(255,255,255,1), rgba(255,255,255,1), rgba(255,255,255,1));
 }
 #carouselsContainer.closed, #carouselsContainer.closed.darkened {
     opacity: 0;
@@ -356,6 +360,8 @@ h4 {
     overflow-x: hidden;
     overflow-y: scroll;
     transition: opacity 0.2s;
+    -webkit-mask: linear-gradient(to left, rgba(255,255,255,0), rgba(255,255,255,0.5), rgba(255,255,255,1), rgba(255,255,255,1), rgba(255,255,255,1), rgba(255,255,255,1));
+    mask: linear-gradient(to left, rgba(255,255,255,0), rgba(255,255,255,0.5), rgba(255,255,255,1), rgba(255,255,255,1), rgba(255,255,255,1), rgba(255,255,255,1));
 }
 #searchResultsContainer.open {
     z-index: 400;
@@ -406,19 +412,87 @@ h4 {
     background: url("./img/dark_mode/favorite.png");
     background-position: center !important;
     background-size: contain !important;
-    opacity: 0.5;
+    opacity: 0.25;
     margin-top: 40px;
     position: absolute;
-    left: 20px;
+    right: 20px;
     bottom: 20px;
+    transition: transform 0.2s;
 }
 .addFavorite:hover {
     cursor: pointer;
+    transform: scale(1.05);
 }
 .addFavorite.selected {
     background: url("./img/dark_mode/favorite_selected.png");
     opacity: 1;
 }
+.addCollectionIcon {
+    height: 100px;
+    width: 100px;
+    background: url("./img/dark_mode/plus.png");
+    background-position: center !important;
+    background-size: contain !important;
+    opacity: 1;
+    margin-top: 40px;
+    position: absolute;
+    left: 20px;
+    bottom: 20px; 
+    transition: transform 0.2s;
+}
+.addCollectionIcon:hover {
+    cursor: pointer;
+    transform: scale(1.1);
+}
+.addCollectionIcon.focus {
+    transform: rotate(45deg);
+}.addCollectionIcon.selected {
+    background: url("./img/dark_mode/plus_selected.png");
+}
+.addCollectionContainer {
+    height: 100px;
+    width: 70%;
+    position: absolute;
+    left: 140px;
+    bottom: 20px;
+    display: flex;
+    overflow-x: scroll;
+    -webkit-mask: linear-gradient(to left, rgba(255,255,255,0), rgba(255,255,255,1), rgba(255,255,255,1), rgba(255,255,255,1));
+    mask: linear-gradient(to left, rgba(255,255,255,0), rgba(255,255,255,1), rgba(255,255,255,1), rgba(255,255,255,1));
+}
+.collectionSelect {
+    aspect-ratio: 2/1;
+    height: 100%;
+    padding: 5px;
+    background-color: rgba(0,0,0,0.25);
+    margin-right: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    flex-shrink: 0;
+}
+.collectionSelect h2 {
+    font-size: 20px;
+}
+.collectionSelect button {
+    position: absolute;
+    bottom: 6px;
+    right: 5px;
+}
+.collectionSelect.added {
+    background-color: rgba(0,0,0,0.75);
+}
+.collectionSelect.added h2 {
+    opacity: 1;
+    color: #f7e7ce;
+}
+.collectionSelect:last-child {
+    aspect-ratio: 1/1;
+    height: 100px;
+    background: none;
+}
+
 .panelBContainer {
     position: relative;
     display: flex;
@@ -741,10 +815,14 @@ h4 {
     #carouselsContainer {
         padding-top: 25vh;
         padding-bottom: 25vh;
+        -webkit-mask: none;
+        mask: none;
     }
     #searchResultsContainer {
         padding-top: 25vh;
         padding-bottom: 25vh;
+        -webkit-mask: none;
+        mask: none;
     }
 
     .menuContainer {
@@ -753,6 +831,7 @@ h4 {
         width: 100%;
         background: none;
         overflow-x: hidden;
+        filter: brightness(100%);
     }
     .menuContainer.opened {
         z-index: 1000;
@@ -805,6 +884,10 @@ h4 {
 
     .carouselContainer {
         height: 100vw;
+    }
+
+    .collectionSelect h2 {
+        font-size: 30px;
     }
 
     .profileContainer {

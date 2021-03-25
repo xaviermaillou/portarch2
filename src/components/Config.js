@@ -49,6 +49,10 @@ const Config = (props) => {
         updateUser(configUser);
     }
 
+    const handleClickSign = () => {
+        document.getElementById("icon_1").click();
+    }
+
     const handleClickLogOut = () => {
         signOut();
         window.location.reload(false);
@@ -57,6 +61,12 @@ const Config = (props) => {
     return(
         <div className="configContainer">
             <h1>Settings</h1>
+            {!configUser &&
+                <div>
+                    <p className="helpAlert">Not signed in</p>
+                    <button onClick={() => handleClickSign()}>Sign in / sign up</button>
+                </div>
+            }
             {configUser &&
                 <PictureConfig />
             }
@@ -92,7 +102,11 @@ const Config = (props) => {
                     ))}
                 </select>
             }
-            <button onClick={() => handleClick()}>Save</button>
+            {configUser && 
+                <button onClick={() => handleClick()}>
+                    Save
+                </button>
+            }
             {configUser && 
                 <p className="helpLink" onClick={() => handleClickLogOut()}>
                     Sign out

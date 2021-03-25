@@ -7,16 +7,16 @@ import Config from "./Config";
 const Menu = (props) => {
 
     const [content, setContent] = useState(0);
-    const [focused, setFocused] = useState(true);
+    const [focused, setFocused] = useState(false);
 
-    let timeout;
+    //let timeout;
 
     const handleMouseEnter = () => {
         if((window.innerHeight / window.innerWidth) >= 1) {
             return;
         }
         //window.clearTimeout(timeout);
-        //setFocused(true);
+        setFocused(true);
         props.setDark(true);
     }
     const handleMouseLeave = () => {
@@ -24,7 +24,7 @@ const Menu = (props) => {
             return;
         }
         //timeout = setTimeout(() => {
-            //setFocused(false);
+            setFocused(false);
         //}, 2000);
         props.setDark(false);
     }

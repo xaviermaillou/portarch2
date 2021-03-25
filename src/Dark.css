@@ -66,6 +66,7 @@ textarea:focus {
         hsla(0, 0%, 0%, 0.002) 99.1%,
         hsla(0, 0%, 0%, 0) 100%
     );
+    background: none;
 }
 
 .menuIconsContainer {

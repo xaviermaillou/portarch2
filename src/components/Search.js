@@ -48,6 +48,7 @@ const Search = (props) => {
                         title={search.search} 
                         result={search.result} 
                         setSearch={props.setSearch} 
+                        collection={[]}
                     />
                 ))}
             </div>

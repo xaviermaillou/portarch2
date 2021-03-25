@@ -62,10 +62,30 @@ const Carousel = (props) => {
     return(
         <div id={id} className="carouselContainer" style={{opacity: `${opacity}`}}>
             {!props.noAuthor && <div className="securityDiv"></div>}
-            <PanelA picture={props.project.mainPicture} title ={props.project.title} id={props.project.id} favorite={props.favorite} />
-            <PanelB id={props.project.id} memoir={props.project.memoir} ownProject={props.noAuthor} resultProject={props.isSearchResult} />
-            {!props.noAuthor && <Portfolio author={props.project.author} />}
-            {ghostDiv && <div className="ghostDiv" style={{width: `${window.innerWidth - window.innerHeight}px`}}></div>}
+            <PanelA 
+                picture={props.project.mainPicture} 
+                title ={props.project.title} 
+                id={props.project.id} 
+                favorite={props.favorite} 
+            />
+            <PanelB 
+                id={props.project.id} 
+                memoir={props.project.memoir} 
+                ownProject={props.noAuthor} 
+                resultProject={props.isSearchResult} 
+            />
+            {!props.noAuthor && 
+                <Portfolio 
+                    author={props.project.author} 
+                />
+            }
+
+            {ghostDiv && 
+                <div 
+                    className="ghostDiv" 
+                    style={{width: `${window.innerWidth - window.innerHeight}px`}}
+                ></div>
+            }
         </div>
     );
 }

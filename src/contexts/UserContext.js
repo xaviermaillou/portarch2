@@ -30,7 +30,23 @@ export const UserProvider = (props) => {
       });
     }, []);
 
-    return <UserContext.Provider value={{state: user}}>
+    const [collections, setCollections] = useState([]);
+
+    useEffect(() => {
+      if(user === undefined) {
+        return;
+      }
+    
+      firebase.firestore().collection('collections').where('author_id', '==', user.id).onSnapshot((snapshot) => {
+        const collection = [];
+        snapshot.docs.map((doc) => (
+          collection.push(doc.data())
+        ));
+        setCollections(collection);
+      });
+    }, [user]);
+
+    return <UserContext.Provider value={{state: user, collections: collections}}>
                 {props.children}
             </UserContext.Provider>
 }
@@ -333,6 +349,27 @@ export const useFavorites = (userID) => {
   return favorites;
 }
 
+//Adds/removes to a collection (taking project's id, user's id, collection's name and if added (boolean))
+export const addCollection = (id, userID, collectionName, added = false) => {
+  if(!added) {
+    firebase.firestore().collection('collections').doc(collectionName.split(" ").join("-")+"_"+userID).set({
+      project_id: firebase.firestore.FieldValue.arrayUnion(id),
+      author_id: userID,
+      name: collectionName,
+    }, {merge: true});
+  } else if(added) {
+    firebase.firestore().collection('collections').doc(collectionName.split(" ").join("-")+"_"+userID).set({
+      project_id: firebase.firestore.FieldValue.arrayRemove(id),
+      author_id: userID,
+      name: collectionName,
+    }, {merge: true});
+  }
+}
+
+export const useCollections = () => {
+  return useContext(UserContext).collections;
+}
+
 //Searchs through projects' keywords
 export const search = (str, setSearches, searches) => {
   if(str.length === 0) {
@@ -387,14 +424,16 @@ export const useProjectById = (id) => {
 
 export const useProjectsByIdsArray = (IdsArray) => {
   const [projects, setProjects] = useState([]);
-
   useEffect(() => {
-    firebase.firestore().collection('projects').where('id', 'array-contains-any', IdsArray).onSnapshot((snapshot) => {
+    if(IdsArray.length === 0) {
+      return;
+    }
+    firebase.firestore().collection('projects').where('id', 'in', IdsArray).onSnapshot((snapshot) => {
       const project = snapshot.docs.map((doc) => ({
         ...doc.data(),
       }));
-      setProjects(project);
+      setProjects(projects => [...projects, project]);
     });
-  });
-  return projects;
+  }, [IdsArray]);
+  return projects[0];
 }

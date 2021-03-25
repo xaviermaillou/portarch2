@@ -27,6 +27,7 @@ const App = () => {
     const projects = useProjects();
     const favorites = useFavorites(user.state ? user.state.id : 0);
 
+
     const [search, setSearch] = useState();
 
     const [dark, setDark] = useState(false);

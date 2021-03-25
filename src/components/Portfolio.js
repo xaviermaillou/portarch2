@@ -15,7 +15,13 @@ const Portfolio = (props) => {
         <div className="panelContainer portfolioContainer">
             <Profile author={authorData[0]} />
             {projects.map((project, i) => (
-                <Carousel key={i} index={i} project={project} noAuthor={true}  favorite={favorites.includes(project.id)} />
+                <Carousel 
+                    key={i} 
+                    index={i} 
+                    project={project} 
+                    noAuthor={true}  
+                    favorite={favorites.includes(project.id)} 
+                />
             ))}
         </div>
     );
