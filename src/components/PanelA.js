@@ -10,7 +10,7 @@ const PanelA = (props) => {
             || e.target.classList.contains("addCollectionIcon") 
             || e.target.classList.contains("addCollectionContainer")
             || e.target.classList.contains("collectionSelect")
-            || e.target.tagName === "H2"
+            || (e.target.tagName === "H2" && e.target.parentElement.classList.contains("collectionSelect"))
             || e.target.tagName === "INPUT"
             || e.target.tagName === "BUTTON"
         ) {
