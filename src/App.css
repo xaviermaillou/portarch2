@@ -517,18 +517,22 @@ h4 {
 .detailPic {
     aspect-ratio: 1/1;
     height: 25%;
+    filter: brightness(50%);
     flex-shrink: 0;
     background-position: center !important;
     background-size: cover !important;
+    transition: filter 0.2s;
 }
 .detailPic:hover {
     cursor: pointer;
+    filter: brightness(100%);
 }
 .zoomedPic {
     aspect-ratio: 1/1;
     position: absolute;
     height: 100%;
     display: none;
+    z-index: 5000;
     background-position: center !important;
     background-size: cover !important;
     opacity: 0;
