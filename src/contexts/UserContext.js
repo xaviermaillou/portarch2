@@ -97,7 +97,7 @@ export const useProjects = () => {
 
   useEffect(() => {
     console.log("Loading projects");
-    firebase.firestore().collection('projects').onSnapshot((snapshot) => {
+    firebase.firestore().collection('projects').orderBy('id', 'desc').onSnapshot((snapshot) => {
       const project = snapshot.docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),
@@ -127,7 +127,7 @@ export const useProjectPictures = (id) => {
 }
 
 //Uploads/updates a project
-export const uploadProject = (setRemainingItems, setAllowRefresh, order, mainPicture, data, keywords, pictures, userID, reload, i = 0, projectID, setEdit) => {
+export const uploadProject = (setRemainingItems, setAllowRefresh, order, mainPicture, data, keywords, score, pictures, userID, reload, i = 0, projectID, setEdit) => {
 
   //First, creates an ID (which will be used all along the process): whether the actual project's id (if updating an existing one), or creating a random one
   let id = projectID ? projectID : Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
@@ -158,7 +158,6 @@ export const uploadProject = (setRemainingItems, setAllowRefresh, order, mainPic
   keywordsArray.forEach((keyword, i) => {
       keywordsArray[i] = keyword.replace(/\s+/g," ").replace(/^\s+|\s+$/,'').toLowerCase();
   });
-
   //Uploads/updates the project's data document with the previously set id
   firebase.firestore().collection('projects').doc(id).set({
     id: id,
@@ -168,6 +167,7 @@ export const uploadProject = (setRemainingItems, setAllowRefresh, order, mainPic
     order: order,
     search_words: splitToKeywords(data.title).concat(splitToKeywords(keywords)),
     keywords: keywordsArray,
+    score: score,
   }, {merge: true}).then(() => {
     remainingUploads--;
     setRemainingItems(remainingUploads);
@@ -320,11 +320,17 @@ export const changeProjectOrder = (user, order, n) => {
 //Adds/removes favorite (taking project's id, user's id and if favorited (boolean))
 export const addFavorite = (id, userID, favorite) => {
   if(!favorite) {
+    firebase.firestore().collection('projects').doc(id).set({
+      score: firebase.firestore.FieldValue.increment(1),
+    }, {merge: true});
     firebase.firestore().collection('favorites').doc(id+userID).set({
       project_id: id,
       author_id: userID,
     });
   } else if(favorite) {
+    firebase.firestore().collection('projects').doc(id).set({
+      score: firebase.firestore.FieldValue.increment(-1),
+    }, {merge: true});
     firebase.firestore().collection('favorites').doc(id+userID).delete();
   }
 }

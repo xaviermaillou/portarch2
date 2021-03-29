@@ -49,6 +49,7 @@ const Project = (props) => {
                     setEdit={setEdit} allowRefresh={allowRefresh} 
                     setAllowRefresh={setAllowRefresh} 
                     order={props.project.order}
+                    setFocusLocked={props.setFocusLocked}
                 />
             }
         </>

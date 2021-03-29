@@ -86,7 +86,6 @@ h4 {
     display: flex;
     justify-content: center;
     padding: 5px;
-    transition: background-color 0.2s;
 }
 .arrowContainer:hover {
     cursor: pointer;
@@ -96,6 +95,7 @@ h4 {
 }
 .arrowContainer-up:hover > .arrow-up {
     margin-top: -1%;
+    border-bottom: 10px solid rgba(247,231,206,1);
 }
 .arrow-up {
     width: 0; 
@@ -106,11 +106,13 @@ h4 {
     border-bottom: 10px solid rgba(255,255,255,0.5);
     transition: margin-top 0.2s;
 }
+
 .arrowContainer-down {
     bottom: -2%;
 }
 .arrowContainer-down:hover > .arrow-down {
     margin-bottom: -1%;
+    border-top: 10px solid rgba(247,231,206,1);
 }
 .arrow-down {
     width: 0; 
@@ -122,22 +124,20 @@ h4 {
     transition: margin-bottom 0.2s;
 }
 
-.arrow-right {
-    width: 0; 
-    height: 0; 
-    border-top: 10px solid transparent;
-    border-bottom: 10px solid transparent;
-
-    border-left: 10px solid rgba(255,255,255,0.25);
-}
-
 .arrow-left {
+    display: inline-block;
+    margin-right: 10px;
     width: 0; 
     height: 0; 
     border-top: 10px solid transparent;
     border-bottom: 10px solid transparent; 
 
-    border-right:10px solid rgba(255,255,255,0.25); 
+    border-right: 10px solid rgba(255,255,255,0.5); 
+    transition: border-right 0.2s;
+}
+.arrow-left:hover {
+    cursor: pointer;
+    border-right: 10px solid rgba(247,231,206,1);
 }
 
 .App {
@@ -164,8 +164,9 @@ h4 {
     position: absolute;
     top: 0;
     right: 0;
+    pointer-events: none;
     height: 100vh;
-    width: 30%;
+    width: 35%;
     z-index: 4000;
     display: flex;
     flex-direction: row-reverse;
@@ -175,6 +176,7 @@ h4 {
 .menuIconsContainer {
     height: 100%;
     width: 60px;
+    pointer-events: all;
     display: flex;
     flex-direction: column;
     justify-content:center;
@@ -205,17 +207,21 @@ h4 {
 .menuContent {
     filter: brightness(100%);
     opacity: 0;
+    z-index: -2000;
+    pointer-events: none;
     height: 100%;
-    width: 100%;
+    width: 70%;
     padding-top: 40px;
     padding-bottom: 20px;
     overflow-x: hidden;
     overflow-y: scroll;
-    transition: opacity 0.2s, filter 0.2s;
+    transition: opacity 0.2s, filter 0.2s, z-index 0.2s 0.2s;
 }
 .menuContent.focused {
     filter: brightness(100%);
     opacity: 1;
+    z-index: 2000;
+    pointer-events: auto;
 }
 
 .discoverContainer {
@@ -537,6 +543,7 @@ h4 {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
+    overflow-y: scroll;
 }
 .projectMemoir p {
     padding: 10px;
@@ -560,6 +567,7 @@ h4 {
     overflow-y: scroll;
     scroll-snap-type: y mandatory;
     scroll-behavior: smooth;
+    position: relative;
 }
 .profileContainer {
     height: 50%;
@@ -575,7 +583,7 @@ h4 {
 }
 .userInfo {
     height: 100%;
-    width: 50%;
+    width: 100%;
     position: relative;
     padding: 10px;
     text-transform: capitalize;
@@ -583,6 +591,15 @@ h4 {
 .userLocation {
     position: absolute;
     bottom: 10px;
+}
+.userInfo.carousel h2:nth-child(1) {
+    font-size: 4em;
+}
+.userInfo.carousel h2:nth-child(2) {
+    font-size: 2em;
+}
+.userInfo.carousel h2:nth-child(3) {
+    font-size: 3em;
 }
 
 .projectContainer {
@@ -609,12 +626,13 @@ h4 {
 .addProjectContainer {
     position: relative;
     display: flex;
+    flex-direction: column;
     background-position: center !important;
     background-size: cover !important;
     padding: 0;
-    overflow-x: scroll;
-    overflow-y: hidden;
-    scroll-snap-type: x mandatory;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    scroll-snap-type: y mandatory;
 }
 .addProjectContent {
     position: relative;
@@ -841,6 +859,9 @@ h4 {
         z-index: 1000;
         opacity: 1;
     }
+    .menuContainer.opened .menuContent {
+        pointer-events: all;
+    }
 
     .menuIconsContainer {
         width: 120px;
@@ -896,6 +917,16 @@ h4 {
 
     .profileContainer {
         width: 100%;
+    }
+
+    .userInfo.carousel h2:nth-child(1) {
+        font-size: 2em;
+    }
+    .userInfo.carousel h2:nth-child(2) {
+        font-size: 1em;
+    }
+    .userInfo.carousel h2:nth-child(3) {
+        font-size: 1.5em;
     }
 
     .discoverContainer input, .configContainer input, .configContainer select, .configContainer button, .userContainer input, .userContainer button, .userContainer textarea {

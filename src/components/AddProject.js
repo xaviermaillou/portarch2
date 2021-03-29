@@ -15,6 +15,7 @@ const AddProject = (props) => {
     const [remainingItems, setRemainingItems] = useState(0);
     const [existingPictures, setExistingPictures] = useState([]);
     const [keywords, setKeywords] = useState([]);
+    const [score, setScore] = useState(0);
 
     const [errorMessage1, setErrorMessage1] = useState();
     const [errorMessage2, setErrorMessage2] = useState();
@@ -36,6 +37,7 @@ const AddProject = (props) => {
             });
 
             setKeywords(props.existingProject.keywords.join(", "));
+            setScore(props.existingProject.score);
 
             document.getElementById("addProject1" + form_id).classList.add("reload");
 
@@ -44,6 +46,12 @@ const AddProject = (props) => {
     }, [props.existingProject, form_id]);
 
     const handleClick = (n) => {
+        props.setFocusLocked(true);
+        document.body.onfocus = () => {
+            setTimeout((() => {
+                props.setFocusLocked(false);
+            }), 100);
+        }
         n ? document.getElementById("addNewProjectMainPicture" + form_id).click() : document.getElementById("addNewProjectPictures" + form_id).click()
     }
 
@@ -60,7 +68,7 @@ const AddProject = (props) => {
         }
 
         setInitOpacity(0);
-
+        
         setMainPicture(file);
 
         let filePath = URL.createObjectURL(e.target.files[0]);
@@ -136,14 +144,20 @@ const AddProject = (props) => {
             return;
         }
 
-        /*const keywordsArray = keywords.split(",").join(" ");
-        keywordsArray.forEach((keyword, i) => {
-            keywordsArray[i] = keyword.replace(/\s+/g," ").replace(/^\s+|\s+$/,'').toLowerCase();
-            console.log(keywordsArray[i]);
-        });
-        setKeywords(keywordsArray);*/
-
-        uploadProject(setRemainingItems, props.setAllowRefresh, props.order, mainPicture, projectData, keywords, pictures, userID, (props.reload && props.reload), ((props.existingPictures && props.existingPictures.length > 0) && props.existingPictures[props.existingPictures.length -1].order + 1), (props.existingProject && props.existingProject.id), (props.existingProject && props.setEdit));
+        uploadProject(
+            setRemainingItems, 
+            props.setAllowRefresh, 
+            props.order, 
+            mainPicture, 
+            projectData, 
+            keywords, 
+            score,
+            pictures, 
+            userID, 
+            (props.reload && props.reload), 
+            ((props.existingPictures && props.existingPictures.length > 0) && props.existingPictures[props.existingPictures.length -1].order + 1), 
+            (props.existingProject && props.existingProject.id), (props.existingProject && props.setEdit)
+        );
         setSubmitted(true);
     }
 

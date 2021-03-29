@@ -4,7 +4,6 @@ import {useProjectsByIdsArray} from "../contexts/UserContext";
 const Tendency = (props) => {
     const userCollection = useProjectsByIdsArray(props.collection);
     const collection = props.result ? props.result : userCollection;
-    console.log(collection);
 
     const handleClick = () => {
         props.setSearch({

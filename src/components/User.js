@@ -44,9 +44,9 @@ const User = (props) => {
 
     //Reloads the <AddProject /> component when new project is fully uploaded (in order to empty the component and reload it new)
     const reloadForm = () => {
-        console.log("reloaded");
         setEnabledForm(false);
         setEnabledForm(true);
+        props.setFocusLocked(false);
     }
 
     return(
@@ -65,6 +65,7 @@ const User = (props) => {
                     project={project} 
                     maxOrder={myProjects.length} 
                     user={user.state.id}
+                    setFocusLocked={props.setFocusLocked}
                 />
             ))}
             {(user.state !== undefined && enabledForm) && 
@@ -73,6 +74,7 @@ const User = (props) => {
                     allowRefresh={allowRefresh} 
                     setAllowRefresh={setAllowRefresh}
                     order={myProjects !== undefined ? myProjects.length : 0}
+                    setFocusLocked={props.setFocusLocked}
                 />
             }
         </div>

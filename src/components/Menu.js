@@ -8,6 +8,7 @@ const Menu = (props) => {
 
     const [content, setContent] = useState(0);
     const [focused, setFocused] = useState(false);
+    const [focusLocked, setFocusLocked] = useState(false);
 
     //let timeout;
 
@@ -23,6 +24,9 @@ const Menu = (props) => {
         if((window.innerHeight / window.innerWidth) >= 1) {
             return;
         }
+        if(focusLocked) {
+            return;
+        }
         //timeout = setTimeout(() => {
             setFocused(false);
         //}, 2000);
@@ -30,16 +34,12 @@ const Menu = (props) => {
     }
 
     return(
-        <div className="menuContainer">
-            <MenuIcons onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} selected={content} setSelected={setContent} />
-            <div 
-                className={focused ? "menuContent focused" : "menuContent"}
-                onMouseEnter={() => handleMouseEnter()} 
-                onMouseLeave={() => handleMouseLeave()}
-            >
+        <div className="menuContainer" onMouseLeave={() => handleMouseLeave()}>
+            <MenuIcons onMouseEnter={handleMouseEnter} selected={content} setSelected={setContent} />
+            <div className={focused ? "menuContent focused" : "menuContent"}>
                 <div style={content === 0 ? {display: "block"} : {display: "none"}}><Discover setSearch={props.setSearch} /></div>
+                <div style={content === 1 ? {display: "block"} : {display: "none"}}><User setContent={setContent} setFocusLocked={setFocusLocked} /></div>
                 <div style={content === 2 ? {display: "block"} : {display: "none"}}><Config /></div>
-                <div style={content === 1 ? {display: "block"} : {display: "none"}}><User setContent={setContent} /></div>
             </div>
         </div>
     );
