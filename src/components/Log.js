@@ -36,8 +36,8 @@ const Log = (props) => {
 
     return(
         <div className="signUpContainer">
-            <input onChange={(e) => handleChange(e)} value={newUser.email || ""} name="email" type="mail" placeholder="Enter email"></input>
-            <input onChange={(e) => handleChange(e)} value={newUser.password || ""} name="password" type="password" placeholder="Enter password"></input>
+            <input onChange={(e) => handleChange(e)} value={newUser.email || ""} name="email" type="mail" placeholder="Enter email" autoComplete="off"></input>
+            <input onChange={(e) => handleChange(e)} value={newUser.password || ""} name="password" type="password" placeholder="Enter password" autoComplete="off"></input>
             <button onClick={() => handleClick()}>{props.alreadyMember ? "Sign in" : "Sign up"}</button>
         </div>
     );
