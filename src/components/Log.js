@@ -19,7 +19,10 @@ const Log = (props) => {
 
     const handleClick = () => {
         if(props.alreadyMember) {
-            firebase.auth().signInWithEmailAndPassword(newUser.email, newUser.password);
+            firebase.auth().signInWithEmailAndPassword(newUser.email, newUser.password)
+                .catch((error) => {
+                    props.setErrorMessage(error.message);
+                });
         } else {
             firebase.auth().createUserWithEmailAndPassword(newUser.email, newUser.password)
             .then((userCredential) => {
@@ -28,6 +31,9 @@ const Log = (props) => {
                     id: id,
                     profilePicture: "https://firebasestorage.googleapis.com/v0/b/portarch-9bfa9.appspot.com/o/project_pictures%2Fanonymous.png?alt=media&token=2ee8159f-bc93-4c00-bd0d-774b92e6f960",
                 });
+            })
+            .catch((error) => {
+                props.setErrorMessage(error.message);
             });
             
             //props.setContent(2);
