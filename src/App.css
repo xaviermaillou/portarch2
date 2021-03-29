@@ -521,7 +521,7 @@ h4 {
     flex-shrink: 0;
     background-position: center !important;
     background-size: cover !important;
-    transition: filter 0.2s;
+    transition: filter 1s;
 }
 .detailPic:hover {
     cursor: pointer;
