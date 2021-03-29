@@ -6,6 +6,12 @@ const PictureConfig = (props) => {
     const [loading, setLoading] = useState(false);
 
     const handleClick = () => {
+        props.setFocusLocked(true);
+        document.body.onfocus = () => {
+            setTimeout((() => {
+                props.setFocusLocked(false);
+            }), 100);
+        }
         document.getElementById("changePictureInput").click();
     }
 

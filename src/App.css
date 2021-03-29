@@ -546,7 +546,6 @@ h4 {
     overflow-y: scroll;
 }
 .projectMemoir p {
-    max-height: 50%;
     padding: 10px;
     font-style: italic;
     color: silver;

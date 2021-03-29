@@ -68,7 +68,7 @@ const Config = (props) => {
                 </div>
             }
             {configUser &&
-                <PictureConfig />
+                <PictureConfig setFocusLocked={props.setFocusLocked} />
             }
             {configUser && 
                 <input 

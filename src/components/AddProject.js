@@ -14,7 +14,7 @@ const AddProject = (props) => {
     const [submitted, setSubmitted] = useState(false);
     const [remainingItems, setRemainingItems] = useState(0);
     const [existingPictures, setExistingPictures] = useState([]);
-    const [keywords, setKeywords] = useState([]);
+    const [keywords, setKeywords] = useState("");
     const [score, setScore] = useState(0);
 
     const [errorMessage1, setErrorMessage1] = useState();

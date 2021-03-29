@@ -154,7 +154,12 @@ export const uploadProject = (setRemainingItems, setAllowRefresh, order, mainPic
   //Used for the indicator of remaining items during the upload
   setRemainingItems(remainingUploads);
 
-  const keywordsArray = keywords.split(",");
+  let keywordsArray;
+  if(keywords.length > 0) {
+    keywordsArray = keywords.split(",");
+  } else {
+    keywordsArray = [];
+  }
   keywordsArray.forEach((keyword, i) => {
       keywordsArray[i] = keyword.replace(/\s+/g," ").replace(/^\s+|\s+$/,'').toLowerCase();
   });
@@ -175,13 +180,15 @@ export const uploadProject = (setRemainingItems, setAllowRefresh, order, mainPic
     else if(remainingUploads === 0 && projectID === undefined) {reload(); setAllowRefresh(true)}
   });
 
-  keywordsArray.forEach((keyword) => {
-    firebase.firestore().collection('keywords').doc(keyword).set({
-      keyword: keyword,
-      projects: firebase.firestore.FieldValue.arrayUnion(id),
-      score: firebase.firestore.FieldValue.increment(1),
-    }, {merge: true});
-  });
+  if(keywordsArray.length > 0) {
+    keywordsArray.forEach((keyword) => {
+      firebase.firestore().collection('keywords').doc(keyword).set({
+        keyword: keyword,
+        projects: firebase.firestore.FieldValue.arrayUnion(id),
+        score: firebase.firestore.FieldValue.increment(1),
+      }, {merge: true});
+    });
+  }
 
   //If there is a new main picture uploaded, uploads this picture to the storage
   if(mainPicture !== undefined) {
@@ -441,5 +448,5 @@ export const useProjectsByIdsArray = (IdsArray) => {
       setProjects(projects => [...projects, project]);
     });
   }, [IdsArray]);
-  return projects[0];
+  return projects[projects.length - 1];
 }

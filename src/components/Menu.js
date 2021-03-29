@@ -39,7 +39,7 @@ const Menu = (props) => {
             <div className={focused ? "menuContent focused" : "menuContent"}>
                 <div style={content === 0 ? {display: "block"} : {display: "none"}}><Discover setSearch={props.setSearch} /></div>
                 <div style={content === 1 ? {display: "block"} : {display: "none"}}><User setContent={setContent} setFocusLocked={setFocusLocked} /></div>
-                <div style={content === 2 ? {display: "block"} : {display: "none"}}><Config /></div>
+                <div style={content === 2 ? {display: "block"} : {display: "none"}}><Config setFocusLocked={setFocusLocked} /></div>
             </div>
         </div>
     );
