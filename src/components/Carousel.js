@@ -61,7 +61,7 @@ const Carousel = (props) => {
 
     return(
         <div id={id} className="carouselContainer" style={{opacity: `${opacity}`}}>
-            {!props.noAuthor && <div className="securityDiv"></div>}
+            <div className="securityDiv"></div>
             <PanelA 
                 picture={props.project.mainPicture} 
                 title ={props.project.title} 
