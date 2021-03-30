@@ -602,15 +602,15 @@ h4 {
 }
 .userInfo.carousel h2:nth-child(1) {
     font-size: 4em;
-    opacity: 0.75;
+    opacity: 0.5;
 }
 .userInfo.carousel h2:nth-child(2) {
     font-size: 2em;
-    opacity: 0.75;
+    opacity: 0.5;
 }
 .userInfo.carousel h2:nth-child(3) {
     font-size: 3em;
-    opacity: 0.75;
+    opacity: 0.5;
 }
 .ownProjectsContainer {
     filter: brightness(75%);
