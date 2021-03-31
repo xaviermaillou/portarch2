@@ -2,8 +2,8 @@ import React from "react";
 
 const Profile = (props) => {
 
-    const handleClickProfile = () => {
-        document.getElementById("icon_2").click();
+    const handleClickProfile = (own) => {
+        own ? document.getElementById("icon_2").click() : console.log("work in progress...");
     }
 
     const author = props.author || [];
@@ -11,7 +11,7 @@ const Profile = (props) => {
     return(
         <div 
             className={props.own ? "profileContainer own" : "profileContainer carousel"}
-            onClick={() => handleClickProfile()}
+            onClick={() => handleClickProfile(props.own)}
         >
             <div 
                 className={props.own ? "profilePic own" : "profilePic"} 

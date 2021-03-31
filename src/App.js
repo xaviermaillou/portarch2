@@ -3,6 +3,7 @@ import "./App.css";
 import Carousel from "./components/Carousel";
 import Menu from "./components/Menu";
 import Logo from "./components/Logo";
+import Indications from "./components/Indications";
 
 import firebase from "firebase/app";
 import "firebase/auth";
@@ -71,6 +72,7 @@ const App = () => {
                 ))}
             </div>
             <Menu setSearch={setSearch} setDark={setDark} />
+            <Indications />
         </div>
     );
 }

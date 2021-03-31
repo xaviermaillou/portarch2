@@ -34,7 +34,7 @@ const Menu = (props) => {
     }
 
     return(
-        <div className="menuContainer" onMouseLeave={() => handleMouseLeave()}>
+        <div className={focused ? "menuContainer focused" : "menuContainer"} onMouseLeave={() => handleMouseLeave()}>
             <MenuIcons onMouseEnter={handleMouseEnter} selected={content} setSelected={setContent} />
             <div className={focused ? "menuContent focused" : "menuContent"}>
                 <div style={content === 0 ? {display: "block"} : {display: "none"}}><Discover setSearch={props.setSearch} /></div>
