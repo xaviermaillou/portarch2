@@ -73,10 +73,12 @@ const Carousel = (props) => {
                 memoir={props.project.memoir} 
                 ownProject={props.noAuthor} 
                 resultProject={props.isSearchResult} 
+                index={props.initialIndex !== undefined ? props.initialIndex : 0}
             />
             {!props.noAuthor && 
                 <Portfolio 
                     author={props.project.author} 
+                    index={props.index}
                 />
             }
 

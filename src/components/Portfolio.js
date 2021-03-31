@@ -4,7 +4,7 @@ import Profile from "./Profile";
 import {useUser, useAuthorData, useAuthorProjects, useFavorites} from "../contexts/UserContext";
 
 const Portfolio = (props) => {
-
+console.log("portfolio loaded");
     const user = useUser();
     const favorites = useFavorites(user.state ? user.state.id : 0);
 
@@ -48,6 +48,7 @@ const Portfolio = (props) => {
                         project={project} 
                         noAuthor={true}  
                         favorite={favorites.includes(project.id)} 
+                        initialIndex={props.index + 1}
                     />
                 ))}
             </div>

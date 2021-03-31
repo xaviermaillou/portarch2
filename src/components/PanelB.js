@@ -7,12 +7,14 @@ const PanelB = (props) => {
     const pictures = useProjectPictures(props.id);
 
     const [selectedPic, setSelectedPic] = useState();
+    const [index] = useState(props.index);
+    console.log(index);
 
     const suffix = props.ownProject ? "own_" : "";
     const suffix2 = props.resultProject ? "result_" : "";
 
     const handleClick = () => {
-        let zoomedPic = document.getElementById(suffix + suffix2 + "zoomedPic" + props.id);
+        let zoomedPic = document.getElementById(suffix + suffix2 + "zoomedPic" + props.id + index);
         zoomedPic.style.display = "none";
         zoomedPic.style.opacity = 0;
         setSelectedPic(undefined);
@@ -20,16 +22,16 @@ const PanelB = (props) => {
 
     useEffect(() => {
         if(selectedPic !== undefined) {
-            let zoomedPic = document.getElementById(suffix + suffix2 + "zoomedPic" + props.id);
+            let zoomedPic = document.getElementById(suffix + suffix2 + "zoomedPic" + props.id + index);
             zoomedPic.style.backgroundImage = "url(" +  pictures[selectedPic].url + ")";
             zoomedPic.style.display = "block";
             zoomedPic.style.opacity = 1;
         }
-    }, [selectedPic, pictures, props.id, suffix, suffix2]);
+    }, [selectedPic, pictures, props.id, suffix, suffix2, index]);
 
     return(
         <div className="panelContainer panelBContainer">
-            <div onClick={() => handleClick()} id={suffix + suffix2 + "zoomedPic" + props.id} className="zoomedPic"></div>
+            <div onClick={() => handleClick()} id={suffix + suffix2 + "zoomedPic" + props.id + index} className="zoomedPic"></div>
             <div className="detailPicsContainer">
                 {pictures && pictures.map((picture, i) => (
                     <DetailPic key={i} index={i} select={setSelectedPic} picture={picture.url} />
