@@ -115,6 +115,7 @@ export const useProjectPictures = (id) => {
 
   useEffect(() => {
     firebase.firestore().collection('project_pictures').where('project_id', '==', id).orderBy('order').onSnapshot((snapshot) => {
+      //console.log("Loading project's pictures: " + snapshot.docs.length);
       const picture = snapshot.docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),
@@ -271,10 +272,11 @@ export const useAuthorData = (id) => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    if(id === 0) {
+    if(id === undefined) {
       return;
     }
     firebase.firestore().collection('users_data').where('id', '==', id).onSnapshot((snapshot) => {
+      //console.log("Loading project's author profile");
       const data = snapshot.docs.map((doc) => ({
         ...doc.data(),
       }));
@@ -290,10 +292,11 @@ export const useAuthorProjects = (id) => {
   const [projects, setProjects] = useState([]);
 
   useEffect(() => {
-    if(id === 0) {
+    if(id === undefined) {
       return;
     }
     firebase.firestore().collection('projects').where('author', '==', id).orderBy('order').onSnapshot((snapshot) => {
+      //console.log("Loading author's projects: " + snapshot.docs.length);
       const project = snapshot.docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),
@@ -305,11 +308,10 @@ export const useAuthorProjects = (id) => {
   return projects;
 }
 
-//Ups the project's order
+//Changes the project's order
 export const changeProjectOrder = (user, order, n) => {
   firebase.firestore().collection('projects').where('author', '==', user).where('order', '==', order).limit(1).get().then((snapshot) => {
     snapshot.docs.forEach((doc) => {
-      console.log(doc.id);
       firebase.firestore().collection('projects').doc(doc.id).set({
         order: firebase.firestore.FieldValue.increment(n),
       }, {merge: true});
@@ -345,12 +347,12 @@ export const addFavorite = (id, userID, favorite) => {
 //Gets all the user's favorites (just to know which projects are favorited (their ids), it doesn't uploads the projects with all their data)
 export const useFavorites = (userID) => {
   const [favorites, setFavorites] = useState([]);
-
   useEffect(() => {
     if(userID === 0) {
       return;
     }
     firebase.firestore().collection('favorites').where('author_id', '==', userID).onSnapshot((snapshot) => {
+      //console.log("Loading user's favorites: " + snapshot.docs.length);
       const favorite = [];
       snapshot.docs.map((doc) => (
         favorite.push(doc.data().project_id)
@@ -390,7 +392,6 @@ export const search = (str, setSearches, searches) => {
   }
   //Creates a random id for each search resuls pack (for DOM purposes)
   const id = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
-  console.log("Search: " + str);
   firebase.firestore().collection('projects').where('search_words', 'array-contains-any', splitToKeywords(str)).onSnapshot((snapshot) => {
     const result = snapshot.docs.map((doc) => ({
       id: doc.id,
@@ -400,10 +401,8 @@ export const search = (str, setSearches, searches) => {
       return;
     }
     if(setSearches !== undefined && searches !== undefined) {
-      console.log("Results: " + result.length);
       setSearches(searches => [...searches, {id: id, search: str, result: result}]);
     } else {
-      console.log(result);
       return result;
     }
   });
@@ -428,6 +427,7 @@ export const useProjectById = (id) => {
 
   useEffect(() => {
     firebase.firestore().collection('projects').doc(id).onSnapshot((snapshot) => {
+      //console.log("Loading project by id: " + snapshot.doc.data());
       setProject(snapshot.doc.data());
     });
   });
@@ -442,6 +442,7 @@ export const useProjectsByIdsArray = (IdsArray) => {
       return;
     }
     firebase.firestore().collection('projects').where('id', 'in', IdsArray).onSnapshot((snapshot) => {
+      //console.log("Loading projects by id: " + snapshot.docs.length);
       const project = snapshot.docs.map((doc) => ({
         ...doc.data(),
       }));

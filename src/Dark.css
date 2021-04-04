@@ -93,7 +93,7 @@ textarea:focus {
 }
 
 .tendencyContainer {
-    background-color: darkgray;
+    background-color: rgba(60, 60, 60, 1);
 }
 .tendencyContainer p {
     color: silver;
@@ -152,6 +152,19 @@ textarea:focus {
 
 .userInfo {
     background-color: rgba(0, 0, 0, 0.5);
+}
+.userOption {
+    background-color: rgba(60, 60, 60, 1);
+}
+.userOption:nth-child(1) {
+    background-image: url("./img/dark_mode/export.png");
+    background-position: center;
+    background-size: 40%;
+}
+.userOption:nth-child(3) {
+    background-image: url("./img/dark_mode/edit-profile.png");
+    background-position: center;
+    background-size: 50%;
 }
 
 .helpLink {

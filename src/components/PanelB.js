@@ -3,12 +3,12 @@ import DetailPic from "./DetailPic";
 import {useProjectPictures} from "../contexts/UserContext";
 
 const PanelB = (props) => {
+    //console.log("Panel B loaded - of: " + props.id);
 
     const pictures = useProjectPictures(props.id);
 
     const [selectedPic, setSelectedPic] = useState();
     const [index] = useState(props.index);
-    console.log(index);
 
     const suffix = props.ownProject ? "own_" : "";
     const suffix2 = props.resultProject ? "result_" : "";

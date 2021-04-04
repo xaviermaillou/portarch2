@@ -44,7 +44,7 @@ const App = () => {
 
     return(
         <div className="App">
-            {search !== undefined && <div className="pill" style={{display: "flex"}}><h1><div className="arrow-left" onClick={() => handleClickClose()}></div>{search.title}</h1></div>}
+            {search !== undefined && <div className="pill opened"><h1><div className="arrow-left" onClick={() => handleClickClose()}></div>{search.title}</h1></div>}
             <Logo />
             {/*Default stream*/}
             <div id="carouselsContainer" className={(search !== undefined ? "closed" : "") + " " + (dark ? "darkened" : "")}>

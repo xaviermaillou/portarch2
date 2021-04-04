@@ -345,11 +345,32 @@ h4 {
     aspect-ratio: 2/1;
     width: 100%;
 }
-.profileContainer.own:hover {
-    cursor: pointer;
-}
 .userInfo.own {
     padding: 5px;
+}
+.userOptionsContainer {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+}
+.userOption {
+    aspect-ratio: 1/1;
+    width: 50%;
+    flex-shrink: 0;
+    filter: brightness(50%);
+    transition: filter 0.2s;
+}
+.userOption:hover {
+    cursor: pointer;
+    filter: brightness(100%);
+}
+.userOption a {
+    opacity: 0;
+    display: block;
+    height: 100%;
+    width: 100%;
 }
 
 #carouselsContainer {
@@ -668,6 +689,8 @@ h4 {
     padding: 5px;
     background-position: center !important;
     background-size: cover !important;
+    filter: brightness(75%);
+    transition: filter 0.2s;
 }
 .projectContainer h2 {
     font-size: 30px;
@@ -675,6 +698,10 @@ h4 {
 .projectContainer button {
     opacity: 0.75;
 }
+.projectContainer:hover {
+    filter: brightness(100%);
+}
+
 .editButton {
     position: absolute;
     left: 5px;
@@ -833,6 +860,16 @@ h4 {
 }
 
 
+.exportedPortfolioContainer {
+    height: 100vh;
+    width: 100%;
+    background-color: black;
+}
+.exportedPortfolioContainer .ownProjectsContainer {
+    filter: brightness(100%);
+}
+
+
 @media (max-aspect-ratio: 3/2) and (min-aspect-ratio: 1/1) {
 
     .menuContainer {
@@ -871,6 +908,9 @@ h4 {
     .arrowContainer {
         padding: 20px;
     }
+    .arrowContainer-up:hover > .arrow-up {
+        border-bottom: 20px solid rgba(255,255,255,0.5);
+    }
     .arrow-up {
         border-left: 20px solid transparent;
         border-right: 20px solid transparent;
@@ -878,12 +918,21 @@ h4 {
         border-bottom: 20px solid rgba(255,255,255,0.5);
         margin-top: -1%;
     }
+    .arrow-up:hover {
+        border-bottom: 20px solid rgba(255,255,255,0.5);
+    }
+    .arrowContainer-down:hover > .arrow-down {
+        border-top: 20px solid rgba(255,255,255,0.5);
+    }
     .arrow-down {
         border-left: 20px solid transparent;
         border-right: 20px solid transparent;
     
         border-top: 20px solid rgba(255,255,255,0.5);
         margin-bottom: -1%;
+    }
+    .arrow-down:hover {
+        border-top: 20px solid rgba(255,255,255,0.5);
     }
 
     .logoContainer {
@@ -987,11 +1036,28 @@ h4 {
         font-size: 1.5em;
     }
 
+    .pill {
+        top: 26vh;
+    }
+    .pill h1 {
+        margin-bottom: 0;
+    }
+
     .discoverContainer input, .configContainer input, .configContainer select, .configContainer button, .userContainer input, .userContainer button, .userContainer textarea {
         margin-top: 60px;
     }
 
     .helpLink {
         margin-top: 40px;
+    }
+
+
+    .exportedPortfolioContainer .portfolioContainer {
+        aspect-ratio: 0;
+        padding-bottom: 25vh;
+    }
+    .exportedPortfolioContainer .profileContainer {
+        aspect-ratio: 2/1;
+        height: 50vw;
     }
 }

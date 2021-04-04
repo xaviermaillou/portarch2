@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import Badge from "./Badge";
 
 const PanelA = (props) => {
+    //console.log("Panel A loaded - of: " + props.id);
 
     const [coverOpacity, setCoverOpacity] = useState(0);
 

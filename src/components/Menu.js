@@ -5,6 +5,7 @@ import User from "./User";
 import Config from "./Config";
 
 const Menu = (props) => {
+    //console.log("Menu loaded");
 
     const [content, setContent] = useState(0);
     const [focused, setFocused] = useState(false);

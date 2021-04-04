@@ -4,7 +4,8 @@ import PanelB from "./PanelB";
 import Portfolio from "./Portfolio";
 
 const Carousel = (props) => {
-
+    //console.log("Carousel loaded: " + props.project.id);
+    
     //noAuthor prop is true when it is a portfolio's carousel, which means there is no author at the end
 
     let id = undefined;
