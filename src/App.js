@@ -33,6 +33,8 @@ const App = () => {
 
     const [dark, setDark] = useState(false);
 
+    const padding = (window.innerHeight / window.innerWidth) >= 1 ? ((window.innerHeight - window.innerWidth) / 2) : 0;
+
     //Removes the search results from main stream
     const handleClickClose = () => {
         let containers = document.getElementsByClassName("tendencyCover");
@@ -47,7 +49,11 @@ const App = () => {
             {search !== undefined && <div className="pill opened"><h1><div className="arrow-left" onClick={() => handleClickClose()}></div>{search.title}</h1></div>}
             <Logo />
             {/*Default stream*/}
-            <div id="carouselsContainer" className={(search !== undefined ? "closed" : "") + " " + (dark ? "darkened" : "")}>
+            <div 
+                id="carouselsContainer" 
+                className={(search !== undefined ? "closed" : "") + " " + (dark ? "darkened" : "")}
+                style={{padding: `${padding}px 0`}}
+            >
                 {(projects) && projects.map((project, i) => (
                     <Carousel 
                         key={i} 
@@ -59,7 +65,11 @@ const App = () => {
                 ))}
             </div>
             {/*Results stream*/}
-            <div id="searchResultsContainer" className={(search !== undefined ? "open" : "") + " " + (dark ? "darkened" : "")}>
+            <div 
+                id="searchResultsContainer" 
+                className={(search !== undefined ? "open" : "") + " " + (dark ? "darkened" : "")}
+                style={{padding: `${padding}px 0`}}
+            >
                 {search !== undefined && search.projects.map((project, i) => (
                     <Carousel 
                         key={i} 
