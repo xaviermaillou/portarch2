@@ -161,7 +161,7 @@ textarea:focus {
     background-position: center;
     background-size: 40%;
 }
-.userOption:nth-child(3) {
+.userOption:nth-child(2) {
     background-image: url("./img/dark_mode/edit-profile.png");
     background-position: center;
     background-size: 50%;

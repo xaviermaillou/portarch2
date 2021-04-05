@@ -7,6 +7,8 @@ const Config = (props) => {
     const user = useUser();
     const [configUser, setConfigUser] = useState();
     const [countries, setCountries] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const [saved, setSaved] = useState(false);
 
     const countriesURL = "https://restcountries.eu/rest/v2/all";
 
@@ -46,7 +48,8 @@ const Config = (props) => {
     }
 
     const handleClick = () => {
-        updateUser(configUser);
+        setLoading(true);
+        updateUser(configUser, setLoading, setSaved);
     }
 
     const handleClickSign = () => {
@@ -103,9 +106,17 @@ const Config = (props) => {
                 </select>
             }
             {configUser && 
-                <button onClick={() => handleClick()}>
-                    Save
-                </button>
+                <div className="configSave">
+                    <button onClick={() => handleClick()}>
+                        Save
+                    </button>
+                    {loading &&
+                        <div className="loadingIcon"></div>
+                    }
+                    {saved && 
+                        <div> ✓</div>
+                    }
+                </div>
             }
             {configUser && 
                 <p className="helpLink" onClick={() => handleClickLogOut()}>

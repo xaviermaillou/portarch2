@@ -23,9 +23,7 @@ const Profile = (props) => {
             {props.own &&
                 <div className="userOptionsContainer">
                     <div className="userOption"><a href={"/portfolio/"+author.id} target="_blank" rel="noreferrer">Share</a></div>
-                    <div className="userOption"></div>
                     <div className="userOption" onClick={() => handleClickEditProfile(props.own)}></div>
-                    <div className="userOption"></div>
                 </div>
             }
         </div>

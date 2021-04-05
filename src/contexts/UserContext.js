@@ -56,8 +56,15 @@ export const useUser = () => {
 }
 
 //Updates user's data (displayName, job, city, country)
-export const updateUser = (user) => {
-  firebase.firestore().collection('users_data').doc(user.id).update(user, {merge: true});
+export const updateUser = (user, setLoading, setSaved) => {
+  firebase.firestore().collection('users_data').doc(user.id).update(user, {merge: true})
+    .then(() => {
+      setLoading(false);
+      setSaved(true);
+      setTimeout(() => {
+        setSaved(false);
+      }, 1000);
+    });
 }
 
 //Sign out
@@ -385,8 +392,28 @@ export const useCollections = () => {
   return useContext(UserContext).collections;
 }
 
+//Gets all the keywords, to help user writing a search query
+export const useKeywords = () => {
+  const [keywords, setKeywords] = useState([]);
+
+  useEffect(() => {
+    firebase.firestore().collection('keywords').orderBy('score', 'desc').onSnapshot((snapshot) => {
+      const keyword = snapshot.docs.map((doc) => ({
+        ...doc.data(),
+      }));
+      let keywordsArray = [];
+      keyword.forEach((key) => {
+        keywordsArray.push(key.keyword);
+      });
+      setKeywords(keywordsArray);
+    });
+  }, []);
+
+  return keywords;
+}
+
 //Searchs through projects' keywords
-export const search = (str, setSearches, searches) => {
+export const search = (str, setSearches, searches, setNoResults) => {
   if(str.length === 0) {
     return;
   }
@@ -398,6 +425,7 @@ export const search = (str, setSearches, searches) => {
       ...doc.data(),
     }));
     if(result.length === 0) {
+      setNoResults(true);
       return;
     }
     if(setSearches !== undefined && searches !== undefined) {
