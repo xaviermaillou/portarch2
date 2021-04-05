@@ -69,6 +69,8 @@ const Search = (props) => {
                         result={search.result} 
                         setSearch={props.setSearch} 
                         collection={[]}
+                        searches={searches}
+                        setSearches={setSearches}
                     />
                 ))}
             </div>

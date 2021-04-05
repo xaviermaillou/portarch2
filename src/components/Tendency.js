@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React from "react";
 import {useProjectsByIdsArray} from "../contexts/UserContext";
 
 const Tendency = (props) => {
@@ -6,6 +6,7 @@ const Tendency = (props) => {
     const collection = props.result ? props.result : userCollection;
 
     const handleClick = () => {
+        document.getElementById("searchResultsContainer").scrollTop = 0;
         props.setSearch({
             title: props.title,
             projects: collection
@@ -20,6 +21,15 @@ const Tendency = (props) => {
         }
     }
 
+    const handleClose = (e, result) => {
+        e.stopPropagation();
+        if(result) {
+            props.setSearches(props.searches.filter((obj) => {
+                return obj.id !== props.index;
+            }))
+        }
+    }
+
     return(
         <div onClick={() => handleClick()} className="tendencyContainer">
             <div className="results">
@@ -30,6 +40,7 @@ const Tendency = (props) => {
             <div id={"tendencyCover" + props.index} className="tendencyCover">
                 <h2>{props.title}</h2>
                 <p>{collection !== undefined && collection.length} result(s)</p>
+                {props.result && <div onClick={(e) => handleClose(e, props.result)} className="close"></div>}
             </div>
         </div>
     );
