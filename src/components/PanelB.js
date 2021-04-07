@@ -15,8 +15,7 @@ const PanelB = (props) => {
 
     const handleClick = () => {
         let zoomedPic = document.getElementById(suffix + suffix2 + "zoomedPic" + props.id + index);
-        zoomedPic.style.display = "none";
-        zoomedPic.style.opacity = 0;
+        zoomedPic.classList.remove("opened");
         setSelectedPic(undefined);
     }
 
@@ -24,8 +23,7 @@ const PanelB = (props) => {
         if(selectedPic !== undefined) {
             let zoomedPic = document.getElementById(suffix + suffix2 + "zoomedPic" + props.id + index);
             zoomedPic.style.backgroundImage = "url(" +  pictures[selectedPic].url + ")";
-            zoomedPic.style.display = "block";
-            zoomedPic.style.opacity = 1;
+            zoomedPic.classList.add("opened");
         }
     }, [selectedPic, pictures, props.id, suffix, suffix2, index]);
 

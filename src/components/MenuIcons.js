@@ -14,6 +14,7 @@ const MenuIcons = (props) => {
 
     const handleClick = (num) => {
         props.setSelected(num);
+        document.getElementsByClassName("menuContent")[0].scrollTop = 0;
     }
 
     return(
