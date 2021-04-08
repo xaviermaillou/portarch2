@@ -22,6 +22,9 @@ const PanelB = (props) => {
     useEffect(() => {
         if(selectedPic !== undefined) {
             let zoomedPic = document.getElementById(suffix + suffix2 + "zoomedPic" + props.id + index);
+            if(zoomedPic.parentElement.getBoundingClientRect().left !== 0) {
+                zoomedPic.parentElement.parentElement.scrollLeft = zoomedPic.parentElement.getBoundingClientRect().left;
+            }
             zoomedPic.style.backgroundImage = "url(" +  pictures[selectedPic].url + ")";
             zoomedPic.classList.add("opened");
         }

@@ -42,7 +42,7 @@ textarea:focus {
 }
 
 .App {
-    background-color: black;
+    background-color: #1a1a1a;
 }
 
 .logoContainer {
@@ -134,7 +134,7 @@ textarea:focus {
 }
 
 #carouselsContainer {
-    background-color: black;
+    background-color: #1a1a1a;;
 }
 #introductionContainer {
     background-color: rgba(60, 60, 60, 1);
@@ -143,14 +143,14 @@ textarea:focus {
     background: none;
 }
 #searchResultsContainer.open {
-    background-color: black;
+    background-color: #1a1a1a;
 }
 
 .panelBContainer {
-    background-color: black;
+    background-color: #1a1a1a;
 }
 .zoomedPic {
-    background-color: black;
+    background-color: #1a1a1a;
 }
 
 .userInfo {

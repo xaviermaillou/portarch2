@@ -215,7 +215,7 @@ h4 {
     pointer-events: none;
     height: 100vh;
     width: 35%;
-    z-index: 4000;
+    z-index: 6000;
     display: flex;
     flex-direction: row-reverse;
     transition: opacity 0.2s;
@@ -711,8 +711,14 @@ h4 {
     position: relative;
     overscroll-behavior-y: none;
 }
+.portfolioContainer .carouselContainer {
+    pointer-events: none;
+}
 .portfolioContainer.locked {
     overscroll-behavior-x: none;
+}
+.portfolioContainer.locked .carouselContainer {
+    pointer-events: all;
 }
 .profileContainer {
     height: 50%;
