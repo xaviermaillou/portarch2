@@ -1,3 +1,23 @@
+@keyframes introSlide {
+    0% {
+        margin-left: -100vw;
+        margin-top: -10vw;
+        opacity: 0;
+    }
+    50% {
+        opacity: 0;
+    }
+}
+@keyframes introSlide2 {
+    0% {
+        margin-left: 50vw;
+        opacity: 0;
+    }
+    50% {
+        opacity: 0;
+    }
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -159,12 +179,16 @@ h4 {
 }
 
 .App {
+    position: fixed;
+    top: 0;
     height: 100vh;
     width: 100%;
+    overflow-y: scroll;
+    scroll-behavior: smooth;
 }
 
 .logoContainer {
-    position: absolute;
+    position: fixed;
     right: 10px;
     top: 10px;
     z-index: 5000;
@@ -173,13 +197,18 @@ h4 {
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
+    opacity: 1;
+    transition: opacity 0.2s;
 }
 .logoContainer {
     cursor: pointer;
 }
+.logoContainer.intro {
+    opacity: 0;
+}
 
 .menuContainer {
-    position: absolute;
+    position: fixed;
     top: 0;
     right: 0;
     overflow: hidden;
@@ -204,6 +233,12 @@ h4 {
     flex-direction: column;
     justify-content:center;
     align-items: center;
+    position: absolute;
+    right: 0%;
+    transition: right 0.4s;
+}
+.menuIconsContainer.intro {
+    right: -100%;
 }
 .menuIcon {
     height: 35px;
@@ -241,6 +276,9 @@ h4 {
 }
 .menuContent.focused {
     right: 60px;
+}
+.menuContent h1 {
+    margin-bottom: 30px;
 }
 
 .discoverContainer {
@@ -396,9 +434,16 @@ h4 {
     height: 100%;
     overflow-x: hidden;
     overflow-y: scroll;
-    transition: opacity 0.2s;
-    -webkit-mask: linear-gradient(to left, rgba(255,255,255,0), rgba(255,255,255,0.5), rgba(255,255,255,1), rgba(255,255,255,1), rgba(255,255,255,1), rgba(255,255,255,1));
-    mask: linear-gradient(to left, rgba(255,255,255,0), rgba(255,255,255,0.5), rgba(255,255,255,1), rgba(255,255,255,1), rgba(255,255,255,1), rgba(255,255,255,1));
+    transition: opacity 0.2s, margin-top 0.8s ease;
+    /*-webkit-mask: linear-gradient(to left, rgba(255,255,255,0), rgba(255,255,255,0.5), rgba(255,255,255,1), rgba(255,255,255,1), rgba(255,255,255,1), rgba(255,255,255,1));
+    mask: linear-gradient(to left, rgba(255,255,255,0), rgba(255,255,255,0.5), rgba(255,255,255,1), rgba(255,255,255,1), rgba(255,255,255,1), rgba(255,255,255,1));*/
+}
+#carouselsContainer.intro {
+    margin-top: 75vh;
+    pointer-events: none;
+}
+#carouselsContainer.preIntro {
+    margin-top: 100vh;
 }
 #carouselsContainer.closed, #carouselsContainer.closed.darkened {
     opacity: 0;
@@ -417,12 +462,48 @@ h4 {
     overflow-x: hidden;
     overflow-y: scroll;
     transition: opacity 0.2s;
-    -webkit-mask: linear-gradient(to left, rgba(255,255,255,0), rgba(255,255,255,0.5), rgba(255,255,255,1), rgba(255,255,255,1), rgba(255,255,255,1), rgba(255,255,255,1));
-    mask: linear-gradient(to left, rgba(255,255,255,0), rgba(255,255,255,0.5), rgba(255,255,255,1), rgba(255,255,255,1), rgba(255,255,255,1), rgba(255,255,255,1));
+   /*-webkit-mask: linear-gradient(to left, rgba(255,255,255,0), rgba(255,255,255,0.5), rgba(255,255,255,1), rgba(255,255,255,1), rgba(255,255,255,1), rgba(255,255,255,1));
+    mask: linear-gradient(to left, rgba(255,255,255,0), rgba(255,255,255,0.5), rgba(255,255,255,1), rgba(255,255,255,1), rgba(255,255,255,1), rgba(255,255,255,1));*/
 }
 #searchResultsContainer.open {
     z-index: 400;
 }
+#introductionContainer {
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    z-index: -1;
+}
+#introductionContainer h5 {
+    margin-top: -10vw;
+    margin-bottom: 5vw;
+    margin-left: -5vw;
+    font-size: 22vw;
+    color: rgba(255,255,255,0.1);
+    animation-name: introSlide;
+    animation-duration: 0.8s;
+}
+#introductionContainer div {
+    display: flex;
+    height: 15vw;
+}
+#introductionContainer .introLogo {
+    aspect-ratio: 1/1;
+    height: 100%;
+    margin-left: 20vw;
+    margin-right: 1vw;
+    background-image: url("./img/dark_mode/Logo.png");
+    background-position: center;
+    background-size: contain;
+}
+#introductionContainer p {
+    width: 55vw;
+    font-size: 3vw;
+    animation-name: introSlide2;
+    animation-duration: 1.6s;
+}
+
 .carouselContainer {
     scroll-snap-align: center;
     scroll-snap-type: x mandatory;
@@ -722,6 +803,9 @@ h4 {
 .projectContainer:hover {
     filter: brightness(100%);
 }
+.projectContainer.hint {
+    filter: brightness(175%);
+}
 
 .editButton {
     position: absolute;
@@ -991,19 +1075,19 @@ h4 {
     }
 
     .menuContainer {
-        z-index: -1000;
         opacity: 0;
         width: 100%;
         background: none;
         overflow-x: hidden;
         filter: brightness(100%);
+        transition: opacity 0.2s;
     }
     .menuContainer.opened {
-        z-index: 1000;
         opacity: 1;
     }
     .menuContainer.opened .menuContent {
         pointer-events: all;
+        right: 120px;
     }
 
     .menuIconsContainer {
@@ -1019,9 +1103,6 @@ h4 {
     .menuContent {
         opacity: 1;
         width: 80%;
-    }
-    .menuContent.focused {
-        right: 120px;
     }
 
     .searchContainer input {

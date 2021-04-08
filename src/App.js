@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import "./App.css";
 import Carousel from "./components/Carousel";
 import Menu from "./components/Menu";
@@ -32,6 +32,8 @@ const App = () => {
     const [search, setSearch] = useState();
 
     const [dark, setDark] = useState(false);
+    const [intro, setIntro] = useState(true);
+    const [introOpacity, setIntroOpacity] = useState(1);
 
     const padding = (window.innerHeight / window.innerWidth) >= 1 ? ((window.innerHeight - window.innerWidth) / 2) : 0;
 
@@ -44,14 +46,42 @@ const App = () => {
         setSearch();
     }
 
+    useEffect(() => {
+        document.onload = setTimeout(() => {
+            document.getElementById("carouselsContainer").classList.remove("preIntro");
+            document.getElementById("carouselsContainer").classList.add("intro");
+        }, 3000);
+    }, []);
+
+    const handleScroll = () => {
+        setIntroOpacity(document.getElementById("carouselsContainer").getBoundingClientRect().top / (0.75 * window.innerHeight));
+        if(document.getElementById("carouselsContainer").getBoundingClientRect().top <= 0) {
+            setIntro(false);
+            document.getElementById("carouselsContainer").classList.remove("intro");
+        }
+    }
+
     return(
-        <div className="App">
+        <div className="App" onScroll={() => handleScroll()}>
+            {intro &&
+                <div id="introductionContainer">
+                    <h5 style={{opacity: `${introOpacity - 0.2}`}}>
+                        welcome
+                    </h5>
+                    <div style={{opacity: `${introOpacity - 0.4}`}}>
+                        <div className="introLogo"></div>
+                        <p>
+                            Share your professional or university architecture projects, build your portfolio and discover others' projects in the PortArch network!
+                        </p>
+                    </div>
+                </div>
+            }
             {search !== undefined && <div className="pill opened"><h1><div className="arrow-left" onClick={() => handleClickClose()}></div>{search.title}</h1></div>}
-            <Logo />
+            <Logo intro={intro} />
             {/*Default stream*/}
             <div 
                 id="carouselsContainer" 
-                className={(search !== undefined ? "closed" : "") + " " + (dark ? "darkened" : "")}
+                className={(search !== undefined ? "closed" : "") + " " + (dark ? "darkened" : "") + (intro ? "preIntro" : "")}
                 style={{padding: `${padding}px 0`}}
             >
                 {(projects) && projects.map((project, i) => (
@@ -81,7 +111,7 @@ const App = () => {
                     />
                 ))}
             </div>
-            <Menu setSearch={setSearch} setDark={setDark} />
+            <Menu setSearch={setSearch} setDark={setDark} intro={intro} />
             <Indications />
         </div>
     );

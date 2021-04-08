@@ -58,7 +58,14 @@ const User = (props) => {
             {user.state === undefined && <p className="helpAlert">{errorMessage}</p>}
 
             {/* If user is connected */}
-            {user.state !== undefined && <Profile own={true} author={user.state} />}
+            {user.state !== undefined && 
+                <Profile 
+                    own={true} 
+                    author={user.state} 
+                    allowSharingPortfolio={myProjects.length > 0} 
+                    setErrorMessage={setErrorMessage}
+                />
+            }
             {user.state !== undefined && myProjects.map((project, i) => (
                 <Project 
                     key={i} 
@@ -75,8 +82,10 @@ const User = (props) => {
                     setAllowRefresh={setAllowRefresh}
                     order={myProjects !== undefined ? myProjects.length : 0}
                     setFocusLocked={props.setFocusLocked}
+                    setErrorMessage={setErrorMessage}
                 />
             }
+            {user.state !== undefined && <p className="helpAlert">{errorMessage}</p>}
         </div>
     );
 }

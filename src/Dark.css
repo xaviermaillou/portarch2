@@ -136,6 +136,9 @@ textarea:focus {
 #carouselsContainer {
     background-color: black;
 }
+#introductionContainer {
+    background-color: rgba(60, 60, 60, 1);
+}
 #searchResultsContainer {
     background: none;
 }

@@ -52,6 +52,7 @@ const AddProject = (props) => {
                 props.setFocusLocked(false);
             }), 100);
         }
+        props.setErrorMessage("");
         n ? document.getElementById("addNewProjectMainPicture" + form_id).click() : document.getElementById("addNewProjectPictures" + form_id).click()
     }
 

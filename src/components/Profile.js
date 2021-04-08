@@ -6,6 +6,17 @@ const Profile = (props) => {
         own ? document.getElementById("icon_2").click() : console.log("work in progress...");
     }
 
+    const handleClickSharePortfolio = (e) => {
+        if(!props.allowSharingPortfolio) {
+            e.preventDefault();
+            document.getElementsByClassName("projectContainer")[0].classList.add("hint");
+            setTimeout(() => {
+                document.getElementsByClassName("projectContainer")[0].classList.remove("hint");
+            },200);
+            props.setErrorMessage("Add at least one project before sharing your portfolio");
+        }
+    }
+
     const author = props.author || [];
 
     return(
@@ -22,7 +33,7 @@ const Profile = (props) => {
             </div>
             {props.own &&
                 <div className="userOptionsContainer">
-                    <div className="userOption"><a href={"/portfolio/"+author.id} target="_blank" rel="noreferrer">Share</a></div>
+                    <div className="userOption"><a onClick={(e) => handleClickSharePortfolio(e)} href={"/portfolio/"+author.id} target="_blank" rel="noreferrer">Share</a></div>
                     <div className="userOption" onClick={() => handleClickEditProfile(props.own)}></div>
                 </div>
             }

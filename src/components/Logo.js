@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 
-const Logo = () => {
+const Logo = (props) => {
 
     const [menuOpened, setMenuOpened] = useState(false);
 
@@ -17,7 +17,7 @@ const Logo = () => {
     }
 
     return(
-        <div className="logoContainer" onClick={() => handleClick()}>
+        <div className={ props.intro ? "logoContainer intro" : "logoContainer"} onClick={() => handleClick()}>
 
         </div>
     );
