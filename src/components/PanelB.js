@@ -6,6 +6,12 @@ const PanelB = (props) => {
     //console.log("Panel B loaded - of: " + props.id);
 
     const pictures = useProjectPictures(props.id);
+    let picsContainerSet = "";
+    if(pictures.length <= 6) {
+        picsContainerSet = "six";
+    } else if(pictures.length <= 9) {
+        picsContainerSet = "nine";
+    }
 
     const [selectedPic, setSelectedPic] = useState();
     const [index] = useState(props.index);
@@ -33,7 +39,7 @@ const PanelB = (props) => {
     return(
         <div className="panelContainer panelBContainer">
             <div onClick={() => handleClick()} id={suffix + suffix2 + "zoomedPic" + props.id + index} className="zoomedPic"></div>
-            <div className="detailPicsContainer">
+            <div className={"detailPicsContainer " + picsContainerSet}>
                 {pictures && pictures.map((picture, i) => (
                     <DetailPic key={i} index={i} select={setSelectedPic} picture={picture.url} />
                 ))}
