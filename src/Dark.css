@@ -177,6 +177,10 @@ textarea:focus {
     color: yellow;
 }
 
+.exportedPortfolioContainer {
+    background-color: #1a1a1a;
+}
+
 @media (max-aspect-ratio: 1/1) {
     .menuContainer {
         background: rgba(0, 0, 0, 0.75);
