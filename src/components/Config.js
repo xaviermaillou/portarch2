@@ -90,6 +90,15 @@ const Config = (props) => {
                 </input>
             }
             {configUser && 
+                <textarea 
+                    onChange={(e) => handleChange(e)} 
+                    value={configUser.about || ""} name="about" 
+                    placeholder="About me" 
+                    autoComplete="off"
+                    rows="8">
+                </textarea>
+            }
+            {configUser && 
                 <input 
                     onChange={(e) => handleChange(e)} 
                     value={configUser.location || ""} name="location" 

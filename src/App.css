@@ -38,7 +38,7 @@ input, button, label, textarea, select {
     background: none;
     border: none;
     outline: none;
-    transition: border-bottom 0.2s;
+    transition: border-bottom 0.2s, border-left 0.2s;
 }
 
 textarea {
@@ -734,11 +734,28 @@ h4 {
     display: flex;
     scroll-snap-align: center;
 }
+.profileContainer .aboutAuthor {
+    height: 100%;
+    width: 50%;
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+}
+.profileContainer .aboutAuthor p {
+    height: fit-content;
+    width: 50%;
+    padding: 20px;
+    font-style: italic;
+    font-size: 20px;
+    color: silver;
+    line-height: 200%;
+}
 .profilePic {
     aspect-ratio: 1/1;
     height: 100%;
     background-color: rgba(255,255,255,0.25);
     background-size: cover;
+    background-position: center;
 }
 .userInfo {
     height: 100%;
@@ -953,6 +970,7 @@ h4 {
     width: 100%;
     background-color: rgba(255,255,255,0.25);
     background-size: cover;
+    background-position: center;
     margin-bottom: 20px;
 }
 .configProfilePic:hover {
@@ -963,7 +981,7 @@ h4 {
     background-position: center !important;
     background-size: 50% !important;
 }
-.discoverContainer input, .configContainer input, .configContainer select, .configContainer button, .userContainer input, .userContainer button, .userContainer textarea {
+.discoverContainer input, .configContainer input, .configContainer select, .configContainer textarea, .configContainer button, .userContainer input, .userContainer button, .userContainer textarea {
     margin-top: 30px;
 }
 .configSave {
@@ -1187,7 +1205,7 @@ h4 {
         font-size: 40px;
     }
 
-    .discoverContainer input, .configContainer input, .configContainer select, .configContainer button, .userContainer input, .userContainer button, .userContainer textarea {
+    .discoverContainer input, .configContainer input, .configContainer select, .configContainer textarea, .configContainer button, .userContainer input, .userContainer button, .userContainer textarea {
         margin-top: 60px;
     }
 

@@ -37,6 +37,11 @@ const Profile = (props) => {
                     <div className="userOption" onClick={() => handleClickEditProfile(props.own)}></div>
                 </div>
             }
+            {!props.own &&
+                <div className="aboutAuthor">
+                    <p>{author.about}</p>
+                </div>
+            }
         </div>
     );
 }
