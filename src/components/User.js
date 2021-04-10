@@ -53,7 +53,7 @@ const User = (props) => {
         <div className="userContainer">
             <h1>Profile</h1>
             {/* If user is NOT connected */}
-            {user.state === undefined && <Log alreadyMember={alreadyMember} setErrorMessage={setErrorMessage} setContent={props.setContent} />}
+            {user.state === undefined && <Log alreadyMember={alreadyMember} setErrorMessage={setErrorMessage} />}
             {user.state === undefined && <p className="helpLink" onClick={() => handleClick()}>{linkBelow}</p>}
             {user.state === undefined && <p className="helpAlert">{errorMessage}</p>}
 

@@ -35,8 +35,6 @@ const Log = (props) => {
             .catch((error) => {
                 props.setErrorMessage(error.message);
             });
-            
-            //props.setContent(2);
         }
     }
 

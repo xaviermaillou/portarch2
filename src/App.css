@@ -268,10 +268,9 @@ h4 {
     width: 70%;
     position: absolute;
     right: -100%;
-    padding-top: 40px;
-    padding-bottom: 20px;
     overflow-x: hidden;
-    overflow-y: scroll;
+    overflow-y: hidden;
+    scroll-behavior: smooth;
     transition: right 0.2s;
 }
 .menuContent.focused {
@@ -279,6 +278,12 @@ h4 {
 }
 .menuContent h1 {
     margin-bottom: 30px;
+}
+.menuSubContent {
+    height: 100%;
+    padding-top: 40px;
+    padding-bottom: 20px;
+    overflow-y: scroll;
 }
 
 .discoverContainer {

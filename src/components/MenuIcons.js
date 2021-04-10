@@ -1,6 +1,8 @@
-import React, {useEffect} from "react";
+import React, {useState, useEffect} from "react";
 
 const MenuIcons = (props) => {
+
+    const [selected, setSelected] = useState(0);
 
     useEffect(() => {
         const icons = document.getElementsByClassName("menuIcon");
@@ -8,13 +10,13 @@ const MenuIcons = (props) => {
             icons[i].classList.remove("selected");
             icons[i].style.opacity = 0.5;
         }
-        document.getElementById("icon_" + props.selected).classList.add("selected");
-        document.getElementById("icon_" + props.selected).style.opacity = 1;
-    }, [props.selected]);
+        document.getElementById("icon_" + selected).classList.add("selected");
+        document.getElementById("icon_" + selected).style.opacity = 1;
+    }, [selected]);
 
     const handleClick = (num) => {
-        props.setSelected(num);
-        document.getElementsByClassName("menuContent")[0].scrollTop = 0;
+        setSelected(num);
+        document.getElementsByClassName("menuSubContent")[num].scrollIntoView();
     }
 
     return(
