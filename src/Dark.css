@@ -152,6 +152,9 @@ textarea:focus {
 .zoomedPic {
     background-color: #1a1a1a;
 }
+.projectMemoir {
+    background-color: rgb(15,15,15);
+}
 
 .userInfo {
     background-color: rgba(0, 0, 0, 0.5);
