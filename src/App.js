@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from "react";
 import "./App.css";
+import "./Dark.css"
 import Carousel from "./components/Carousel";
 import Menu from "./components/Menu";
 import Logo from "./components/Logo";
