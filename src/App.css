@@ -1,3 +1,8 @@
+@keyframes introOpacity {
+    0% {
+        opacity: 0;
+    }
+}
 @keyframes introSlide {
     0% {
         margin-left: -100vw;
@@ -524,12 +529,14 @@ h4 {
     background-image: url("./img/dark_mode/Logo.png");
     background-position: center;
     background-size: contain;
+    animation-name: introOpacity;
+    animation-duration: 0.4s;
 }
 #introductionContainer p {
     width: 55vw;
     font-size: 3vw;
     animation-name: introSlide2;
-    animation-duration: 1.6s;
+    animation-duration: 2.2s;
 }
 
 .carouselContainer {
