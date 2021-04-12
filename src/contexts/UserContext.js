@@ -103,7 +103,7 @@ export const useProjects = () => {
   const [projects, setProjects] = useState([]);
 
   useEffect(() => {
-    firebase.firestore().collection('projects').orderBy('id', 'desc').onSnapshot((snapshot) => {
+    firebase.firestore().collection('projects').orderBy('score', 'desc').onSnapshot((snapshot) => {
       console.log("Loading projects: " + snapshot.docs.length);
       const project = snapshot.docs.map((doc) => ({
         id: doc.id,

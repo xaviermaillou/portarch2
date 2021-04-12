@@ -76,7 +76,7 @@ const AddProject = (props) => {
         document.getElementById("addProjectContainer" + form_id).style.backgroundImage = "url(" + filePath + ")";
 
         setTimeout(() => {            
-            document.getElementById("addProject2" + form_id).scrollIntoView({behavior: "smooth"});
+            document.getElementById("addProjectContainer" + form_id).scrollTop = document.getElementById("addProjectContainer" + form_id).offsetHeight;
         }, 2000);
     }
 
@@ -210,7 +210,8 @@ const AddProject = (props) => {
                 onChange={(e) => handleChangeInput(e)}
                 name="keywords"
                 value={keywords || ""}
-                placeholder="Keywords (city, style, materials, etc...)" />
+                placeholder="Keywords (city, style, materials, etc...)"
+                autoComplete="off" />
 
                 <textarea
                 onChange={(e) => handleChangeInput(e)}
