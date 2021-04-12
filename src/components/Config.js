@@ -116,7 +116,11 @@ const Config = (props) => {
                 </input>
             }
             {configUser && 
-                <select onChange={(e) => handleChange(e)} id="countrySelect" name="country" defaultValue="null">
+                <select 
+                    onChange={(e) => handleChange(e)} 
+                    id="countrySelect" 
+                    name="country" 
+                    defaultValue="null">
                     <option value="null" disabled>Country</option>
                     {countries.map((country, i) => (
                         <option key={i} value={country.code}>{country.name}</option>

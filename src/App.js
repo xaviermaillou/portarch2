@@ -50,6 +50,7 @@ const App = () => {
     useEffect(() => {
         document.onload = setTimeout(() => {
             document.getElementById("carouselsContainer").classList.remove("preIntro");
+            document.getElementsByClassName("App")[0].classList.remove("preIntro");
             document.getElementById("carouselsContainer").classList.add("intro");
         }, 3000);
     }, []);
@@ -63,7 +64,7 @@ const App = () => {
     }
 
     return(
-        <div className="App" onScroll={() => handleScroll()}>
+        <div className="App preIntro" onScroll={() => handleScroll()}>
             {intro &&
                 <div id="introductionContainer">
                     <h5 style={{opacity: `${introOpacity - 0.2}`}}>
