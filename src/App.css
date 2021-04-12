@@ -17,6 +17,24 @@
         opacity: 0;
     }
 }
+@keyframes introSlide3 {
+    0% {
+        margin-left: -50vw;
+        opacity: 0;
+    }
+    50% {
+        opacity: 0;
+    }
+}
+@keyframes introSlide4 {
+    0% {
+        margin-left: 50vw;
+        opacity: 0;
+    }
+    50% {
+        opacity: 0;
+    }
+}
 
 * {
     margin: 0;
@@ -475,6 +493,8 @@ h4 {
 }
 #searchResultsContainer.open {
     z-index: 400;
+    animation-name: introSlide4;
+    animation-duration: 0.4s;
 }
 #introductionContainer {
     height: 100%;
@@ -603,6 +623,8 @@ h4 {
     bottom: 20px;
     display: flex;
     overflow-x: scroll;
+    animation-name: introSlide3;
+    animation-duration: 0.4s;
     -webkit-mask: linear-gradient(to left, rgba(255,255,255,0), rgba(255,255,255,1), rgba(255,255,255,1), rgba(255,255,255,1));
     mask: linear-gradient(to left, rgba(255,255,255,0), rgba(255,255,255,1), rgba(255,255,255,1), rgba(255,255,255,1));
 }
