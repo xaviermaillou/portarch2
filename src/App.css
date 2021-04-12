@@ -770,7 +770,7 @@ h4 {
 .profileContainer .aboutAuthor p {
     height: fit-content;
     width: 50%;
-    padding: 20px;
+    padding: 10px;
     font-style: italic;
     color: silver;
     line-height: 200%;
@@ -1006,6 +1006,16 @@ h4 {
     background-image: url("./img/dark_mode/loading.gif");
     background-position: center !important;
     background-size: 50% !important;
+}
+.textareaCounter {
+    display: block;
+    padding-right: 5px;
+    text-align: right;
+    color: silver;
+    margin-top: -20px;
+}
+.textareaCounter.max {
+    color: yellow;
 }
 .discoverContainer input, .configContainer input, .configContainer select, .configContainer textarea, .configContainer button, .userContainer input, .userContainer button, .userContainer textarea {
     margin-top: 30px;

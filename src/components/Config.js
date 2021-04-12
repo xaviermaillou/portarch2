@@ -10,11 +10,16 @@ const Config = (props) => {
     const [loading, setLoading] = useState(false);
     const [saved, setSaved] = useState(false);
 
+    const [aboutCounter, setAboutCounter] = useState(0);
+
     const countriesURL = "https://restcountries.eu/rest/v2/all";
 
     useEffect(() => {
         setConfigUser(user.state);
     }, [user]);
+    useEffect(() => {
+        setAboutCounter(configUser ? configUser.about.length : 0);
+    }, [configUser]);
 
     useEffect(() => {
         if(configUser !== undefined) {
@@ -90,13 +95,17 @@ const Config = (props) => {
                 </input>
             }
             {configUser && 
-                <textarea 
-                    onChange={(e) => handleChange(e)} 
-                    value={configUser.about || ""} name="about" 
-                    placeholder="About me" 
-                    autoComplete="off"
-                    rows="8">
-                </textarea>
+                <div>
+                    <textarea 
+                        onChange={(e) => handleChange(e)} 
+                        value={configUser.about || ""} name="about" 
+                        placeholder="About me" 
+                        autoComplete="off"
+                        rows="8"
+                        maxLength="140">
+                    </textarea>
+                    <span className={aboutCounter === 140 ? "textareaCounter max" : "textareaCounter"}>{aboutCounter} / 140</span>
+                </div>
             }
             {configUser && 
                 <input 
