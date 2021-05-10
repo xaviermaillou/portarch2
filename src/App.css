@@ -3,6 +3,14 @@
         opacity: 0;
     }
 }
+@keyframes introOpacity2 {
+    0% {
+        opacity: 0;
+    }
+    75% {
+        opacity: 0;
+    }
+}
 @keyframes introSlide {
     0% {
         margin-left: -100vw;
@@ -124,6 +132,39 @@ h4 {
     top: 0;
     left: 0;
     pointer-events: none;
+}
+.indicationsContainer .swipeUpToDiscover {
+    height: 5vh;
+    width: 100%;
+    position: absolute;
+    top: 70vh;
+    text-align: center;
+    animation-name: introOpacity2;
+    animation-duration: 6s;
+}
+.indicationsContainer .tapToAdd {
+    height: 100vh;
+    width: 100vh;
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.75);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.2s 2s;
+    cursor: pointer;
+}
+.indicationsContainer .swipeLeftToDiscover {
+    height: 100vh;
+    position: absolute;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.75);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.2s;
+    cursor: pointer;
 }
 
 .securityDiv{

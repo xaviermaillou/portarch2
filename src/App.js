@@ -60,6 +60,7 @@ const App = () => {
         if(document.getElementById("carouselsContainer").getBoundingClientRect().top <= 0) {
             setIntro(false);
             document.getElementById("carouselsContainer").classList.remove("intro");
+            document.getElementsByClassName("swipeUpToDiscover")[0].style.display = "none";
         }
     }
 
@@ -114,7 +115,7 @@ const App = () => {
                 ))}
             </div>
             <Menu setSearch={setSearch} setDark={setDark} intro={intro} />
-            <Indications />
+            <Indications introOpacity={introOpacity} />
         </div>
     );
 }
